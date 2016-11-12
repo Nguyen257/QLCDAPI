@@ -1,0 +1,62 @@
+﻿@model PagedList.IPagedList<QLDHCDAPI.Models.UYQUYEN>
+
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Danh sách các ủy quyền xảy ra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách các ủy quyền xảy ra</h2>
+
+<p>
+    @Html.ActionLink("Tạo mới một ủy quyền", "Create")
+</p>
+@using (Html.BeginForm("Index", "UyQuyen", FormMethod.Get))
+{
+    <p>
+        Tìm theo tên: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+    </p>
+}
+<table class="table table-striped table-hover ">
+    <tr>
+        <th>
+            Họ tên người chuyển
+        </th>
+        <th>
+            Họ tên người nhận
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SLUQ)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().THOIGIAN)
+        </th>
+        
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NGUOICHUYEN.CODONG.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NGUOINHAN.CODONG.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SLUQ)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.THOIGIAN)
+            </td>
+            
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.MAUQ }) |
+            </td>
+        </tr>
+    }
+
+</table>

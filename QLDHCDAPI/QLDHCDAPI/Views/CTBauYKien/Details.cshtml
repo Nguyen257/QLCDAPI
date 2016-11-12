@@ -1,0 +1,72 @@
+﻿@model QLDHCDAPI.Models.CTBQYKIEN
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết ý kiến biểu quyết của cổ đông</h2>
+
+<div>
+    <h4>CTBQYKIEN</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BANGYKIEN.DHCD.TenDH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BANGYKIEN.DHCD.TenDH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CT_DHCD.CODONG.HoTen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CT_DHCD.CODONG.HoTen)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LUACHON)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LUACHON)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NOIDUNGYKKHAC)
+        </dt>
+
+        <dd>
+            <div class="form-group">
+                <div class="col-lg-10">
+                    <textarea class="form-control" rows="3" id="textArea" style="margin: 0px -0.84375px 0px 0px; width: 230px; height: 87px; resize:vertical;">
+                        @Html.DisplayFor(model => model.NOIDUNGYKKHAC)
+                    </textarea>
+                </div>
+            </div>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.THOIGIANBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.THOIGIANBAU)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SLPHIEUBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLPHIEUBAU)
+        </dd>
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index", "CTBauYKien", new  { mayk = Model.MAYK } ,null)
+</p>

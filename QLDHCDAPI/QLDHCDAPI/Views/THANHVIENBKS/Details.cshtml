@@ -1,0 +1,51 @@
+﻿@model QLDHCDAPI.Models.THANHVIENBK
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>THANHVIENBK</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SOPHIEUBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SOPHIEUBAU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LATHAYTHE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LATHAYTHE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CODONG.HoTen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CODONG.HoTen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DHCD.TenDH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DHCD.TenDH)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { macd = Model.MACD, madh = Model.MADH }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,63 @@
+﻿@model QLDHCDAPI.Models.USERCD
+
+@{
+    ViewBag.Title = "Manage";
+}
+
+@using (Html.BeginForm("Manage", "UserCoDong", FormMethod.Post, new { @class = "formRegister form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h2>Manage</h2>
+    
+        @Html.Raw("<label style='color:red;'>" + ViewBag.AlertText+string.Empty + " </label>");
+    
+    <div class="form-group">
+        <div class="col-md-10">
+            <input id="USERNAME" name="USERNAME" type="hidden" value="@(HttpContext.Current.Session["UserName"]+string.Empty)" required />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label required">Password :</label>
+        <div class="col-md-10">
+            <input id="PASS" type="password" name="PASS" class="form-control" required />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label required">Confirm password :</label>
+        <div class="col-md-10">
+            <input id="ConfirmPass" type="password" name="ConfirmPass" class="form-control" required />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button id="btnRegister_click" onclick="btnRegister_click()"> Save</button>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function btnRegister_click() {
+            if (ValidateForm() == true) $('.formRegister')[0].submit();
+
+        }
+
+        function getHome() {
+            return '@Request.Url.Authority';
+        }
+        function ValidateForm() {
+            var CheckData = true;
+            var Username = $('#USERNAME').val();
+            var pass = $('#PASS').val();
+            var confirm = $('#ConfirmPass').val();
+            if (Username && pass && confirm) {
+                if (pass == confirm) return true;
+                else return false;
+            }
+            else {
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

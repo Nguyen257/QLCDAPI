@@ -1,0 +1,80 @@
+﻿@model QLDHCDAPI.Models.CT_DHCD
+
+@{
+    ViewBag.Title = "Chỉnh sửa tham gia đại hội";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chỉnh sửa tham gia đại hội</h2>
+
+@using (Html.BeginForm("Update","ThamGiaDH",FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>CT_DHCD</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.MADH)
+
+        @Html.HiddenFor(model => model.MACD)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SLCP, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SLCP)
+                @Html.ValidationMessageFor(model => model.SLCP)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SLDAUQ, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SLDAUQ)
+                @Html.ValidationMessageFor(model => model.SLDAUQ)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SLDCUQ, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SLDCUQ)
+                @Html.ValidationMessageFor(model => model.SLDCUQ)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HTDK, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HTDK)
+                @Html.ValidationMessageFor(model => model.HTDK)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SLCPSAUCUNG, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SLCPSAUCUNG)
+                @Html.ValidationMessageFor(model => model.SLCPSAUCUNG)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.QUYENBAUCU, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.QUYENBAUCU)
+                @Html.ValidationMessageFor(model => model.QUYENBAUCU)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

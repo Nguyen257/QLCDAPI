@@ -1,0 +1,106 @@
+﻿@model QLDHCDAPI.Models.DHCD
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>DHCD</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenDH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenDH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nQKin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nQKin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nQBefore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nQBefore)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nDeCuHDQT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nDeCuHDQT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nUngCuHDQT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nUngCuHDQT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nDeCuBKS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nDeCuBKS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nUngCuBKS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nUngCuBKS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.thoiGian)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.thoiGian)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ACTIVE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ACTIVE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TONGSOPHIEU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TONGSOPHIEU)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm("DeleteDHCD", "DHCD", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="hidden" id="madh" name="madh" value="@Model.MADH" />
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

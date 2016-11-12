@@ -1,0 +1,73 @@
+﻿@model PagedList.IPagedList < QLDHCDAPI.Models.CT_BAUHDQT >
+
+@{
+    ViewBag.Title = "Danh sách các cổ đông đã bầu cho thành viên" +ViewBag.tenUngVien;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách các cổ đông đã bầu cho thành viên @ViewBag.tenUngVien</h2>
+
+
+<p>
+    @Html.ActionLink("Bầu cho thành viên này", "Create", new { madh = ViewBag.madh , macd  =ViewBag.macd })
+</p>
+@using (Html.BeginForm("Index", "CTBauHDQT", FormMethod.Get))
+{
+    <p>
+        Tìm theo tên: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="hidden" value="@ViewBag.madh" id="madh" name="madh" />
+        <input type="hidden" value="@ViewBag.macd" id="macd" name="macd" />
+        <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            Mã bầu cử
+        </th>
+        <th>
+            Họ và tên ứng viên
+        </th>
+        <th>
+            Họ và tên người bầu
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model =>  model.FirstOrDefault().SLPHIEUBAU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model =>  model.FirstOrDefault().HINHTHUCBAU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model =>  model.FirstOrDefault().THOIGIANBAU)
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MACT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BANGBAUHDQT.CT_DHCD.CODONG.HoTen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CT_DHCD.CODONG.HoTen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SLPHIEUBAU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HINHTHUCBAU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.THOIGIANBAU)
+        </td>
+
+
+    </tr>
+}
+
+</table>

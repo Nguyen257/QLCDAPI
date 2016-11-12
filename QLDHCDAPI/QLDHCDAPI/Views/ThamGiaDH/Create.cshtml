@@ -1,0 +1,93 @@
+﻿@model QLDHCDAPI.Models.CT_DHCD
+
+@{
+    ViewBag.Title = "Đăng kí tham gia đại hội";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Đăng kí tham gia đại hội</h2>
+
+@using (Html.BeginForm("Insert","ThamGiaDH",FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MADH, "Tên đại hội", new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.DropDownList("MADH", String.Empty)
+                @Html.ValidationMessageFor(model => model.MADH)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MACD, "Tên cổ đông", new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.DropDownList("MACD", String.Empty)
+                @Html.ValidationMessageFor(model => model.MACD)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SLCP, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.SLCP)
+                @Html.ValidationMessageFor(model => model.SLCP)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SLDAUQ, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.SLDAUQ)
+                @Html.ValidationMessageFor(model => model.SLDAUQ)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SLDCUQ, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.SLDCUQ)
+                @Html.ValidationMessageFor(model => model.SLDCUQ)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HTDK, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.HTDK)
+                @Html.ValidationMessageFor(model => model.HTDK)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SLCPSAUCUNG, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.SLCPSAUCUNG)
+                @Html.ValidationMessageFor(model => model.SLCPSAUCUNG)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.QUYENBAUCU, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.QUYENBAUCU)
+                @Html.ValidationMessageFor(model => model.QUYENBAUCU)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2" style="text-align:center;">
+                <button type="reset" class="btn btn-default">Hủy</button>
+                <button type="submit" class="btn btn-primary">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Trở lại danh sách tham gia đại hội", "Index")
+</div>

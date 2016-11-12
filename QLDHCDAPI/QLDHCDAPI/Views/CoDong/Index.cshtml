@@ -1,0 +1,73 @@
+﻿@model PagedList.IPagedList<QLDHCDAPI.Models.CODONG>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Danh sách các cổ đông trong công ty";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách các cổ đông trong công ty</h2>
+
+<p>
+    @Html.ActionLink("Tạo mới cổ đông", "Create")
+</p>
+@using (Html.BeginForm("Index","CoDong",FormMethod.Get))
+{
+    <p>
+        Tìm theo tên: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Tìm kiếm" class="btn btn-success"  />
+    </p>
+}
+    <table class="table table-striped table-hover ">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().HoTen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().CMND)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().DiaChi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().QuocTich)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ChucVu)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoTen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CMND)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaChi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuocTich)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChucVu)
+                </td>
+                
+                <td>
+                    @Html.ActionLink("Chỉnh sửa", "EditCoDong", new { macd = item.MACD }) |
+                    @Html.ActionLink("Chi tiết", "DetailCoDong", new { macd = item.MACD }) |
+                    @Html.ActionLink("Xóa", "DeleteCoDong", new { macd = item.MACD })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+<div >
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+</div>

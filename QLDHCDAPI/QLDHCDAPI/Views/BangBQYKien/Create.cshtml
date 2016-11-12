@@ -1,0 +1,88 @@
+﻿@model QLDHCDAPI.Models.BANGYKIEN
+
+@{
+    ViewBag.Title = "Tạo ý kiến để biểu quyết trọng DHCD";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Tạo ý kiến để biểu quyết trọng ĐHCĐ</h2>
+@{
+    if (ViewBag.check != null)
+    {
+        if (ViewBag.check == 1)
+        {
+           <div class="alert alert-dismissible alert-success">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>@ViewBag.checkString</strong>
+           </div>
+        }
+        else
+        {
+        <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>@ViewBag.checkString</strong>
+        </div>
+        }
+    }
+}
+
+@using (Html.BeginForm("Create", "BangBQYKien", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>BANGYKIEN</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MADH, "Tên đại hội", new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.DropDownList("MADH", String.Empty)
+                @Html.ValidationMessageFor(model => model.MADH)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NOIDUNG, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.TextAreaFor(model => model.NOIDUNG)
+                @Html.ValidationMessageFor(model => model.NOIDUNG)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SLDONGY, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(model => model.SLDONGY, new {@readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.SLDONGY)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SLKHONGDONGY, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(model => model.SLKHONGDONGY, new { @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.SLKHONGDONGY)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SLYKKHAC, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(model => model.SLYKKHAC, new { @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.SLYKKHAC)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

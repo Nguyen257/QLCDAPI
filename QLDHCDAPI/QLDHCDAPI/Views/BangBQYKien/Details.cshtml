@@ -1,0 +1,71 @@
+﻿@model QLDHCDAPI.Models.BANGYKIEN
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết ý kiến biểu quyết</h2>
+
+<div>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MAYK)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MAYK)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DHCD.TenDH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DHCD.TenDH)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NOIDUNG)
+        </dt>
+
+        <dd>
+            <div class="form-group">
+                <div class="col-lg-10">
+                    <textarea class="form-control" rows="3" id="textArea" style="margin: 0px -0.84375px 0px 0px; width: 350px; height: 87px; resize:vertical;" readonly>
+                        @Html.DisplayFor(model => model.NOIDUNG)
+                    </textarea>
+                </div>
+            </div>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLKHONGDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLKHONGDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLYKKHAC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLYKKHAC)
+        </dd>
+
+       
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MAYK }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

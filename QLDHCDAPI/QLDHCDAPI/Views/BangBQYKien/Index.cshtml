@@ -1,0 +1,77 @@
+﻿@model PagedList.IPagedList <QLDHCDAPI.Models.BANGYKIEN>
+
+@{
+    ViewBag.Title = "Danh sách các ý kiến được biểu quyết trong đại hội";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách các ý kiến được biểu quyết trong đại hội</h2>
+
+<p>
+    @Html.ActionLink("Tạo ý kiến biểu quyết", "Create")
+</p>
+@using (Html.BeginForm("Index", "BangBQYKien", FormMethod.Get))
+{
+    <p>
+        Tìm theo tên: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().DHCD.TenDH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NOIDUNG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SLDONGY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SLKHONGDONGY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SLYKKHAC)
+        </th>
+        
+        <th></th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DHCD.TenDH)
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-lg-10">
+                    <textarea class="form-control" rows="3" id="textArea" style="margin: 0px -0.84375px 0px 0px; width: 230px; height: 87px; resize:vertical;" readonly>
+                            @Html.DisplayFor(modelItem => item.NOIDUNG)
+                    </textarea>
+                </div>
+            </div>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SLDONGY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SLKHONGDONGY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SLYKKHAC)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MAYK }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MAYK }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MAYK })
+        </td>
+        <td>
+            @Html.ActionLink("Xem danh sách cổ đông biểu quyết", "Index","CTBauYKien", new { mayk= item.MAYK },null)
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,47 @@
+﻿@model QLDHCDAPI.Models.BANGBAUBK
+
+@{
+    ViewBag.Title = "Chi tiết ứng cử của thành viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết ứng cử của thành viên</h2>
+
+<div>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CT_DHCD.DHCD.TenDH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CT_DHCD.DHCD.TenDH)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CT_DHCD.CODONG.HoTen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CT_DHCD.CODONG.HoTen)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HINHTHUCBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HINHTHUCBAU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLPHIEUBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLPHIEUBAU)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

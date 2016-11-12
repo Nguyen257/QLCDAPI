@@ -1,0 +1,59 @@
+﻿@model PagedList.IPagedList<QLDHCDAPI.Models.BANGBAUBK>
+
+@{
+    ViewBag.Title = "Danh sách các thành viên bầu vào BKS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách các thành viên bầu vào BKS</h2>
+
+<p>
+    @Html.ActionLink("Tạo ứng cử hoặc đề cử vào BKS", "Create")
+</p>
+@using (Html.BeginForm("Index", "BangBauBKS", FormMethod.Get))
+{
+    <p>
+        Tìm theo tên: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CT_DHCD.DHCD.TenDH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CT_DHCD.CODONG.HoTen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().HINHTHUCBAU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SLPHIEUBAU)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CT_DHCD.DHCD.TenDH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CT_DHCD.CODONG.HoTen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HINHTHUCBAU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SLPHIEUBAU)
+        </td>
+        <td>
+            @Html.ActionLink("Chi tiết", "Details", new { madh = item.MADH, macd = item.MACD }) |
+            @Html.ActionLink("DS người bầu cho thành viên này", "Index", "CTBauBKS", new { madh = item.MADH, macd = item.MACD }, null) |
+            @Html.ActionLink("Xóa", "Delete", new { madh = item.MADH, macd = item.MACD })
+        </td>
+    </tr>
+}
+
+</table>

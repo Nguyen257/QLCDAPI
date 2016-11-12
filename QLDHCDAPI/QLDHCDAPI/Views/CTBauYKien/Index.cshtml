@@ -1,0 +1,82 @@
+﻿@model PagedList.IPagedList<QLDHCDAPI.Models.CTBQYKIEN>
+
+@{
+    ViewBag.Title = "Danh sách các cổ đông biểu quyết ý kiến";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách các cổ đông biểu quyết ý kiến</h2>
+<h5>Nội dung ý kiến biểu quyết :  @Html.ActionLink("Bấm để xem", "Details", "BangBQYKien", new { id = ViewBag.pamayk }, null) </h5>
+<hr/>
+<p>
+    @Html.ActionLink("Biểu quyết ý kiến", "Create", "CTBauYKien", new { mayk = ViewBag.pamayk },null)
+</p>
+@using (Html.BeginForm("Index", "CTBauYKien", FormMethod.Get))
+{
+    <p>
+        Tìm theo tên: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="hidden" value="@ViewBag.pamayk" id="mayk" name="mayk" />
+        <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+    </p>
+}
+<br/>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().BANGYKIEN.DHCD.TenDH)
+        </th>
+        <th>
+            Tên cổ đông biểu quyết
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().LUACHON)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NOIDUNGYKKHAC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().THOIGIANBAU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SLPHIEUBAU)
+        </th>
+
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BANGYKIEN.DHCD.TenDH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CT_DHCD.CODONG.HoTen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LUACHON)
+        </td>
+        <td>
+            <div class="form-group">
+                <div class="col-lg-10">
+                    <textarea class="form-control" rows="3" id="textArea" style="margin: 0px -0.84375px 0px 0px; width: 230px; height: 87px; resize:vertical;">
+                        @Html.DisplayFor(modelItem => item.NOIDUNGYKKHAC)
+                    </textarea>
+                </div>
+            </div>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.THOIGIANBAU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SLPHIEUBAU)
+        </td>
+
+        
+        <td>
+            @Html.ActionLink("Details", "Details", new { mayk = item.MAYK, madh= item.MADH, macd = item.MACD })
+        </td>
+    </tr>
+}
+
+</table>

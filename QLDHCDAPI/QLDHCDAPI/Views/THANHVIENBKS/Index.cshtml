@@ -1,0 +1,52 @@
+﻿@model IEnumerable<QLDHCDAPI.Models.THANHVIENBK>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SOPHIEUBAU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LATHAYTHE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CODONG.HoTen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DHCD.TenDH)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SOPHIEUBAU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LATHAYTHE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CODONG.HoTen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DHCD.TenDH)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { macd = item.MACD, madh = item.MADH }) |
+            @Html.ActionLink("Details", "Details", new { macd = item.MACD,madh = item.MADH }) |
+            @Html.ActionLink("Delete", "Delete", new { macd=item.MACD, madh = item.MADH })
+        </td>
+    </tr>
+}
+
+</table>

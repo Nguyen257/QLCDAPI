@@ -1,0 +1,126 @@
+﻿@model QLDHCDAPI.Models.CODONG
+
+@{
+    ViewBag.Title = "EditCoDong";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EditCoDong</h2>
+
+@using (Html.BeginForm("UpdateCoDong", "CoDong", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.MACD)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HoTen, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.HoTen)
+                @Html.ValidationMessageFor(model => model.HoTen)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CMND, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.CMND)
+                @Html.ValidationMessageFor(model => model.CMND)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NgayCap, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.NgayCap)
+                @Html.ValidationMessageFor(model => model.NgayCap)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NoiCap, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.NoiCap)
+                @Html.ValidationMessageFor(model => model.NoiCap)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DiaChi, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.DiaChi)
+                @Html.ValidationMessageFor(model => model.DiaChi)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.QuocTich, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.QuocTich)
+                @Html.ValidationMessageFor(model => model.QuocTich)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ChucVu, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.ChucVu)
+                @Html.ValidationMessageFor(model => model.ChucVu)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SDT, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.SDT)
+                @Html.ValidationMessageFor(model => model.SDT)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TrinhDoVanHoa, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.TrinhDoVanHoa)
+                @Html.ValidationMessageFor(model => model.TrinhDoVanHoa)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TrinhDoChuyenMon, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.TrinhDoChuyenMon)
+                @Html.ValidationMessageFor(model => model.TrinhDoChuyenMon)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ANHCD, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.ANHCD)
+                @Html.ValidationMessageFor(model => model.ANHCD)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <button type="reset" class="btn btn-default">Hủy</button>
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Trở lại danh sách", "Index")
+</div>

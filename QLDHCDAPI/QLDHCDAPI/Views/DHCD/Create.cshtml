@@ -1,0 +1,170 @@
+﻿@model QLDHCDAPI.Models.DHCD
+
+@{
+    ViewBag.Title = "Tạo mới đại hội cổ đông";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Tạo mới đại hội cổ đông</h2>
+
+@using (Html.BeginForm("InsertDHCD", "DHCD", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>DHCD</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MADH, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.MADH)
+                @Html.ValidationMessageFor(model => model.MADH)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TenDH, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.TenDH)
+                @Html.ValidationMessageFor(model => model.TenDH)
+            </div>
+        </div>
+        <div class="form-group" style="display: none !important">
+            @Html.LabelFor(model => model.STTDHTRONGNAM, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.HiddenFor(model => model.STTDHTRONGNAM)
+                @Html.ValidationMessageFor(model => model.STTDHTRONGNAM)
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.nQKin, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.nQKin, new { @class = "k-textbox formNumberic" })
+                @Html.ValidationMessageFor(model => model.nQKin)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nQBefore, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.nQBefore, new { @class = "k-textbox formNumberic" })
+                @Html.ValidationMessageFor(model => model.nQBefore)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nDeCuHDQT, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.nDeCuHDQT, new { @class = "k-textbox formNumberic" })
+                @Html.ValidationMessageFor(model => model.nDeCuHDQT)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nUngCuHDQT, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.nUngCuHDQT, new { @class = "k-textbox formNumberic" })
+                @Html.ValidationMessageFor(model => model.nUngCuHDQT)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nDeCuBKS, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.nDeCuBKS, new { @class = "k-textbox formNumberic" })
+                @Html.ValidationMessageFor(model => model.nDeCuBKS)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nUngCuBKS, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.nUngCuBKS)
+                @Html.ValidationMessageFor(model => model.nUngCuBKS)
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.thoiGian, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.thoiGian)
+                @Html.ValidationMessageFor(model => model.thoiGian)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ACTIVE, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.HiddenFor(model => model.ACTIVE)
+                <input type="checkbox" id="CheckBoxActive" name="CheckBoxActive"  value="0" />
+                @Html.ValidationMessageFor(model => model.ACTIVE)
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.TONGSOPHIEU, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(model => model.TONGSOPHIEU, new { @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.TONGSOPHIEU)
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2" style="text-align:center;">
+                <button type="reset" class="btn btn-default">Hủy</button>
+                <button type="submit" class="btn btn-primary">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Trở lại danh sách đại hội cổ đông", "Index")
+</div>
+
+@section Scripts{
+    <script>
+
+        function LoadMaDH() {
+                
+            var myDate = new Date();
+            var thoigian = myDate.getMonth() + '/' + myDate.getDate() + '/' + myDate.getFullYear();
+            $.get("@(Request.Url.Scheme + "://"+ Request.Url.Authority)/qldhcdapi/DHCDAPI/GetMaCD?thoiGian=" + thoigian + "&role=@(HttpContext.Current.Session["Role"]+ string.Empty)",
+            function (data) {
+                $('#STTDHTRONGNAM').val(data);
+                $('#MADH').val("DHCD" + myDate.getFullYear() + data);
+            });
+        }
+        $(document).ready(function () {
+            $('#thoiGian').kendoDatePicker({
+                value: new Date()
+            });
+            $('#CheckBoxActive').change(function () {
+                if ($(this).is(":checked")) {
+                    $('#ACTIVE').val('1');
+                }
+                else {
+                    $('#ACTIVE').val('0');
+                }
+                $('#textbox1').val($(this).is(':checked'));
+            });
+
+            LoadMaDH();
+
+            $('#thoiGian').change(function () {
+                var thoigian = $('#thoiGian').val();
+                var TempDate = Date.parse(thoigian)
+                var myDate = new Date(TempDate);
+                $.get("@(Request.Url.Scheme + "://"+ Request.Url.Authority)/qldhcdapi/DHCDAPI/GetMaCD?thoiGian=" + thoigian + "&role=@(HttpContext.Current.Session["Role"]+ string.Empty)",
+                function (data) {
+                    $('#STTDHTRONGNAM').val(data);
+                    $('#MADH').val("DHCD" + myDate.getFullYear() + data);
+                });
+            });
+            
+        });
+    </script>
+}

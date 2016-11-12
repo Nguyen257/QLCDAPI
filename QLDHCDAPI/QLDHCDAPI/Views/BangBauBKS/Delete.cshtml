@@ -1,0 +1,66 @@
+﻿@model QLDHCDAPI.Models.BANGBAUBK
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xóa đề cử hoặc ứng cử thành viên vào BKS</h2>
+@using (Html.BeginForm("Delete", "BangBauBKS", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <h3 class="panel-title">Thông báo</h3>
+        </div>
+        <div class="panel-body">
+            <p style="text-align:center;font-size:larger;font-weight:bold;">Bạn có chắc chắn muốn xóa ?</p>
+            <div class="form-actions no-color" style="text-align:center;">
+                <input type="hidden" value="@Model.MADH" id="madh" name="madh" />
+                <input type="hidden" value="@Model.MACD" id="macd" name="macd" />
+                <input type="submit" value="Delete" class="btn btn-default" /> 
+
+            </div>
+        </div>
+    </div>
+}
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CT_DHCD.DHCD.TenDH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CT_DHCD.DHCD.TenDH)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CT_DHCD.CODONG.HoTen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CT_DHCD.CODONG.HoTen)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HINHTHUCBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HINHTHUCBAU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLPHIEUBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLPHIEUBAU)
+        </dd>
+
+    </dl>
+
+
+</div>
+@Html.ActionLink("Back to List", "Index")

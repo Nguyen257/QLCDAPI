@@ -1,0 +1,83 @@
+﻿@model QLDHCDAPI.Models.CT_DHCD
+
+@{
+    ViewBag.Title = "Chi tiết tham gia ĐH";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết tham gia ĐH</h2>
+
+<div>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CODONG.HoTen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CODONG.HoTen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DHCD.TenDH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DHCD.TenDH)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLCP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLDAUQ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLDAUQ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLDCUQ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLDCUQ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HTDK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HTDK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCPSAUCUNG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLCPSAUCUNG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QUYENBAUCU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QUYENBAUCU)
+        </dd>
+
+        
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { mcd = Model.MACD, mdh = Model.MADH }) |
+    @Html.ActionLink("Trở lại danh sách", "Index")
+</p>

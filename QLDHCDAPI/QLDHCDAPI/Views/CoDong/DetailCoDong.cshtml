@@ -1,0 +1,117 @@
+﻿@model QLDHCDAPI.Models.CODONG
+
+@{
+    ViewBag.Title = "Chi tiết cổ đông";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết cổ đông</h2>
+
+<div>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HoTen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoTen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CMND)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CMND)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayCap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayCap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoiCap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoiCap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiaChi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiaChi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuocTich)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuocTich)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChucVu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChucVu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SDT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SDT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrinhDoVanHoa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrinhDoVanHoa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrinhDoChuyenMon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrinhDoChuyenMon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ANHCD)
+        </dt>
+
+        <dd>
+            <div >
+                <img src="@Html.DisplayFor(model => model.ANHCD)" width="30%" height="auto" ></div>
+           
+        </dd>
+        
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Chỉnh sửa cổ đông", "EditCoDong", new { macd = Model.MACD }) |
+    @Html.ActionLink("Trở lại danh sách cổ đông", "Index")
+</p>

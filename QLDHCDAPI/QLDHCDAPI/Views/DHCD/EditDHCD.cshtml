@@ -1,0 +1,111 @@
+﻿@model QLDHCDAPI.Models.DHCD
+
+@{
+    ViewBag.Title = "Chỉnh sửa Đại hội cổ đông";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chỉnh sửa Đại hội cổ đông</h2>
+
+@using (Html.BeginForm("UpdateDHCD", "DHCD", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>DHCD</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.MADH)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TenDH, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.TenDH)
+                @Html.ValidationMessageFor(model => model.TenDH)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nQKin, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.nQKin)
+                @Html.ValidationMessageFor(model => model.nQKin)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nQBefore, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.nQBefore)
+                @Html.ValidationMessageFor(model => model.nQBefore)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nDeCuHDQT, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.nDeCuHDQT)
+                @Html.ValidationMessageFor(model => model.nDeCuHDQT)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nUngCuHDQT, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.nUngCuHDQT)
+                @Html.ValidationMessageFor(model => model.nUngCuHDQT)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nDeCuBKS, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.nDeCuBKS)
+                @Html.ValidationMessageFor(model => model.nDeCuBKS)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nUngCuBKS, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.nUngCuBKS)
+                @Html.ValidationMessageFor(model => model.nUngCuBKS)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.thoiGian, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.thoiGian)
+                @Html.ValidationMessageFor(model => model.thoiGian)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ACTIVE, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.ACTIVE)
+                @Html.ValidationMessageFor(model => model.ACTIVE)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TONGSOPHIEU, new { @class = "control-label col-lg-2" })
+            <div class="col-lg-10">
+                @Html.EditorFor(model => model.TONGSOPHIEU)
+                @Html.ValidationMessageFor(model => model.TONGSOPHIEU)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <button type="reset" class="btn btn-default">Hủy</button>
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Trở lại danh sách", "Index")
+</div>

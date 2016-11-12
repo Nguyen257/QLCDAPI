@@ -17,7 +17,7 @@ namespace QLDHCDAPI
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
+                routeTemplate: "qldhcdapi/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 

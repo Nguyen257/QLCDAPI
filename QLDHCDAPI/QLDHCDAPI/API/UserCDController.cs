@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using QLDHCDAPI.Models;
 using System.Security.Cryptography;
 using System.Text;
+using System.ComponentModel;
 
 namespace QLDHCDAPI.API
 {
@@ -18,135 +19,138 @@ namespace QLDHCDAPI.API
     {
         private QLDHCDEntities db = new QLDHCDEntities();
 
-        // GET api/UserCD
-        public IQueryable<USERCD> GetUSERCDs()
-        {
-            return db.USERCDs;
-        }
-
-        // GET api/UserCD/5
-        [ResponseType(typeof(USERCD))]
-        public IHttpActionResult GetUSERCD(int id)
-        {
-            USERCD usercd = db.USERCDs.Find(id);
-            if (usercd == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(usercd);
-        }
-
-        [ResponseType(typeof(USERCD))]
-        public IHttpActionResult LoginUser(string userName,string pass)
-        {
-            MD5CryptoServiceProvider md5Hasher = new MD5CryptoServiceProvider();
-            byte[] hashedDataBytes;
-            UTF8Encoding encoder = new UTF8Encoding();
-            hashedDataBytes =
-              md5Hasher.ComputeHash(encoder.GetBytes(pass));
-
-            USERCD usercd = (from l in db.USERCDs
-                               where l.USERNAME == userName && l.PASS == hashedDataBytes
-                               select l).First();
-
-            //USERCD usercd = db.USERCDs.Find(id);
-            if (usercd == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(usercd);
-        }
+        //// GET api/UserCD
+        //public IQueryable<USERCD> GetUSERCDs()
+        //{
+        //    IQueryable<USERCD> QueryUserCD = (from l in db.USERCDs
+        //                                      select new USERCD { USERNAME = l.USERNAME, MACD = l.MACD, CODONG = l.CODONG }).AsQueryable();
+        //    return QueryUserCD;
+        //    //return db.USERCDs;
+        //}
 
 
-        // PUT api/UserCD/5
-        public IHttpActionResult PutUSERCD(int id, USERCD usercd)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[ResponseType(typeof(USERCD))]
+        //public IHttpActionResult GetUSERCD(int id)
+        //{
+        //    USERCD usercd = db.USERCDs.Find(id);
+        //    if (usercd == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (id != usercd.ID)
-            {
-                return BadRequest();
-            }
+        //    return Ok(usercd);
+        //}
 
-            db.Entry(usercd).State = EntityState.Modified;
+        //[ResponseType(typeof(USERCD))]
+        //public IHttpActionResult LoginUser(string userName,string pass)
+        //{
+        //    MD5CryptoServiceProvider md5Hasher = new MD5CryptoServiceProvider();
+        //    byte[] hashedDataBytes;
+        //    UTF8Encoding encoder = new UTF8Encoding();
+        //    hashedDataBytes =
+        //      md5Hasher.ComputeHash(encoder.GetBytes(pass));
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!USERCDExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    USERCD usercd = (from l in db.USERCDs
+        //                       where l.USERNAME == userName && l.PASS == hashedDataBytes
+        //                       select l).First();
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    //USERCD usercd = db.USERCDs.Find(id);
+        //    if (usercd == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-        // POST api/UserCD
-        [ResponseType(typeof(USERCD))]
-        public IHttpActionResult PostUSERCD(USERCD usercd)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //    return Ok(usercd);
+        //}
 
-            db.USERCDs.Add(usercd);
-            db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = usercd.ID }, usercd);
-        }
+        //// PUT api/UserCD/5
+        //public IHttpActionResult PutUSERCD(int id, USERCD usercd)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-        public IHttpActionResult CreateUser(string userName,string pass)
-        {
-            string HashMd5 = string.Empty;
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            MD5CryptoServiceProvider md5Hasher = new MD5CryptoServiceProvider();
-            byte[] hashedBytes;
-            UTF8Encoding encoder = new UTF8Encoding();
-            hashedBytes = md5Hasher.ComputeHash(encoder.GetBytes(pass));
+        //    if (id != usercd.ID)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            USERCD usercd = new USERCD();
-            usercd.USERNAME = userName;
-            usercd.PASS = hashedBytes;
+        //    db.Entry(usercd).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        db.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!USERCDExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
+
+        //// POST api/UserCD
+        //[ResponseType(typeof(USERCD))]
+        //public IHttpActionResult PostUSERCD(USERCD usercd)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    db.USERCDs.Add(usercd);
+        //    db.SaveChanges();
+
+        //    return CreatedAtRoute("DefaultApi", new { id = usercd.ID }, usercd);
+        //}
+
+        //public IHttpActionResult CreateUser(string userName,string pass)
+        //{
+        //    string HashMd5 = string.Empty;
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //    MD5CryptoServiceProvider md5Hasher = new MD5CryptoServiceProvider();
+        //    byte[] hashedBytes;
+        //    UTF8Encoding encoder = new UTF8Encoding();
+        //    hashedBytes = md5Hasher.ComputeHash(encoder.GetBytes(pass));
+
+        //    USERCD usercd = new USERCD();
+        //    usercd.USERNAME = userName;
+        //    usercd.PASS = hashedBytes;
                      
 
-            db.USERCDs.Add(usercd);
-            db.SaveChanges();
+        //    db.USERCDs.Add(usercd);
+        //    db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = usercd.ID }, usercd);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = usercd.ID }, usercd);
+        //}
 
-        // DELETE api/UserCD/5
-        [ResponseType(typeof(USERCD))]
-        public IHttpActionResult DeleteUSERCD(int id)
-        {
-            USERCD usercd = db.USERCDs.Find(id);
-            if (usercd == null)
-            {
-                return NotFound();
-            }
+        //// DELETE api/UserCD/5
+        //[ResponseType(typeof(USERCD))]
+        //public IHttpActionResult DeleteUSERCD(int id)
+        //{
+        //    USERCD usercd = db.USERCDs.Find(id);
+        //    if (usercd == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            db.USERCDs.Remove(usercd);
-            db.SaveChanges();
+        //    db.USERCDs.Remove(usercd);
+        //    db.SaveChanges();
 
-            return Ok(usercd);
-        }
+        //    return Ok(usercd);
+        //}
 
 
 

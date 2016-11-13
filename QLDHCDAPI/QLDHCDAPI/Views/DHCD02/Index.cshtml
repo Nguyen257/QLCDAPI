@@ -1,0 +1,93 @@
+﻿@model IEnumerable<QLDHCDAPI.Models.DHCD>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TenDH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STTDHTRONGNAM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nQKin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nQBefore)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nDeCuHDQT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nUngCuHDQT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nDeCuBKS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nUngCuBKS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.thoiGian)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACTIVE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TONGSOPHIEU)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenDH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STTDHTRONGNAM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nQKin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nQBefore)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nDeCuHDQT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nUngCuHDQT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nDeCuBKS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nUngCuBKS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.thoiGian)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACTIVE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TONGSOPHIEU)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MADH }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MADH }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MADH })
+        </td>
+    </tr>
+}
+
+</table>

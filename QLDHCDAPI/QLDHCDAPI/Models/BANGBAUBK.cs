@@ -24,7 +24,7 @@ namespace QLDHCDAPI.Models
         public string HINHTHUCBAU { get; set; }
         public Nullable<int> SLPHIEUBAU { get; set; }
     
-        public virtual CT_DHCD CT_DHCD { get; set; }
         public virtual ICollection<CT_BAUBKS> CT_BAUBKS { get; set; }
+        public virtual CT_DHCD CT_DHCD { get; set; }
     }
 }

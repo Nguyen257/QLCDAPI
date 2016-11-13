@@ -17,13 +17,14 @@ namespace QLDHCDAPI.Models
         public DHCD()
         {
             this.BANGYKIENs = new HashSet<BANGYKIEN>();
-            this.CT_DHCD = new HashSet<CT_DHCD>();
             this.THANHVIENBKS = new HashSet<THANHVIENBK>();
             this.THANHVIENHDQTs = new HashSet<THANHVIENHDQT>();
+            this.CT_DHCD = new HashSet<CT_DHCD>();
         }
     
         public string MADH { get; set; }
         public string TenDH { get; set; }
+        public Nullable<int> YEARDHCD { get; set; }
         public Nullable<int> STTDHTRONGNAM { get; set; }
         public Nullable<int> nQKin { get; set; }
         public Nullable<int> nQBefore { get; set; }
@@ -31,13 +32,15 @@ namespace QLDHCDAPI.Models
         public Nullable<int> nUngCuHDQT { get; set; }
         public Nullable<int> nDeCuBKS { get; set; }
         public Nullable<int> nUngCuBKS { get; set; }
+        public Nullable<int> nBauBoSungHDQT { get; set; }
+        public Nullable<int> nBauBOSungBKS { get; set; }
         public Nullable<System.DateTime> thoiGian { get; set; }
         public Nullable<int> ACTIVE { get; set; }
         public Nullable<int> TONGSOPHIEU { get; set; }
     
         public virtual ICollection<BANGYKIEN> BANGYKIENs { get; set; }
-        public virtual ICollection<CT_DHCD> CT_DHCD { get; set; }
         public virtual ICollection<THANHVIENBK> THANHVIENBKS { get; set; }
         public virtual ICollection<THANHVIENHDQT> THANHVIENHDQTs { get; set; }
+        public virtual ICollection<CT_DHCD> CT_DHCD { get; set; }
     }
 }

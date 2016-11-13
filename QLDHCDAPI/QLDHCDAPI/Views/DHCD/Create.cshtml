@@ -19,7 +19,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MADH, new { @class = "control-label col-lg-2" })
             <div class="col-lg-10">
-                @Html.EditorFor(model => model.MADH)
+                @Html.TextBoxFor(model => model.MADH, new {@class = "k-textbox myCSSInput", disabled = "disabled", @readonly = "readonly" })
                 @Html.ValidationMessageFor(model => model.MADH)
             </div>
         </div>
@@ -27,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TenDH, new { @class = "control-label col-lg-2" })
             <div class="col-lg-10">
-                @Html.EditorFor(model => model.TenDH)
+                @Html.TextBoxFor(model => model.TenDH, new { @class = "k-textbox myCSSInput" })
                 @Html.ValidationMessageFor(model => model.TenDH)
             </div>
         </div>
@@ -39,10 +39,10 @@
             </div>
         </div>
 
-        @*<div class="form-group">
+        <div class="form-group">
             @Html.LabelFor(model => model.nQKin, new { @class = "control-label col-lg-2" })
             <div class="col-lg-10">
-                @Html.EditorFor(model => model.nQKin, new { @class = "k-textbox formNumberic" })
+                @Html.TextBoxFor(model => model.nQKin, new { @class = "k-textbox formNumberic myCSSInput" })
                 @Html.ValidationMessageFor(model => model.nQKin)
             </div>
         </div>
@@ -50,7 +50,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.nQBefore, new { @class = "control-label col-lg-2" })
             <div class="col-lg-10">
-                @Html.EditorFor(model => model.nQBefore, new { @class = "k-textbox formNumberic" })
+                @Html.TextBoxFor(model => model.nQBefore, new { @class = "k-textbox formNumberic myCSSInput" })
                 @Html.ValidationMessageFor(model => model.nQBefore)
             </div>
         </div>
@@ -58,7 +58,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.nDeCuHDQT, new { @class = "control-label col-lg-2" })
             <div class="col-lg-10">
-                @Html.EditorFor(model => model.nDeCuHDQT, new { @class = "k-textbox formNumberic" })
+                @Html.TextBoxFor(model => model.nDeCuHDQT, new { @class = "k-textbox formNumberic myCSSInput" })
                 @Html.ValidationMessageFor(model => model.nDeCuHDQT)
             </div>
         </div>
@@ -66,7 +66,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.nUngCuHDQT, new { @class = "control-label col-lg-2" })
             <div class="col-lg-10">
-                @Html.EditorFor(model => model.nUngCuHDQT, new { @class = "k-textbox formNumberic" })
+                @Html.TextBoxFor(model => model.nUngCuHDQT, new { @class = "k-textbox formNumberic myCSSInput" })
                 @Html.ValidationMessageFor(model => model.nUngCuHDQT)
             </div>
         </div>
@@ -74,7 +74,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.nDeCuBKS, new { @class = "control-label col-lg-2" })
             <div class="col-lg-10">
-                @Html.EditorFor(model => model.nDeCuBKS, new { @class = "k-textbox formNumberic" })
+                @Html.TextBoxFor(model => model.nDeCuBKS, new { @class = "k-textbox formNumberic myCSSInput" })
                 @Html.ValidationMessageFor(model => model.nDeCuBKS)
             </div>
         </div>
@@ -82,15 +82,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.nUngCuBKS, new { @class = "control-label col-lg-2" })
             <div class="col-lg-10">
-                @Html.EditorFor(model => model.nUngCuBKS)
+                @Html.TextBoxFor(model => model.nUngCuBKS, new { @class = "k-textbox formNumberic myCSSInput" })
                 @Html.ValidationMessageFor(model => model.nUngCuBKS)
             </div>
-        </div>*@
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.thoiGian, new { @class = "control-label col-lg-2" })
             <div class="col-lg-10">
-                @Html.EditorFor(model => model.thoiGian)
+                @Html.TextBoxFor(model => model.thoiGian)
                 @Html.ValidationMessageFor(model => model.thoiGian)
             </div>
         </div>
@@ -136,6 +136,7 @@
             function (data) {
                 $('#STTDHTRONGNAM').val(data);
                 $('#MADH').val("DHCD" + myDate.getFullYear() + data);
+                $('#TenDH').val("Đại hội cổ đông lần " + data + " năm " + myDate.getFullYear());
             });
         }
         $(document).ready(function () {
@@ -162,8 +163,11 @@
                 function (data) {
                     $('#STTDHTRONGNAM').val(data);
                     $('#MADH').val("DHCD" + myDate.getFullYear() + data);
+                    $('#TenDH').val("Đại hội cổ đông lần " + data + " năm " + myDate.getFullYear());
                 });
             });
+
+           
             
         });
     </script>

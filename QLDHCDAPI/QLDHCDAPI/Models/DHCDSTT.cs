@@ -12,19 +12,10 @@ namespace QLDHCDAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BANGBAUHDQT
+    public partial class DHCDSTT
     {
-        public BANGBAUHDQT()
-        {
-            this.CT_BAUHDQT = new HashSet<CT_BAUHDQT>();
-        }
-    
-        public string MADH { get; set; }
-        public int MACD { get; set; }
-        public string HINHTHUCBAU { get; set; }
-        public Nullable<int> SLPHIEUBAU { get; set; }
-    
-        public virtual ICollection<CT_BAUHDQT> CT_BAUHDQT { get; set; }
-        public virtual CT_DHCD CT_DHCD { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> YEARDH { get; set; }
+        public Nullable<int> MAXSTTOFYEAR { get; set; }
     }
 }

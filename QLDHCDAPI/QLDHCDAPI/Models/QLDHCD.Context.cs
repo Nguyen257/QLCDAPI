@@ -31,13 +31,14 @@ namespace QLDHCDAPI.Models
         public virtual DbSet<CODONG> CODONGs { get; set; }
         public virtual DbSet<CT_BAUBKS> CT_BAUBKS { get; set; }
         public virtual DbSet<CT_BAUHDQT> CT_BAUHDQT { get; set; }
-        public virtual DbSet<CT_DHCD> CT_DHCD { get; set; }
         public virtual DbSet<CTBQYKIEN> CTBQYKIENs { get; set; }
+        public virtual DbSet<DHCDSTT> DHCDSTTs { get; set; }
         public virtual DbSet<EXCEPTIONAPP> EXCEPTIONAPPs { get; set; }
         public virtual DbSet<THANHVIENBK> THANHVIENBKS { get; set; }
         public virtual DbSet<THANHVIENHDQT> THANHVIENHDQTs { get; set; }
         public virtual DbSet<USERCD> USERCDs { get; set; }
         public virtual DbSet<UYQUYEN> UYQUYENs { get; set; }
         public virtual DbSet<DHCD> DHCDs { get; set; }
+        public virtual DbSet<CT_DHCD> CT_DHCD { get; set; }
     }
 }

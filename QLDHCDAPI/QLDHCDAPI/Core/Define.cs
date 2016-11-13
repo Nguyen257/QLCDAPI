@@ -12,6 +12,8 @@ namespace QLDHCDAPI.Core
             public static string UserName = "UserName";
             public static string isLogin = "isLogin";
             public static string Role = "Role";
+            public static string MaChungKhoangCT = "HDC";
+            public static string MaDH = "MaDH";
         }
 
     }

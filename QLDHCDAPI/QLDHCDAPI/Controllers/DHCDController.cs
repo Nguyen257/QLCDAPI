@@ -11,6 +11,25 @@ namespace QLDHCDAPI.Controllers
     {
         QLDHCDEntities db = new QLDHCDEntities();
 
+        public string GetCurrentMaDH()
+        {
+            string DataReturn = "NULL";
+            try
+            {
+                List<DHCD> ListDHCD = (from l in db.DHCDs
+                                       where l.ACTIVE == 1
+                                       select l).ToList();
+                if (ListDHCD != null && ListDHCD.Count > 0)
+                {
+                    DataReturn = ListDHCD.First().MADH;
+                }
+            }
+            catch
+            {
+                return "NULL";
+            }
+            return DataReturn;
+        }
         //
         // GET: /DHCD/
         public ActionResult Index()

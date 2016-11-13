@@ -1,16 +1,15 @@
 ﻿@model QLDHCDAPI.Models.DHCD
 
 @{
-    ViewBag.Title = "Chỉnh sửa Đại hội cổ đông";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
 }
 
-<h2>Chỉnh sửa Đại hội cổ đông</h2>
+<h2>Edit</h2>
 
-@using (Html.BeginForm("UpdateDHCD", "DHCD", FormMethod.Post))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
         <h4>DHCD</h4>
         <hr />
@@ -20,15 +19,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TenDH, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.TenDH, new { @class = "k-textbox myCSSInput" })
+                @Html.EditorFor(model => model.TenDH)
                 @Html.ValidationMessageFor(model => model.TenDH)
             </div>
         </div>
 
-        <div class="form-group" style="display:none !important">
+        <div class="form-group">
             @Html.LabelFor(model => model.STTDHTRONGNAM, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.HiddenFor(model => model.STTDHTRONGNAM)
+                @Html.EditorFor(model => model.STTDHTRONGNAM)
                 @Html.ValidationMessageFor(model => model.STTDHTRONGNAM)
             </div>
         </div>
@@ -36,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.nQKin, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.nQKin, new { @class = "k-textbox formNumberic myCSSInput" })
+                @Html.EditorFor(model => model.nQKin)
                 @Html.ValidationMessageFor(model => model.nQKin)
             </div>
         </div>
@@ -44,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.nQBefore, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.nQBefore, new { @class = "k-textbox formNumberic myCSSInput" })
+                @Html.EditorFor(model => model.nQBefore)
                 @Html.ValidationMessageFor(model => model.nQBefore)
             </div>
         </div>
@@ -52,7 +51,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.nDeCuHDQT, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.nDeCuHDQT, new { @class = "k-textbox formNumberic myCSSInput" })
+                @Html.EditorFor(model => model.nDeCuHDQT)
                 @Html.ValidationMessageFor(model => model.nDeCuHDQT)
             </div>
         </div>
@@ -60,7 +59,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.nUngCuHDQT, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.nUngCuHDQT, new { @class = "k-textbox formNumberic myCSSInput" })
+                @Html.EditorFor(model => model.nUngCuHDQT)
                 @Html.ValidationMessageFor(model => model.nUngCuHDQT)
             </div>
         </div>
@@ -68,7 +67,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.nDeCuBKS, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.nDeCuBKS, new { @class = "k-textbox formNumberic myCSSInput" })
+                @Html.EditorFor(model => model.nDeCuBKS)
                 @Html.ValidationMessageFor(model => model.nDeCuBKS)
             </div>
         </div>
@@ -76,7 +75,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.nUngCuBKS, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.nUngCuBKS, new { @class = "k-textbox formNumberic myCSSInput" })
+                @Html.EditorFor(model => model.nUngCuBKS)
                 @Html.ValidationMessageFor(model => model.nUngCuBKS)
             </div>
         </div>
@@ -92,23 +91,21 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ACTIVE, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.HiddenFor(model => model.ACTIVE)
-                <input type="checkbox" id="CheckBoxActive" name="CheckBoxActive" value="0" />
+                @Html.EditorFor(model => model.ACTIVE)
                 @Html.ValidationMessageFor(model => model.ACTIVE)
             </div>
         </div>
 
-        @*<div class="form-group">
+        <div class="form-group">
             @Html.LabelFor(model => model.TONGSOPHIEU, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.TONGSOPHIEU)
                 @Html.ValidationMessageFor(model => model.TONGSOPHIEU)
             </div>
-        </div>*@
+        </div>
 
         <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <button type="reset" class="btn btn-default">Hủy</button>
+            <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
@@ -116,29 +113,5 @@
 }
 
 <div>
-    @Html.ActionLink("Trở lại danh sách", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
-@section Scripts{
-    <script>
-
-       
-        $(document).ready(function () {
-            if ($('#ACTIVE').val() == 1) $('#CheckBoxActive').prop("checked", true);
-            else $('#CheckBoxActive').prop("checked", false);
-
-            $('#thoiGian').kendoDatePicker({
-                value: new Date()
-            });
-            $('#CheckBoxActive').change(function () {
-                if ($(this).is(":checked")) {
-                    $('#ACTIVE').val('1');
-                }
-                else {
-                    $('#ACTIVE').val('0');
-                }
-                $('#textbox1').val($(this).is(':checked'));
-            });
-
-        });
-    </script>
-}

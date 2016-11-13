@@ -25,6 +25,7 @@ namespace QLDHCDAPI.Models
     
         public string MADH { get; set; }
         public int MACD { get; set; }
+        public string MATD { get; set; }
         public Nullable<int> SLCP { get; set; }
         public Nullable<int> SLDAUQ { get; set; }
         public Nullable<int> SLDCUQ { get; set; }

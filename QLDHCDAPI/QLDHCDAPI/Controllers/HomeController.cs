@@ -10,6 +10,11 @@ namespace QLDHCDAPI.Controllers
     {
         public ActionResult Index()
         {
+            string strMaDH = new DHCDController().GetCurrentMaDH();
+            if(!string.IsNullOrWhiteSpace(strMaDH) && !string.Equals(strMaDH,"NULL"))
+            {
+                HttpContext.Session[Core.Define.SessionName.MaDH] = strMaDH;
+            }
             return View();
         }
 

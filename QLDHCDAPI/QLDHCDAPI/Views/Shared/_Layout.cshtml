@@ -12,6 +12,19 @@
     @Styles.Render("~/Kendo/CSS/kendo.rtl.min.css")
     @Scripts.Render("~/Kendo/Scirpt/jquery.min.js")
     @Scripts.Render("~/Kendo/Scirpt/kendo.all.min.js")
+    <script>
+        
+        $(document).ready(function () {
+            if ("@((HttpContext.Current!=null && HttpContext.Current.Session!=null) ? HttpContext.Current.Session["isLogin"]+string.Empty : "No")" == "Yes") {
+                
+            }
+            else {
+                if("@(Request.Url.PathAndQuery.Contains("/UserCoDong/Login")?"true" : "false")"== "false")
+                window.location.replace("@(Request.Url.Scheme + "://" + Request.Url.Authority + "/UserCoDong/Login")");
+        }
+        });
+        
+    </script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

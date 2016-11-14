@@ -15,6 +15,9 @@
             @Html.DisplayNameFor(model => model.TenDH)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.YEARDHCD)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.STTDHTRONGNAM)
         </th>
         <th>
@@ -36,6 +39,12 @@
             @Html.DisplayNameFor(model => model.nUngCuBKS)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.nBauBoSungHDQT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nBauBOSungBKS)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.thoiGian)
         </th>
         <th>
@@ -44,6 +53,12 @@
         <th>
             @Html.DisplayNameFor(model => model.TONGSOPHIEU)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LABAUBOSUNG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TRANGTHAI)
+        </th>
         <th></th>
     </tr>
 
@@ -51,6 +66,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.TenDH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.YEARDHCD)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.STTDHTRONGNAM)
@@ -74,6 +92,12 @@
             @Html.DisplayFor(modelItem => item.nUngCuBKS)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.nBauBoSungHDQT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nBauBOSungBKS)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.thoiGian)
         </td>
         <td>
@@ -81,6 +105,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TONGSOPHIEU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LABAUBOSUNG)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TRANGTHAI)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.MADH }) |

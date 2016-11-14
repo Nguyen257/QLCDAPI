@@ -12,19 +12,12 @@ namespace QLDHCDAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BANGBAUBK
+    public partial class COMMITDHCD
     {
-        public BANGBAUBK()
-        {
-            this.CT_BAUBKS = new HashSet<CT_BAUBKS>();
-        }
-    
+        public int ID { get; set; }
+        public Nullable<System.DateTime> DATECOMMIT { get; set; }
         public string MADH { get; set; }
-        public int MACD { get; set; }
-        public string HINHTHUCBAU { get; set; }
-        public Nullable<int> SLPHIEUBAU { get; set; }
     
-        public virtual ICollection<CT_BAUBKS> CT_BAUBKS { get; set; }
-        public virtual CT_DHCD CT_DHCD { get; set; }
+        public virtual DHCD DHCD { get; set; }
     }
 }

@@ -1,0 +1,208 @@
+﻿@model QLDHCDAPI.Models.DHCD_ThanhVien
+@{ int nSauCung = 0;}
+@{
+    ViewBag.Title = "AddUngVienBKS";
+}
+
+<h2>AddUngVienBKS</h2>
+
+@using (Html.BeginForm("AddUngVienBKS", "DHCD", FormMethod.Post, new { @class = "formCreate form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="myDataForm" name="myDataForm" />
+    <div class="form-horizontal">
+        <h4>Thêm thành viên vào bầu BKS của @Model.DHCD.TenDH</h4>
+        <hr />
+        <div id="NotifyErr" class="myAlertError">
+            <span>@ViewBag.AlertErr</span>
+        </div>
+        @Html.ValidationSummary(true)
+        @{
+
+    if (!Model.DHCD.LABAUBOSUNG)
+    {
+        int numberTongBKS = (Model.DHCD.nTongBKS.HasValue) ? (Model.DHCD.nTongBKS.Value) : (0);
+        if (numberTongBKS > 0)
+        {
+            int nDeCu = (Model.DHCD.nDeCuBKS.HasValue) ? (Model.DHCD.nDeCuBKS.Value) : (0);
+            int nUngCu = (Model.DHCD.nUngCuBKS.HasValue) ? (Model.DHCD.nUngCuBKS.Value) : (0);
+            int divID = 0;
+            <div id="FormTVBKS">
+                <span>Thành viên đề cử vào BKS</span><br />
+                @for (int i = 0; i < nDeCu; i++)
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Cổ đông</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="MATD@(divID)" name="MATD" />
+                            <input type="hidden" id="THANHVIENTYPE@(divID)" name="THANHVIENTYPE" value="decu" />
+                            <input type="text" id="MaCoDinh@(divID)" name="MaCoDinhBKS" class="form-control k-textbox" value="@ViewBag.MaCoDinh" readonly />
+                            <input type="text" id="MACD@(divID)" name="MACD_DCBKS" class="form-control formNumberic k-textbox" onchange="getTenCD('@(divID)');" placeholder="Mã cổ đông" />
+                            <input type="text" id="HOTEN@(divID)" name="HoTen_DCBKS" class="form-control k-textbox" readonly placeholder="Họ tên Cổ đông" />
+                        </div>
+                    </div>
+                    divID++;
+                }
+
+                <span>Thành viên ứng cử vào BKS</span><br />
+                @for (int i = 0; i < nUngCu; i++)
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Cổ đông</label>
+                        <div class="col-md-10">
+
+                            <input type="hidden" id="MATD@(divID)" name="MATD" />
+                            <input type="hidden" id="THANHVIENTYPE@(divID)" name="THANHVIENTYPE" value="ungcu" />
+                            <input type="text" id="MaCoDinh@(divID)" name="MaCoDinhBKS" class="form-control k-textbox" value="@ViewBag.MaCoDinh" readonly />
+                            <input type="text" id="MACD@(divID)" name="MACD_DCBKS" class="form-control formNumberic k-textbox" onchange="getTenCD('@(divID)');" placeholder="Mã cổ đông" />
+                            <input type="text" id="HOTEN@(divID)" name="HoTen_DCBKS" class="form-control k-textbox" readonly placeholder="Họ tên Cổ đông" />
+                        </div>
+                    </div>
+                    divID++;
+                }
+            </div>
+                nSauCung = nDeCu + nUngCu;
+        }
+    }
+    else
+    {
+        int numberTongBKS = (Model.DHCD.nTongBKS.HasValue) ? (Model.DHCD.nTongBKS.Value) : (0);
+        if (numberTongBKS > 0)
+        {
+            int nBoSung = (Model.DHCD.nBauBOSungBKS.HasValue) ? (Model.DHCD.nBauBOSungBKS.Value) : (0);
+            int divID = 0;
+            <div id="FormTVBKS">
+                <span>Thành viên bổ sung vào HĐQT</span><br />
+                @for (int i = 0; i < nBoSung; i++)
+                {
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Cổ đông</label>
+                        <div class="col-md-10">
+                            <input type="hidden" id="MATD@(divID)" name="MATD" />
+                            <input type="hidden" id="THANHVIENTYPE@(divID)" name="THANHVIENTYPE" value="bosung" />
+                            <input type="text" id="MaCoDinh@(divID)" name="MaCoDinhBKS" class="form-control k-textbox" value="@ViewBag.MaCoDinh" readonly />
+                            <input type="text" id="MACD@(divID)" name="MACD_DCBKS" class="form-control formNumberic k-textbox" onchange="getTenCD('@(divID)');" placeholder="Mã cổ đông" />
+                            <input type="text" id="HOTEN@(divID)" name="HoTen_DCBKS" class="form-control k-textbox" readonly placeholder="Họ tên Cổ đông" />
+                        </div>
+                    </div>
+                    divID++;
+                }
+            </div>
+                nSauCung = nBoSung;
+        }
+    }
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="SubmitForm" type="submit" value="Add" class="btn btn-default" onclick="btnSubmitClick();" disabled />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts{
+    <script>
+        var dataJson;
+        var numberSauCung = '@(nSauCung)';
+        function getTenCD(id) {
+            var macd = $('#MACD' + id).val();
+            if (macd != null && macd.length > 0) {
+                $.get("@(Request.Url.Scheme + "://"+ Request.Url.Authority)/qldhcdapi/CoDongAPI/GetCoDongFromMaCD?macd=" + macd + "&role=@(HttpContext.Current.Session["Role"]+ string.Empty)",
+                     function (data) {
+                         $('#HOTEN' + id).val(data);
+                         if (data != "") {
+                             var macodinh = '@(ViewBag.MaCoDinh+string.Empty)';
+                             var pad = "00000";
+                             var mymacd = pad.substring(0, pad.length - macd.length) + macd;
+                             $('#MATD' + id).val(macodinh + mymacd);
+                         }
+                         ValidateForm();
+                     });
+               
+            }
+        }
+
+        function ValidateForm() {
+            dataJson = '';
+            var listId = [];
+            var ListCD = $('input[name="MACD_DCBKS"]');
+            var ListHoTen = $('input[name="HoTen_DCBKS"]');
+            $.each(ListCD, function (index, value) {
+                var macd = ListCD[index].value;
+                if (jQuery.inArray(macd, listId) == -1) {
+                    if (macd != '' && ListHoTen[index].value!='') {
+                        listId.push(macd);
+                    }
+                    else {
+                        $('#SubmitForm').prop('disabled', true);
+                        return false;
+                    }
+                }
+                else {
+                    $('#SubmitForm').prop('disabled', true);
+                    return false;
+                }
+                if (listId.length == parseInt(numberSauCung)) {
+
+                    $('#SubmitForm').prop('disabled', false);
+                }
+                return true;
+            });
+
+        }
+
+        function btnSubmitClick() {
+            dataJson = '';
+            var ListMa = [];
+            var Listty = [];
+            var listMaTD = $('input[name="MATD"]');
+            var listType = $('input[name="THANHVIENTYPE"]');
+            $.each(listMaTD, function (index, value) {
+                var myMatd = listMaTD[index].value;
+                if (myMatd == null || myMatd == '') {
+                    return false;
+                }
+                else {
+                    ListMa.push(myMatd);
+                    Listty.push(listType[index].value);
+                    dataJson += myMatd + '##$$##' + listType[index].value + '##$$##';
+
+                }
+            });
+
+
+
+            $('#myDataForm').val(dataJson);
+            $('.formCreate')[0].submit();
+            return true;;
+        }
+
+        $(document).ready(function () {
+            numberSauCung = '@(nSauCung)';
+            $('input[name="MACD_DCBKS"]').focusout(function (e) {
+                var inputID = e.target.id;
+                var ArrayVal = inputID.split('MACD');
+                var id = ArrayVal[1];
+                var macd = $(e.target).val();
+                $.get("@(Request.Url.Scheme + "://"+ Request.Url.Authority)/qldhcdapi/CoDongAPI/GetCoDongFromMaCD?macd=" + macd + "&role=@(HttpContext.Current.Session["Role"]+ string.Empty)",
+                    function (data) {
+                        $('#HOTEN' + id).val(data);
+                        if (data != "") {
+                            var macodinh = '@(ViewBag.MaCoDinh+string.Empty)';
+                            var pad = "00000";
+                            var mymacd = pad.substring(0, pad.length - macd.length) + macd;
+                            $('#MATD' + id).val(macodinh + mymacd);
+
+                        }
+                        ValidateForm();
+                    });
+                
+            });
+
+        });
+    </script>
+}

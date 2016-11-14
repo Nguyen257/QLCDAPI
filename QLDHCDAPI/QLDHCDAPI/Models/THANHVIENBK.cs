@@ -14,12 +14,15 @@ namespace QLDHCDAPI.Models
     
     public partial class THANHVIENBK
     {
-        public string MADH { get; set; }
-        public int MACD { get; set; }
-        public Nullable<int> SOPHIEUBAU { get; set; }
-        public Nullable<int> LATHAYTHE { get; set; }
+        public string MATD { get; set; }
+        public string HINHTHUCBAU { get; set; }
+        public Nullable<int> SLPHIEUBAU { get; set; }
+        public Nullable<bool> LADECU { get; set; }
+        public Nullable<bool> LAUNGCU { get; set; }
+        public Nullable<bool> LATHAYTHE { get; set; }
+        public Nullable<bool> LACHUTICH { get; set; }
+        public Nullable<bool> LASUCCESS { get; set; }
     
-        public virtual CODONG CODONG { get; set; }
-        public virtual DHCD DHCD { get; set; }
+        public virtual CT_DHCD CT_DHCD { get; set; }
     }
 }

@@ -5,36 +5,36 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="QLDHCDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="BANGBAUBKS">
-          <Key>
-            <PropertyRef Name="MADH" />
-            <PropertyRef Name="MACD" />
-          </Key>
-          <Property Name="MADH" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="MACD" Type="int" Nullable="false" />
-          <Property Name="HINHTHUCBAU" Type="nvarchar" MaxLength="20" />
-          <Property Name="SLPHIEUBAU" Type="int" />
-        </EntityType>
-        <EntityType Name="BANGBAUHDQT">
-          <Key>
-            <PropertyRef Name="MADH" />
-            <PropertyRef Name="MACD" />
-          </Key>
-          <Property Name="MADH" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="MACD" Type="int" Nullable="false" />
-          <Property Name="HINHTHUCBAU" Type="nvarchar" MaxLength="20" />
-          <Property Name="SLPHIEUBAU" Type="int" />
-        </EntityType>
         <EntityType Name="BANGYKIEN">
           <Key>
             <PropertyRef Name="MAYK" />
           </Key>
           <Property Name="MAYK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MADH" Type="nvarchar" MaxLength="10" />
-          <Property Name="NOIDUNG" Type="nvarchar" MaxLength="500" />
-          <Property Name="SLDONGY" Type="int" />
-          <Property Name="SLKHONGDONGY" Type="int" />
-          <Property Name="SLYKKHAC" Type="int" />
+          <Property Name="NOIDUNG" Type="nvarchar(max)" />
+          <Property Name="SLDONGY" Type="int" Nullable="false" />
+          <Property Name="SLKHONGDONGY" Type="int" Nullable="false" />
+          <Property Name="SLYKKHAC" Type="int" Nullable="false" />
+          <Property Name="SOPHIEUPHATRA" Type="int" Nullable="false" />
+          <Property Name="TUONGDUONGCOPHIEU" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BANGYKIENBQPHIEU">
+          <Key>
+            <PropertyRef Name="MAYK" />
+          </Key>
+          <Property Name="MAYK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MADH" Type="nvarchar" MaxLength="10" />
+          <Property Name="NOIDUNG" Type="nvarchar(max)" />
+          <Property Name="SLDONGY" Type="int" Nullable="false" />
+          <Property Name="SLKHONGDONGY" Type="int" Nullable="false" />
+          <Property Name="SL_PHATRA" Type="int" Nullable="false" />
+          <Property Name="SLCP_PHATRA" Type="int" Nullable="false" />
+          <Property Name="SL_THUVAO" Type="int" Nullable="false" />
+          <Property Name="SLCP_THUVAO" Type="int" Nullable="false" />
+          <Property Name="SL_HOPLE" Type="int" Nullable="false" />
+          <Property Name="SLCP_HOPLE" Type="int" Nullable="false" />
+          <Property Name="SL_KHONG_HOPLE" Type="int" Nullable="false" />
+          <Property Name="SLCP_KHONG_HOPLE" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CODONG">
           <Key>
@@ -52,17 +52,24 @@
           <Property Name="SDT" Type="nvarchar" MaxLength="20" />
           <Property Name="TrinhDoVanHoa" Type="nvarchar" MaxLength="100" />
           <Property Name="TrinhDoChuyenMon" Type="nvarchar" MaxLength="100" />
-          <Property Name="ANHCD" Type="nvarchar" MaxLength="255" />
+          <Property Name="ANHCD" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="COMMITDHCD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DATECOMMIT" Type="date" />
+          <Property Name="MADH" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="CT_BAUBKS">
           <Key>
             <PropertyRef Name="MACT" />
           </Key>
           <Property Name="MACT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MADH" Type="nvarchar" MaxLength="10" />
-          <Property Name="MANGDUOCBAU" Type="int" />
-          <Property Name="MANGDIBAU" Type="int" />
-          <Property Name="SLPHIEUBAU" Type="int" />
+          <Property Name="MABKS" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="MANGUOIBAU" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="SLPHIEUBAU" Type="int" Nullable="false" />
           <Property Name="HINHTHUCBAU" Type="nvarchar" MaxLength="50" />
           <Property Name="THOIGIANBAU" Type="datetime" />
         </EntityType>
@@ -71,38 +78,48 @@
             <PropertyRef Name="MACT" />
           </Key>
           <Property Name="MACT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MADH" Type="nvarchar" MaxLength="10" />
-          <Property Name="MANGDUOCBAU" Type="int" />
-          <Property Name="MANGDIBAU" Type="int" />
+          <Property Name="MAHDQT" Type="nvarchar" MaxLength="13" />
+          <Property Name="MANGUOIBAU" Type="nvarchar" MaxLength="13" />
           <Property Name="SLPHIEUBAU" Type="int" />
           <Property Name="HINHTHUCBAU" Type="nvarchar" MaxLength="50" />
           <Property Name="THOIGIANBAU" Type="datetime" />
         </EntityType>
         <EntityType Name="CT_DHCD">
           <Key>
-            <PropertyRef Name="MADH" />
-            <PropertyRef Name="MACD" />
+            <PropertyRef Name="MATD" />
           </Key>
+          <Property Name="MATD" Type="nvarchar" MaxLength="13" Nullable="false" />
           <Property Name="MADH" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="MACD" Type="int" Nullable="false" />
-          <Property Name="MATD" Type="nvarchar" MaxLength="13" />
           <Property Name="SLCP" Type="int" />
           <Property Name="SLDAUQ" Type="int" />
           <Property Name="SLDCUQ" Type="int" />
-          <Property Name="HTDK" Type="nvarchar" MaxLength="50" />
+          <Property Name="HTDK" Type="nvarchar" MaxLength="100" />
           <Property Name="SLCPSAUCUNG" Type="int" />
-          <Property Name="QUYENBAUCU" Type="int" />
+          <Property Name="NCP_DABAUHDQT" Type="int" />
+          <Property Name="NCP_DABAUBKS" Type="int" />
+          <Property Name="NCP_DABQYKIEN" Type="int" />
+          <Property Name="NCP_DABQYKIEN_PHEU" Type="int" />
+        </EntityType>
+        <EntityType Name="CT_YKIEN_BQPHIEU">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MAYK" Type="int" Nullable="false" />
+          <Property Name="MATD" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="LUACHON" Type="int" />
+          <Property Name="THOIGIANBAU" Type="datetime" />
+          <Property Name="PHIEUTYPE" Type="bit" />
         </EntityType>
         <EntityType Name="CTBQYKIEN">
           <Key>
-            <PropertyRef Name="MAYK" />
-            <PropertyRef Name="MACD" />
+            <PropertyRef Name="ID" />
           </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MAYK" Type="int" Nullable="false" />
-          <Property Name="MADH" Type="nvarchar" MaxLength="10" />
-          <Property Name="MACD" Type="int" Nullable="false" />
+          <Property Name="MATD" Type="nvarchar" MaxLength="13" Nullable="false" />
           <Property Name="LUACHON" Type="int" />
-          <Property Name="SLPHIEUBAU" Type="int" />
           <Property Name="NOIDUNGYKKHAC" Type="nvarchar" MaxLength="500" />
           <Property Name="THOIGIANBAU" Type="datetime" />
         </EntityType>
@@ -123,8 +140,12 @@
           <Property Name="nBauBoSungHDQT" Type="int" />
           <Property Name="nBauBOSungBKS" Type="int" />
           <Property Name="thoiGian" Type="date" />
-          <Property Name="ACTIVE" Type="int" />
+          <Property Name="ACTIVE" Type="int" Nullable="false" />
           <Property Name="TONGSOPHIEU" Type="int" />
+          <Property Name="LABAUBOSUNG" Type="bit" Nullable="false" />
+          <Property Name="TRANGTHAI" Type="bit" />
+          <Property Name="nTongHDQT" Type="int" />
+          <Property Name="nTongBKS" Type="int" />
         </EntityType>
         <EntityType Name="DHCDSTT">
           <Key>
@@ -145,23 +166,29 @@
         </EntityType>
         <EntityType Name="THANHVIENBKS">
           <Key>
-            <PropertyRef Name="MADH" />
-            <PropertyRef Name="MACD" />
+            <PropertyRef Name="MATD" />
           </Key>
-          <Property Name="MADH" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="MACD" Type="int" Nullable="false" />
-          <Property Name="SOPHIEUBAU" Type="int" />
-          <Property Name="LATHAYTHE" Type="int" />
+          <Property Name="MATD" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="HINHTHUCBAU" Type="nvarchar" MaxLength="20" />
+          <Property Name="SLPHIEUBAU" Type="int" />
+          <Property Name="LADECU" Type="bit" />
+          <Property Name="LAUNGCU" Type="bit" />
+          <Property Name="LATHAYTHE" Type="bit" />
+          <Property Name="LACHUTICH" Type="bit" />
+          <Property Name="LASUCCESS" Type="bit" />
         </EntityType>
         <EntityType Name="THANHVIENHDQT">
           <Key>
-            <PropertyRef Name="MADH" />
-            <PropertyRef Name="MACD" />
+            <PropertyRef Name="MATD" />
           </Key>
-          <Property Name="MADH" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="MACD" Type="int" Nullable="false" />
-          <Property Name="SOPHIEUBAU" Type="int" />
-          <Property Name="LATHAYTHE" Type="int" />
+          <Property Name="MATD" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="HINHTHUCBAU" Type="nvarchar" MaxLength="20" />
+          <Property Name="SLPHIEUBAU" Type="int" />
+          <Property Name="LADECU" Type="bit" />
+          <Property Name="LAUNGCU" Type="bit" />
+          <Property Name="LATHAYTHE" Type="bit" />
+          <Property Name="LACHUTICH" Type="bit" />
+          <Property Name="LASUCCESS" Type="bit" />
         </EntityType>
         <EntityType Name="USERCD">
           <Key>
@@ -178,40 +205,13 @@
           </Key>
           <Property Name="MAUQ" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MADH" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="MANGCHUYEN" Type="int" Nullable="false" />
-          <Property Name="MANGNHAN" Type="int" Nullable="false" />
+          <Property Name="MANGCHUYEN" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="UYQUYENTYPE" Type="nvarchar" MaxLength="50" />
+          <Property Name="MANGNHAN" Type="nvarchar" MaxLength="13" Nullable="false" />
           <Property Name="SLUQ" Type="int" />
           <Property Name="THOIGIAN" Type="date" />
         </EntityType>
-        <Association Name="FK_BBBKS_CTDHCD">
-          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
-          <End Role="BANGBAUBKS" Type="Self.BANGBAUBKS" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="BANGBAUBKS">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BBHDQT_CTDHCD">
-          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
-          <End Role="BANGBAUHDQT" Type="Self.BANGBAUHDQT" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="BANGBAUHDQT">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BYKIEN_DHCD">
+        <Association Name="FK__BANGYKIEN__MADH__778AC167">
           <End Role="DHCD" Type="Self.DHCD" Multiplicity="0..1" />
           <End Role="BANGYKIEN" Type="Self.BANGYKIEN" Multiplicity="*" />
           <ReferentialConstraint>
@@ -223,91 +223,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CTBBKS_BBBKS">
-          <End Role="BANGBAUBKS" Type="Self.BANGBAUBKS" Multiplicity="0..1" />
-          <End Role="CT_BAUBKS" Type="Self.CT_BAUBKS" Multiplicity="*" />
+        <Association Name="FK__BANGYKIENB__MADH__160F4887">
+          <End Role="DHCD" Type="Self.DHCD" Multiplicity="0..1" />
+          <End Role="BANGYKIENBQPHIEU" Type="Self.BANGYKIENBQPHIEU" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="BANGBAUBKS">
+            <Principal Role="DHCD">
               <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
             </Principal>
-            <Dependent Role="CT_BAUBKS">
+            <Dependent Role="BANGYKIENBQPHIEU">
               <PropertyRef Name="MADH" />
-              <PropertyRef Name="MANGDUOCBAU" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CTBBKS_CTDHCD">
-          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="0..1" />
-          <End Role="CT_BAUBKS" Type="Self.CT_BAUBKS" Multiplicity="*" />
+        <Association Name="FK__COMMITDHCD__MADH__1FCDBCEB">
+          <End Role="DHCD" Type="Self.DHCD" Multiplicity="0..1" />
+          <End Role="COMMITDHCD" Type="Self.COMMITDHCD" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CT_DHCD">
+            <Principal Role="DHCD">
               <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
             </Principal>
-            <Dependent Role="CT_BAUBKS">
+            <Dependent Role="COMMITDHCD">
               <PropertyRef Name="MADH" />
-              <PropertyRef Name="MANGDIBAU" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CTBHDQT_BBHDQT">
-          <End Role="BANGBAUHDQT" Type="Self.BANGBAUHDQT" Multiplicity="0..1" />
-          <End Role="CT_BAUHDQT" Type="Self.CT_BAUHDQT" Multiplicity="*" />
+        <Association Name="FK__CT_YKIEN_B__MAYK__1EA48E88">
+          <End Role="BANGYKIENBQPHIEU" Type="Self.BANGYKIENBQPHIEU" Multiplicity="1" />
+          <End Role="CT_YKIEN_BQPHIEU" Type="Self.CT_YKIEN_BQPHIEU" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="BANGBAUHDQT">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
+            <Principal Role="BANGYKIENBQPHIEU">
+              <PropertyRef Name="MAYK" />
             </Principal>
-            <Dependent Role="CT_BAUHDQT">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MANGDUOCBAU" />
+            <Dependent Role="CT_YKIEN_BQPHIEU">
+              <PropertyRef Name="MAYK" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CTBHDQT_CTDHCD">
-          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="0..1" />
-          <End Role="CT_BAUHDQT" Type="Self.CT_BAUHDQT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="CT_BAUHDQT">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MANGDIBAU" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CTUQ1">
-          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
-          <End Role="UYQUYEN" Type="Self.UYQUYEN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="UYQUYEN">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MANGCHUYEN" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CTUQ2">
-          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
-          <End Role="UYQUYEN" Type="Self.UYQUYEN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="UYQUYEN">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MANGNHAN" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CTYK_BYKIEN">
+        <Association Name="FK__CTBQYKIEN__MAYK__7F2BE32F">
           <End Role="BANGYKIEN" Type="Self.BANGYKIEN" Multiplicity="1" />
           <End Role="CTBQYKIEN" Type="Self.CTBQYKIEN" Multiplicity="*" />
           <ReferentialConstraint>
@@ -319,33 +271,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CTYK_CTDHCD">
-          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="0..1" />
-          <End Role="CTBQYKIEN" Type="Self.CTBQYKIEN" Multiplicity="*" />
+        <Association Name="FK_CT_BAUBKS1">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
+          <End Role="CT_BAUBKS" Type="Self.CT_BAUBKS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
+              <PropertyRef Name="MATD" />
             </Principal>
-            <Dependent Role="CTBQYKIEN">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
+            <Dependent Role="CT_BAUBKS">
+              <PropertyRef Name="MABKS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DH_CD1">
-          <End Role="DHCD" Type="Self.DHCD" Multiplicity="1" />
-          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="*" />
+        <Association Name="FK_CT_BAUBKS2">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
+          <End Role="CT_BAUBKS" Type="Self.CT_BAUBKS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DHCD">
-              <PropertyRef Name="MADH" />
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
             </Principal>
-            <Dependent Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
+            <Dependent Role="CT_BAUBKS">
+              <PropertyRef Name="MANGUOIBAU" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DH_CD2">
+        <Association Name="FK_CT_BAUHDQT1">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="0..1" />
+          <End Role="CT_BAUHDQT" Type="Self.CT_BAUHDQT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
+            </Principal>
+            <Dependent Role="CT_BAUHDQT">
+              <PropertyRef Name="MAHDQT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CT_BAUHDQT2">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="0..1" />
+          <End Role="CT_BAUHDQT" Type="Self.CT_BAUHDQT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
+            </Principal>
+            <Dependent Role="CT_BAUHDQT">
+              <PropertyRef Name="MANGUOIBAU" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CTDHCD_MACD">
           <End Role="CODONG" Type="Self.CODONG" Multiplicity="1" />
           <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="*" />
           <ReferentialConstraint>
@@ -357,51 +331,75 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_THANHVIENBKS_MACD">
-          <End Role="CODONG" Type="Self.CODONG" Multiplicity="1" />
-          <End Role="THANHVIENBKS" Type="Self.THANHVIENBKS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CODONG">
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="THANHVIENBKS">
-              <PropertyRef Name="MACD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_THANHVIENBKS_MADH">
+        <Association Name="FK_CTDHCD_MADH">
           <End Role="DHCD" Type="Self.DHCD" Multiplicity="1" />
-          <End Role="THANHVIENBKS" Type="Self.THANHVIENBKS" Multiplicity="*" />
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DHCD">
               <PropertyRef Name="MADH" />
             </Principal>
-            <Dependent Role="THANHVIENBKS">
+            <Dependent Role="CT_DHCD">
               <PropertyRef Name="MADH" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_THANHVIENHDQT_MACD">
-          <End Role="CODONG" Type="Self.CODONG" Multiplicity="1" />
-          <End Role="THANHVIENHDQT" Type="Self.THANHVIENHDQT" Multiplicity="*" />
+        <Association Name="FK_THANHVIENBKS">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
+          <End Role="THANHVIENBKS" Type="Self.THANHVIENBKS" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="CODONG">
-              <PropertyRef Name="MACD" />
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
             </Principal>
-            <Dependent Role="THANHVIENHDQT">
-              <PropertyRef Name="MACD" />
+            <Dependent Role="THANHVIENBKS">
+              <PropertyRef Name="MATD" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_THANHVIENHDQT_MADH">
+        <Association Name="FK_THANHVIENHDQT">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
+          <End Role="THANHVIENHDQT" Type="Self.THANHVIENHDQT" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
+            </Principal>
+            <Dependent Role="THANHVIENHDQT">
+              <PropertyRef Name="MATD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UQ_MADH">
           <End Role="DHCD" Type="Self.DHCD" Multiplicity="1" />
-          <End Role="THANHVIENHDQT" Type="Self.THANHVIENHDQT" Multiplicity="*" />
+          <End Role="UYQUYEN" Type="Self.UYQUYEN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DHCD">
               <PropertyRef Name="MADH" />
             </Principal>
-            <Dependent Role="THANHVIENHDQT">
+            <Dependent Role="UYQUYEN">
               <PropertyRef Name="MADH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UQ_MANGCHUYEN">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
+          <End Role="UYQUYEN" Type="Self.UYQUYEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
+            </Principal>
+            <Dependent Role="UYQUYEN">
+              <PropertyRef Name="MANGCHUYEN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UQ_MANGNHAN">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
+          <End Role="UYQUYEN" Type="Self.UYQUYEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
+            </Principal>
+            <Dependent Role="UYQUYEN">
+              <PropertyRef Name="MANGNHAN" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -417,14 +415,69 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CT_BAUBKS_INSERT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MABKS" Type="nvarchar" Mode="In" />
+          <Parameter Name="MANGUOIBAU" Type="nvarchar" Mode="In" />
+          <Parameter Name="SLPHIEUBAU" Type="int" Mode="In" />
+          <Parameter Name="HINHTHUCBAU" Type="nvarchar" Mode="In" />
+          <Parameter Name="CHECKSUCCESS" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="CT_BAUBKS_INSERT_CURRENTUSER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MABKS" Type="nvarchar" Mode="In" />
+          <Parameter Name="USERNAME" Type="nvarchar" Mode="In" />
+          <Parameter Name="SLPHIEUBAU" Type="int" Mode="In" />
+          <Parameter Name="HINHTHUCBAU" Type="nvarchar" Mode="In" />
+          <Parameter Name="CHECKSUCCESS" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="CT_BAUHDQT_INSERT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MAHDQT" Type="nvarchar" Mode="In" />
+          <Parameter Name="MANGUOIBAU" Type="nvarchar" Mode="In" />
+          <Parameter Name="SLPHIEUBAU" Type="int" Mode="In" />
+          <Parameter Name="HINHTHUCBAU" Type="nvarchar" Mode="In" />
+          <Parameter Name="CHECKSUCCESS" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="CT_BAUHDQT_INSERT_CURRENTUSER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MAHDQT" Type="nvarchar" Mode="In" />
+          <Parameter Name="USERNAME" Type="nvarchar" Mode="In" />
+          <Parameter Name="SLPHIEUBAU" Type="int" Mode="In" />
+          <Parameter Name="HINHTHUCBAU" Type="nvarchar" Mode="In" />
+          <Parameter Name="CHECKSUCCESS" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="UYQUYEN_INSERT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MANGCHUYEN" Type="nvarchar" Mode="In" />
+          <Parameter Name="MANGNHAN" Type="nvarchar" Mode="In" />
+          <Parameter Name="UYQUYENTYPE" Type="nvarchar" Mode="In" />
+          <Parameter Name="SLUQ" Type="int" Mode="In" />
+          <Parameter Name="HoTen" Type="nvarchar" Mode="In" />
+          <Parameter Name="CMND" Type="int" Mode="In" />
+          <Parameter Name="NgayCap" Type="datetime" Mode="In" />
+          <Parameter Name="NoiCap" Type="nvarchar" Mode="In" />
+          <Parameter Name="DiaChi" Type="nvarchar" Mode="In" />
+          <Parameter Name="QuocTich" Type="nvarchar" Mode="In" />
+          <Parameter Name="CHECKSUCCESS" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="UYQUYEN_INSERT_BYUSERNAME" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="USERNAME" Type="nvarchar" Mode="In" />
+          <Parameter Name="MANGNHAN" Type="nvarchar" Mode="In" />
+          <Parameter Name="UYQUYENTYPE" Type="nvarchar" Mode="In" />
+          <Parameter Name="SLUQ" Type="int" Mode="In" />
+          <Parameter Name="HoTen" Type="nvarchar" Mode="In" />
+          <Parameter Name="CMND" Type="int" Mode="In" />
+          <Parameter Name="NgayCap" Type="datetime" Mode="In" />
+          <Parameter Name="NoiCap" Type="nvarchar" Mode="In" />
+          <Parameter Name="DiaChi" Type="nvarchar" Mode="In" />
+          <Parameter Name="QuocTich" Type="nvarchar" Mode="In" />
+          <Parameter Name="CHECKSUCCESS" Type="int" Mode="InOut" />
+        </Function>
         <EntityContainer Name="QLDHCDModelStoreContainer">
-          <EntitySet Name="BANGBAUBKS" EntityType="Self.BANGBAUBKS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BANGBAUHDQT" EntityType="Self.BANGBAUHDQT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BANGYKIEN" EntityType="Self.BANGYKIEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BANGYKIENBQPHIEU" EntityType="Self.BANGYKIENBQPHIEU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CODONG" EntityType="Self.CODONG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="COMMITDHCD" EntityType="Self.COMMITDHCD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CT_BAUBKS" EntityType="Self.CT_BAUBKS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CT_BAUHDQT" EntityType="Self.CT_BAUHDQT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CT_DHCD" EntityType="Self.CT_DHCD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CT_YKIEN_BQPHIEU" EntityType="Self.CT_YKIEN_BQPHIEU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CTBQYKIEN" EntityType="Self.CTBQYKIEN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DHCD" EntityType="Self.DHCD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DHCDSTT" EntityType="Self.DHCDSTT" Schema="dbo" store:Type="Tables" />
@@ -433,73 +486,69 @@
           <EntitySet Name="THANHVIENHDQT" EntityType="Self.THANHVIENHDQT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USERCD" EntityType="Self.USERCD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UYQUYEN" EntityType="Self.UYQUYEN" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_BBBKS_CTDHCD" Association="Self.FK_BBBKS_CTDHCD">
-            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-            <End Role="BANGBAUBKS" EntitySet="BANGBAUBKS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BBHDQT_CTDHCD" Association="Self.FK_BBHDQT_CTDHCD">
-            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-            <End Role="BANGBAUHDQT" EntitySet="BANGBAUHDQT" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BYKIEN_DHCD" Association="Self.FK_BYKIEN_DHCD">
+          <AssociationSet Name="FK__BANGYKIEN__MADH__778AC167" Association="Self.FK__BANGYKIEN__MADH__778AC167">
             <End Role="DHCD" EntitySet="DHCD" />
             <End Role="BANGYKIEN" EntitySet="BANGYKIEN" />
           </AssociationSet>
-          <AssociationSet Name="FK_CTBBKS_BBBKS" Association="Self.FK_CTBBKS_BBBKS">
-            <End Role="BANGBAUBKS" EntitySet="BANGBAUBKS" />
-            <End Role="CT_BAUBKS" EntitySet="CT_BAUBKS" />
+          <AssociationSet Name="FK__BANGYKIENB__MADH__160F4887" Association="Self.FK__BANGYKIENB__MADH__160F4887">
+            <End Role="DHCD" EntitySet="DHCD" />
+            <End Role="BANGYKIENBQPHIEU" EntitySet="BANGYKIENBQPHIEU" />
           </AssociationSet>
-          <AssociationSet Name="FK_CTBBKS_CTDHCD" Association="Self.FK_CTBBKS_CTDHCD">
-            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-            <End Role="CT_BAUBKS" EntitySet="CT_BAUBKS" />
+          <AssociationSet Name="FK__COMMITDHCD__MADH__1FCDBCEB" Association="Self.FK__COMMITDHCD__MADH__1FCDBCEB">
+            <End Role="DHCD" EntitySet="DHCD" />
+            <End Role="COMMITDHCD" EntitySet="COMMITDHCD" />
           </AssociationSet>
-          <AssociationSet Name="FK_CTBHDQT_BBHDQT" Association="Self.FK_CTBHDQT_BBHDQT">
-            <End Role="BANGBAUHDQT" EntitySet="BANGBAUHDQT" />
-            <End Role="CT_BAUHDQT" EntitySet="CT_BAUHDQT" />
+          <AssociationSet Name="FK__CT_YKIEN_B__MAYK__1EA48E88" Association="Self.FK__CT_YKIEN_B__MAYK__1EA48E88">
+            <End Role="BANGYKIENBQPHIEU" EntitySet="BANGYKIENBQPHIEU" />
+            <End Role="CT_YKIEN_BQPHIEU" EntitySet="CT_YKIEN_BQPHIEU" />
           </AssociationSet>
-          <AssociationSet Name="FK_CTBHDQT_CTDHCD" Association="Self.FK_CTBHDQT_CTDHCD">
-            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-            <End Role="CT_BAUHDQT" EntitySet="CT_BAUHDQT" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CTUQ1" Association="Self.FK_CTUQ1">
-            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-            <End Role="UYQUYEN" EntitySet="UYQUYEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CTUQ2" Association="Self.FK_CTUQ2">
-            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-            <End Role="UYQUYEN" EntitySet="UYQUYEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CTYK_BYKIEN" Association="Self.FK_CTYK_BYKIEN">
+          <AssociationSet Name="FK__CTBQYKIEN__MAYK__7F2BE32F" Association="Self.FK__CTBQYKIEN__MAYK__7F2BE32F">
             <End Role="BANGYKIEN" EntitySet="BANGYKIEN" />
             <End Role="CTBQYKIEN" EntitySet="CTBQYKIEN" />
           </AssociationSet>
-          <AssociationSet Name="FK_CTYK_CTDHCD" Association="Self.FK_CTYK_CTDHCD">
+          <AssociationSet Name="FK_CT_BAUBKS1" Association="Self.FK_CT_BAUBKS1">
             <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-            <End Role="CTBQYKIEN" EntitySet="CTBQYKIEN" />
+            <End Role="CT_BAUBKS" EntitySet="CT_BAUBKS" />
           </AssociationSet>
-          <AssociationSet Name="FK_DH_CD1" Association="Self.FK_DH_CD1">
+          <AssociationSet Name="FK_CT_BAUBKS2" Association="Self.FK_CT_BAUBKS2">
+            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
+            <End Role="CT_BAUBKS" EntitySet="CT_BAUBKS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CT_BAUHDQT1" Association="Self.FK_CT_BAUHDQT1">
+            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
+            <End Role="CT_BAUHDQT" EntitySet="CT_BAUHDQT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CT_BAUHDQT2" Association="Self.FK_CT_BAUHDQT2">
+            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
+            <End Role="CT_BAUHDQT" EntitySet="CT_BAUHDQT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CTDHCD_MACD" Association="Self.FK_CTDHCD_MACD">
+            <End Role="CODONG" EntitySet="CODONG" />
+            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CTDHCD_MADH" Association="Self.FK_CTDHCD_MADH">
             <End Role="DHCD" EntitySet="DHCD" />
             <End Role="CT_DHCD" EntitySet="CT_DHCD" />
           </AssociationSet>
-          <AssociationSet Name="FK_DH_CD2" Association="Self.FK_DH_CD2">
-            <End Role="CODONG" EntitySet="CODONG" />
+          <AssociationSet Name="FK_THANHVIENBKS" Association="Self.FK_THANHVIENBKS">
             <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-          </AssociationSet>
-          <AssociationSet Name="FK_THANHVIENBKS_MACD" Association="Self.FK_THANHVIENBKS_MACD">
-            <End Role="CODONG" EntitySet="CODONG" />
             <End Role="THANHVIENBKS" EntitySet="THANHVIENBKS" />
           </AssociationSet>
-          <AssociationSet Name="FK_THANHVIENBKS_MADH" Association="Self.FK_THANHVIENBKS_MADH">
-            <End Role="DHCD" EntitySet="DHCD" />
-            <End Role="THANHVIENBKS" EntitySet="THANHVIENBKS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_THANHVIENHDQT_MACD" Association="Self.FK_THANHVIENHDQT_MACD">
-            <End Role="CODONG" EntitySet="CODONG" />
+          <AssociationSet Name="FK_THANHVIENHDQT" Association="Self.FK_THANHVIENHDQT">
+            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
             <End Role="THANHVIENHDQT" EntitySet="THANHVIENHDQT" />
           </AssociationSet>
-          <AssociationSet Name="FK_THANHVIENHDQT_MADH" Association="Self.FK_THANHVIENHDQT_MADH">
+          <AssociationSet Name="FK_UQ_MADH" Association="Self.FK_UQ_MADH">
             <End Role="DHCD" EntitySet="DHCD" />
-            <End Role="THANHVIENHDQT" EntitySet="THANHVIENHDQT" />
+            <End Role="UYQUYEN" EntitySet="UYQUYEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UQ_MANGCHUYEN" Association="Self.FK_UQ_MANGCHUYEN">
+            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
+            <End Role="UYQUYEN" EntitySet="UYQUYEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UQ_MANGNHAN" Association="Self.FK_UQ_MANGNHAN">
+            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
+            <End Role="UYQUYEN" EntitySet="UYQUYEN" />
           </AssociationSet>
           <AssociationSet Name="FK_USERCD" Association="Self.FK_USERCD">
             <End Role="CODONG" EntitySet="CODONG" />
@@ -510,42 +559,40 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QLDHCDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="BANGBAUBK">
-          <Key>
-            <PropertyRef Name="MADH" />
-            <PropertyRef Name="MACD" />
-          </Key>
-          <Property Name="MADH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MACD" Type="Int32" Nullable="false" />
-          <Property Name="HINHTHUCBAU" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="SLPHIEUBAU" Type="Int32" />
-          <NavigationProperty Name="CT_BAUBKS" Relationship="Self.FK_CTBBKS_BBBKS" FromRole="BANGBAUBKS" ToRole="CT_BAUBKS" />
-          <NavigationProperty Name="CT_DHCD" Relationship="QLDHCDModel.FK_BBBKS_CTDHCD" FromRole="BANGBAUBK" ToRole="CT_DHCD" />
-        </EntityType>
-        <EntityType Name="BANGBAUHDQT">
-          <Key>
-            <PropertyRef Name="MADH" />
-            <PropertyRef Name="MACD" />
-          </Key>
-          <Property Name="MADH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MACD" Type="Int32" Nullable="false" />
-          <Property Name="HINHTHUCBAU" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="SLPHIEUBAU" Type="Int32" />
-          <NavigationProperty Name="CT_BAUHDQT" Relationship="Self.FK_CTBHDQT_BBHDQT" FromRole="BANGBAUHDQT" ToRole="CT_BAUHDQT" />
-          <NavigationProperty Name="CT_DHCD" Relationship="QLDHCDModel.FK_BBHDQT_CTDHCD" FromRole="BANGBAUHDQT" ToRole="CT_DHCD" />
-        </EntityType>
         <EntityType Name="BANGYKIEN">
           <Key>
             <PropertyRef Name="MAYK" />
           </Key>
           <Property Name="MAYK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MADH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="NOIDUNG" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="SLDONGY" Type="Int32" />
-          <Property Name="SLKHONGDONGY" Type="Int32" />
-          <Property Name="SLYKKHAC" Type="Int32" />
-          <NavigationProperty Name="CTBQYKIENs" Relationship="Self.FK_CTYK_BYKIEN" FromRole="BANGYKIEN" ToRole="CTBQYKIEN" />
-          <NavigationProperty Name="DHCD" Relationship="QLDHCDModel.FK_BYKIEN_DHCD" FromRole="BANGYKIEN" ToRole="DHCD" />
+          <Property Name="NOIDUNG" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SLDONGY" Type="Int32" Nullable="false" />
+          <Property Name="SLKHONGDONGY" Type="Int32" Nullable="false" />
+          <Property Name="SLYKKHAC" Type="Int32" Nullable="false" />
+          <Property Name="SOPHIEUPHATRA" Type="Int32" Nullable="false" />
+          <Property Name="TUONGDUONGCOPHIEU" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DHCD" Relationship="Self.FK__BANGYKIEN__MADH__693CA210" FromRole="BANGYKIEN" ToRole="DHCD" />
+          <NavigationProperty Name="CTBQYKIENs" Relationship="Self.FK__CTBQYKIEN__MAYK__70DDC3D8" FromRole="BANGYKIEN" ToRole="CTBQYKIEN" />
+        </EntityType>
+        <EntityType Name="BANGYKIENBQPHIEU">
+          <Key>
+            <PropertyRef Name="MAYK" />
+          </Key>
+          <Property Name="MAYK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MADH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NOIDUNG" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SLDONGY" Type="Int32" Nullable="false" />
+          <Property Name="SLKHONGDONGY" Type="Int32" Nullable="false" />
+          <Property Name="SL_PHATRA" Type="Int32" Nullable="false" />
+          <Property Name="SLCP_PHATRA" Type="Int32" Nullable="false" />
+          <Property Name="SL_THUVAO" Type="Int32" Nullable="false" />
+          <Property Name="SLCP_THUVAO" Type="Int32" Nullable="false" />
+          <Property Name="SL_HOPLE" Type="Int32" Nullable="false" />
+          <Property Name="SLCP_HOPLE" Type="Int32" Nullable="false" />
+          <Property Name="SL_KHONG_HOPLE" Type="Int32" Nullable="false" />
+          <Property Name="SLCP_KHONG_HOPLE" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DHCD" Relationship="Self.FK__BANGYKIENB__MADH__07C12930" FromRole="BANGYKIENBQPHIEU" ToRole="DHCD" />
+          <NavigationProperty Name="CT_YKIEN_BQPHIEU" Relationship="Self.FK__CT_YKIEN_B__MAYK__10566F31" FromRole="BANGYKIENBQPHIEU" ToRole="CT_YKIEN_BQPHIEU" />
         </EntityType>
         <EntityType Name="CODONG">
           <Key>
@@ -563,54 +610,115 @@
           <Property Name="SDT" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="TrinhDoVanHoa" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="TrinhDoChuyenMon" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ANHCD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="THANHVIENBKS" Relationship="Self.FK_THANHVIENBKS_MACD" FromRole="CODONG" ToRole="THANHVIENBKS" />
-          <NavigationProperty Name="THANHVIENHDQTs" Relationship="Self.FK_THANHVIENHDQT_MACD" FromRole="CODONG" ToRole="THANHVIENHDQT" />
+          <Property Name="ANHCD" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CT_DHCD" Relationship="Self.FK_CTDHCD_MACD" FromRole="CODONG" ToRole="CT_DHCD" />
           <NavigationProperty Name="USERCDs" Relationship="Self.FK_USERCD" FromRole="CODONG" ToRole="USERCD" />
-          <NavigationProperty Name="CT_DHCD" Relationship="QLDHCDModel.FK_DH_CD2" FromRole="CODONG" ToRole="CT_DHCD" />
         </EntityType>
         <EntityType Name="CT_BAUBKS">
           <Key>
             <PropertyRef Name="MACT" />
           </Key>
           <Property Name="MACT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MADH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="MANGDUOCBAU" Type="Int32" />
-          <Property Name="MANGDIBAU" Type="Int32" />
-          <Property Name="SLPHIEUBAU" Type="Int32" />
+          <Property Name="MABKS" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MANGUOIBAU" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SLPHIEUBAU" Type="Int32" Nullable="false" />
           <Property Name="HINHTHUCBAU" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="THOIGIANBAU" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="BANGBAUBK" Relationship="Self.FK_CTBBKS_BBBKS" FromRole="CT_BAUBKS" ToRole="BANGBAUBKS" />
-          <NavigationProperty Name="CT_DHCD" Relationship="QLDHCDModel.FK_CTBBKS_CTDHCD" FromRole="CT_BAUBKS" ToRole="CT_DHCD" />
+          <NavigationProperty Name="CT_DHCD" Relationship="Self.FK_CT_BAUBKS1" FromRole="CT_BAUBKS" ToRole="CT_DHCD" />
+          <NavigationProperty Name="CT_DHCD1" Relationship="Self.FK_CT_BAUBKS2" FromRole="CT_BAUBKS" ToRole="CT_DHCD" />
         </EntityType>
         <EntityType Name="CT_BAUHDQT">
           <Key>
             <PropertyRef Name="MACT" />
           </Key>
           <Property Name="MACT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MADH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="MANGDUOCBAU" Type="Int32" />
-          <Property Name="MANGDIBAU" Type="Int32" />
+          <Property Name="MAHDQT" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="MANGUOIBAU" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
           <Property Name="SLPHIEUBAU" Type="Int32" />
           <Property Name="HINHTHUCBAU" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="THOIGIANBAU" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="BANGBAUHDQT" Relationship="Self.FK_CTBHDQT_BBHDQT" FromRole="CT_BAUHDQT" ToRole="BANGBAUHDQT" />
-          <NavigationProperty Name="CT_DHCD" Relationship="QLDHCDModel.FK_CTBHDQT_CTDHCD" FromRole="CT_BAUHDQT" ToRole="CT_DHCD" />
+          <NavigationProperty Name="CT_DHCD" Relationship="Self.FK_CT_BAUHDQT1" FromRole="CT_BAUHDQT" ToRole="CT_DHCD" />
+          <NavigationProperty Name="CT_DHCD1" Relationship="Self.FK_CT_BAUHDQT2" FromRole="CT_BAUHDQT" ToRole="CT_DHCD" />
+        </EntityType>
+        <EntityType Name="CT_DHCD">
+          <Key>
+            <PropertyRef Name="MATD" />
+          </Key>
+          <Property Name="MATD" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MADH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MACD" Type="Int32" Nullable="false" />
+          <Property Name="SLCP" Type="Int32" />
+          <Property Name="SLDAUQ" Type="Int32" />
+          <Property Name="SLDCUQ" Type="Int32" />
+          <Property Name="HTDK" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SLCPSAUCUNG" Type="Int32" />
+          <Property Name="NCP_DABAUHDQT" Type="Int32" />
+          <Property Name="NCP_DABAUBKS" Type="Int32" />
+          <Property Name="NCP_DABQYKIEN" Type="Int32" />
+          <Property Name="NCP_DABQYKIEN_PHEU" Type="Int32" />
+          <NavigationProperty Name="CODONG" Relationship="Self.FK_CTDHCD_MACD" FromRole="CT_DHCD" ToRole="CODONG" />
+          <NavigationProperty Name="CT_BAUBKS" Relationship="Self.FK_CT_BAUBKS1" FromRole="CT_DHCD" ToRole="CT_BAUBKS" />
+          <NavigationProperty Name="CT_BAUBKS1" Relationship="Self.FK_CT_BAUBKS2" FromRole="CT_DHCD" ToRole="CT_BAUBKS" />
+          <NavigationProperty Name="CT_BAUHDQT" Relationship="Self.FK_CT_BAUHDQT1" FromRole="CT_DHCD" ToRole="CT_BAUHDQT" />
+          <NavigationProperty Name="CT_BAUHDQT1" Relationship="Self.FK_CT_BAUHDQT2" FromRole="CT_DHCD" ToRole="CT_BAUHDQT" />
+          <NavigationProperty Name="DHCD" Relationship="Self.FK_CTDHCD_MADH" FromRole="CT_DHCD" ToRole="DHCD" />
+          <NavigationProperty Name="THANHVIENHDQT" Relationship="Self.FK_THANHVIENHDQT" FromRole="CT_DHCD" ToRole="THANHVIENHDQT" />
+          <NavigationProperty Name="UYQUYENs" Relationship="Self.FK_UQ_MANGCHUYEN" FromRole="CT_DHCD" ToRole="UYQUYEN" />
+          <NavigationProperty Name="UYQUYENs1" Relationship="Self.FK_UQ_MANGNHAN" FromRole="CT_DHCD" ToRole="UYQUYEN" />
+          <NavigationProperty Name="THANHVIENBK" Relationship="QLDHCDModel.FK_THANHVIENBKS" FromRole="CT_DHCD" ToRole="THANHVIENBK" />
+        </EntityType>
+        <EntityType Name="CT_YKIEN_BQPHIEU">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MAYK" Type="Int32" Nullable="false" />
+          <Property Name="MATD" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LUACHON" Type="Int32" />
+          <Property Name="THOIGIANBAU" Type="DateTime" Precision="3" />
+          <Property Name="PHIEUTYPE" Type="Boolean" />
+          <NavigationProperty Name="BANGYKIENBQPHIEU" Relationship="Self.FK__CT_YKIEN_B__MAYK__10566F31" FromRole="CT_YKIEN_BQPHIEU" ToRole="BANGYKIENBQPHIEU" />
         </EntityType>
         <EntityType Name="CTBQYKIEN">
           <Key>
-            <PropertyRef Name="MAYK" />
-            <PropertyRef Name="MACD" />
+            <PropertyRef Name="ID" />
           </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MAYK" Type="Int32" Nullable="false" />
-          <Property Name="MADH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="MACD" Type="Int32" Nullable="false" />
+          <Property Name="MATD" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LUACHON" Type="Int32" />
-          <Property Name="SLPHIEUBAU" Type="Int32" />
           <Property Name="NOIDUNGYKKHAC" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="THOIGIANBAU" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="BANGYKIEN" Relationship="Self.FK_CTYK_BYKIEN" FromRole="CTBQYKIEN" ToRole="BANGYKIEN" />
-          <NavigationProperty Name="CT_DHCD" Relationship="QLDHCDModel.FK_CTYK_CTDHCD" FromRole="CTBQYKIEN" ToRole="CT_DHCD" />
+          <NavigationProperty Name="BANGYKIEN" Relationship="Self.FK__CTBQYKIEN__MAYK__70DDC3D8" FromRole="CTBQYKIEN" ToRole="BANGYKIEN" />
+        </EntityType>
+        <EntityType Name="DHCD">
+          <Key>
+            <PropertyRef Name="MADH" />
+          </Key>
+          <Property Name="MADH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TenDH" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="YEARDHCD" Type="Int32" />
+          <Property Name="STTDHTRONGNAM" Type="Int32" />
+          <Property Name="nQKin" Type="Int32" DefaultValue="0" />
+          <Property Name="nQBefore" Type="Int32" DefaultValue="0" />
+          <Property Name="nDeCuHDQT" Type="Int32" />
+          <Property Name="nUngCuHDQT" Type="Int32" />
+          <Property Name="nDeCuBKS" Type="Int32" />
+          <Property Name="nUngCuBKS" Type="Int32" />
+          <Property Name="nBauBoSungHDQT" Type="Int32" />
+          <Property Name="nBauBOSungBKS" Type="Int32" />
+          <Property Name="thoiGian" Type="DateTime" Precision="0" />
+          <Property Name="ACTIVE" Type="Int32" Nullable="false" />
+          <Property Name="TONGSOPHIEU" Type="Int32" DefaultValue="0" />
+          <Property Name="LABAUBOSUNG" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BANGYKIENs" Relationship="Self.FK__BANGYKIEN__MADH__693CA210" FromRole="DHCD" ToRole="BANGYKIEN" />
+          <NavigationProperty Name="BANGYKIENBQPHIEUx" Relationship="Self.FK__BANGYKIENB__MADH__07C12930" FromRole="DHCD" ToRole="BANGYKIENBQPHIEU" />
+          <NavigationProperty Name="CT_DHCD" Relationship="Self.FK_CTDHCD_MADH" FromRole="DHCD" ToRole="CT_DHCD" />
+          <NavigationProperty Name="UYQUYENs" Relationship="Self.FK_UQ_MADH" FromRole="DHCD" ToRole="UYQUYEN" />
+          <NavigationProperty Name="COMMITDHCDs" Relationship="QLDHCDModel.FK__COMMITDHCD__MADH__1B0907CE" FromRole="DHCD" ToRole="COMMITDHCD" />
+          <Property Name="TRANGTHAI" Type="Boolean" />
+          <Property Name="nTongHDQT" Type="Int32" />
+          <Property Name="nTongBKS" Type="Int32" />
         </EntityType>
         <EntityType Name="DHCDSTT">
           <Key>
@@ -629,29 +737,19 @@
           <Property Name="ERRORDATE" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ERRORUSER" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="THANHVIENBK">
-          <Key>
-            <PropertyRef Name="MADH" />
-            <PropertyRef Name="MACD" />
-          </Key>
-          <Property Name="MADH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MACD" Type="Int32" Nullable="false" />
-          <Property Name="SOPHIEUBAU" Type="Int32" />
-          <Property Name="LATHAYTHE" Type="Int32" />
-          <NavigationProperty Name="CODONG" Relationship="Self.FK_THANHVIENBKS_MACD" FromRole="THANHVIENBKS" ToRole="CODONG" />
-          <NavigationProperty Name="DHCD" Relationship="QLDHCDModel.FK_THANHVIENBKS_MADH" FromRole="THANHVIENBK" ToRole="DHCD" />
-        </EntityType>
         <EntityType Name="THANHVIENHDQT">
           <Key>
-            <PropertyRef Name="MADH" />
-            <PropertyRef Name="MACD" />
+            <PropertyRef Name="MATD" />
           </Key>
-          <Property Name="MADH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MACD" Type="Int32" Nullable="false" />
-          <Property Name="SOPHIEUBAU" Type="Int32" />
-          <Property Name="LATHAYTHE" Type="Int32" />
-          <NavigationProperty Name="CODONG" Relationship="Self.FK_THANHVIENHDQT_MACD" FromRole="THANHVIENHDQT" ToRole="CODONG" />
-          <NavigationProperty Name="DHCD" Relationship="QLDHCDModel.FK_THANHVIENHDQT_MADH" FromRole="THANHVIENHDQT" ToRole="DHCD" />
+          <Property Name="MATD" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HINHTHUCBAU" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SLPHIEUBAU" Type="Int32" />
+          <Property Name="LADECU" Type="Boolean" />
+          <Property Name="LAUNGCU" Type="Boolean" />
+          <Property Name="LATHAYTHE" Type="Boolean" />
+          <Property Name="LACHUTICH" Type="Boolean" />
+          <NavigationProperty Name="CT_DHCD" Relationship="Self.FK_THANHVIENHDQT" FromRole="THANHVIENHDQT" ToRole="CT_DHCD" />
+          <Property Name="LASUCCESS" Type="Boolean" />
         </EntityType>
         <EntityType Name="USERCD">
           <Key>
@@ -669,42 +767,28 @@
           </Key>
           <Property Name="MAUQ" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MADH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MANGCHUYEN" Type="Int32" Nullable="false" />
-          <Property Name="MANGNHAN" Type="Int32" Nullable="false" />
+          <Property Name="MANGCHUYEN" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UYQUYENTYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MANGNHAN" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SLUQ" Type="Int32" />
           <Property Name="THOIGIAN" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="NGUOICHUYEN" Relationship="QLDHCDModel.FK_CTUQ1" FromRole="UYQUYEN" ToRole="CT_DHCD" />
-          <NavigationProperty Name="NGUOINHAN" Relationship="QLDHCDModel.FK_CTUQ2" FromRole="UYQUYEN" ToRole="CT_DHCD" />
+          <NavigationProperty Name="CT_DHCD" Relationship="Self.FK_UQ_MANGCHUYEN" FromRole="UYQUYEN" ToRole="CT_DHCD" />
+          <NavigationProperty Name="CT_DHCD1" Relationship="Self.FK_UQ_MANGNHAN" FromRole="UYQUYEN" ToRole="CT_DHCD" />
+          <NavigationProperty Name="DHCD" Relationship="Self.FK_UQ_MADH" FromRole="UYQUYEN" ToRole="DHCD" />
         </EntityType>
-        <Association Name="FK_CTBBKS_BBBKS">
-          <End Role="BANGBAUBKS" Type="Self.BANGBAUBK" Multiplicity="0..1" />
-          <End Role="CT_BAUBKS" Type="Self.CT_BAUBKS" Multiplicity="*" />
+        <Association Name="FK__BANGYKIEN__MADH__693CA210">
+          <End Role="DHCD" Type="Self.DHCD" Multiplicity="0..1" />
+          <End Role="BANGYKIEN" Type="Self.BANGYKIEN" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="BANGBAUBKS">
+            <Principal Role="DHCD">
               <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
             </Principal>
-            <Dependent Role="CT_BAUBKS">
+            <Dependent Role="BANGYKIEN">
               <PropertyRef Name="MADH" />
-              <PropertyRef Name="MANGDUOCBAU" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CTBHDQT_BBHDQT">
-          <End Role="BANGBAUHDQT" Type="Self.BANGBAUHDQT" Multiplicity="0..1" />
-          <End Role="CT_BAUHDQT" Type="Self.CT_BAUHDQT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BANGBAUHDQT">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="CT_BAUHDQT">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MANGDUOCBAU" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CTYK_BYKIEN">
+        <Association Name="FK__CTBQYKIEN__MAYK__70DDC3D8">
           <End Role="BANGYKIEN" Type="Self.BANGYKIEN" Multiplicity="1" />
           <End Role="CTBQYKIEN" Type="Self.CTBQYKIEN" Multiplicity="*" />
           <ReferentialConstraint>
@@ -716,26 +800,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_THANHVIENBKS_MACD">
-          <End Role="CODONG" Type="Self.CODONG" Multiplicity="1" />
-          <End Role="THANHVIENBKS" Type="Self.THANHVIENBK" Multiplicity="*" />
+        <Association Name="FK__BANGYKIENB__MADH__07C12930">
+          <End Role="DHCD" Type="Self.DHCD" Multiplicity="0..1" />
+          <End Role="BANGYKIENBQPHIEU" Type="Self.BANGYKIENBQPHIEU" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CODONG">
-              <PropertyRef Name="MACD" />
+            <Principal Role="DHCD">
+              <PropertyRef Name="MADH" />
             </Principal>
-            <Dependent Role="THANHVIENBKS">
-              <PropertyRef Name="MACD" />
+            <Dependent Role="BANGYKIENBQPHIEU">
+              <PropertyRef Name="MADH" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_THANHVIENHDQT_MACD">
+        <Association Name="FK__CT_YKIEN_B__MAYK__10566F31">
+          <End Role="BANGYKIENBQPHIEU" Type="Self.BANGYKIENBQPHIEU" Multiplicity="1" />
+          <End Role="CT_YKIEN_BQPHIEU" Type="Self.CT_YKIEN_BQPHIEU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BANGYKIENBQPHIEU">
+              <PropertyRef Name="MAYK" />
+            </Principal>
+            <Dependent Role="CT_YKIEN_BQPHIEU">
+              <PropertyRef Name="MAYK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CTDHCD_MACD">
           <End Role="CODONG" Type="Self.CODONG" Multiplicity="1" />
-          <End Role="THANHVIENHDQT" Type="Self.THANHVIENHDQT" Multiplicity="*" />
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CODONG">
               <PropertyRef Name="MACD" />
             </Principal>
-            <Dependent Role="THANHVIENHDQT">
+            <Dependent Role="CT_DHCD">
               <PropertyRef Name="MACD" />
             </Dependent>
           </ReferentialConstraint>
@@ -752,298 +848,298 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CT_BAUBKS1">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
+          <End Role="CT_BAUBKS" Type="Self.CT_BAUBKS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
+            </Principal>
+            <Dependent Role="CT_BAUBKS">
+              <PropertyRef Name="MABKS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CT_BAUBKS2">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
+          <End Role="CT_BAUBKS" Type="Self.CT_BAUBKS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
+            </Principal>
+            <Dependent Role="CT_BAUBKS">
+              <PropertyRef Name="MANGUOIBAU" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CT_BAUHDQT1">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="0..1" />
+          <End Role="CT_BAUHDQT" Type="Self.CT_BAUHDQT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
+            </Principal>
+            <Dependent Role="CT_BAUHDQT">
+              <PropertyRef Name="MAHDQT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CT_BAUHDQT2">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="0..1" />
+          <End Role="CT_BAUHDQT" Type="Self.CT_BAUHDQT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
+            </Principal>
+            <Dependent Role="CT_BAUHDQT">
+              <PropertyRef Name="MANGUOIBAU" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CTDHCD_MADH">
+          <End Role="DHCD" Type="Self.DHCD" Multiplicity="1" />
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DHCD">
+              <PropertyRef Name="MADH" />
+            </Principal>
+            <Dependent Role="CT_DHCD">
+              <PropertyRef Name="MADH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_THANHVIENHDQT">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
+          <End Role="THANHVIENHDQT" Type="Self.THANHVIENHDQT" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
+            </Principal>
+            <Dependent Role="THANHVIENHDQT">
+              <PropertyRef Name="MATD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UQ_MANGCHUYEN">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
+          <End Role="UYQUYEN" Type="Self.UYQUYEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
+            </Principal>
+            <Dependent Role="UYQUYEN">
+              <PropertyRef Name="MANGCHUYEN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UQ_MANGNHAN">
+          <End Role="CT_DHCD" Type="Self.CT_DHCD" Multiplicity="1" />
+          <End Role="UYQUYEN" Type="Self.UYQUYEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
+            </Principal>
+            <Dependent Role="UYQUYEN">
+              <PropertyRef Name="MANGNHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UQ_MADH">
+          <End Role="DHCD" Type="Self.DHCD" Multiplicity="1" />
+          <End Role="UYQUYEN" Type="Self.UYQUYEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DHCD">
+              <PropertyRef Name="MADH" />
+            </Principal>
+            <Dependent Role="UYQUYEN">
+              <PropertyRef Name="MADH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="QLDHCDEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BANGBAUBKS" EntityType="Self.BANGBAUBK" />
-          <EntitySet Name="BANGBAUHDQTs" EntityType="Self.BANGBAUHDQT" />
           <EntitySet Name="BANGYKIENs" EntityType="Self.BANGYKIEN" />
+          <EntitySet Name="BANGYKIENBQPHIEUx" EntityType="Self.BANGYKIENBQPHIEU" />
           <EntitySet Name="CODONGs" EntityType="Self.CODONG" />
           <EntitySet Name="CT_BAUBKS" EntityType="Self.CT_BAUBKS" />
           <EntitySet Name="CT_BAUHDQT" EntityType="Self.CT_BAUHDQT" />
+          <EntitySet Name="CT_DHCD" EntityType="Self.CT_DHCD" />
+          <EntitySet Name="CT_YKIEN_BQPHIEU" EntityType="Self.CT_YKIEN_BQPHIEU" />
           <EntitySet Name="CTBQYKIENs" EntityType="Self.CTBQYKIEN" />
+          <EntitySet Name="DHCDs" EntityType="Self.DHCD" />
           <EntitySet Name="DHCDSTTs" EntityType="Self.DHCDSTT" />
           <EntitySet Name="EXCEPTIONAPPs" EntityType="Self.EXCEPTIONAPP" />
-          <EntitySet Name="THANHVIENBKS" EntityType="Self.THANHVIENBK" />
           <EntitySet Name="THANHVIENHDQTs" EntityType="Self.THANHVIENHDQT" />
           <EntitySet Name="USERCDs" EntityType="Self.USERCD" />
           <EntitySet Name="UYQUYENs" EntityType="Self.UYQUYEN" />
-          <AssociationSet Name="FK_CTBBKS_BBBKS" Association="Self.FK_CTBBKS_BBBKS">
-            <End Role="BANGBAUBKS" EntitySet="BANGBAUBKS" />
-            <End Role="CT_BAUBKS" EntitySet="CT_BAUBKS" />
+          <AssociationSet Name="FK__BANGYKIEN__MADH__693CA210" Association="Self.FK__BANGYKIEN__MADH__693CA210">
+            <End Role="DHCD" EntitySet="DHCDs" />
+            <End Role="BANGYKIEN" EntitySet="BANGYKIENs" />
           </AssociationSet>
-          <AssociationSet Name="FK_CTBHDQT_BBHDQT" Association="Self.FK_CTBHDQT_BBHDQT">
-            <End Role="BANGBAUHDQT" EntitySet="BANGBAUHDQTs" />
-            <End Role="CT_BAUHDQT" EntitySet="CT_BAUHDQT" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CTYK_BYKIEN" Association="Self.FK_CTYK_BYKIEN">
+          <AssociationSet Name="FK__CTBQYKIEN__MAYK__70DDC3D8" Association="Self.FK__CTBQYKIEN__MAYK__70DDC3D8">
             <End Role="BANGYKIEN" EntitySet="BANGYKIENs" />
             <End Role="CTBQYKIEN" EntitySet="CTBQYKIENs" />
           </AssociationSet>
-          <AssociationSet Name="FK_THANHVIENBKS_MACD" Association="Self.FK_THANHVIENBKS_MACD">
-            <End Role="CODONG" EntitySet="CODONGs" />
-            <End Role="THANHVIENBKS" EntitySet="THANHVIENBKS" />
+          <AssociationSet Name="FK__BANGYKIENB__MADH__07C12930" Association="Self.FK__BANGYKIENB__MADH__07C12930">
+            <End Role="DHCD" EntitySet="DHCDs" />
+            <End Role="BANGYKIENBQPHIEU" EntitySet="BANGYKIENBQPHIEUx" />
           </AssociationSet>
-          <AssociationSet Name="FK_THANHVIENHDQT_MACD" Association="Self.FK_THANHVIENHDQT_MACD">
+          <AssociationSet Name="FK__CT_YKIEN_B__MAYK__10566F31" Association="Self.FK__CT_YKIEN_B__MAYK__10566F31">
+            <End Role="BANGYKIENBQPHIEU" EntitySet="BANGYKIENBQPHIEUx" />
+            <End Role="CT_YKIEN_BQPHIEU" EntitySet="CT_YKIEN_BQPHIEU" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CTDHCD_MACD" Association="Self.FK_CTDHCD_MACD">
             <End Role="CODONG" EntitySet="CODONGs" />
-            <End Role="THANHVIENHDQT" EntitySet="THANHVIENHDQTs" />
+            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
           </AssociationSet>
           <AssociationSet Name="FK_USERCD" Association="Self.FK_USERCD">
             <End Role="CODONG" EntitySet="CODONGs" />
             <End Role="USERCD" EntitySet="USERCDs" />
           </AssociationSet>
-          <EntitySet Name="DHCDs" EntityType="QLDHCDModel.DHCD" />
-          <AssociationSet Name="FK_BYKIEN_DHCD" Association="QLDHCDModel.FK_BYKIEN_DHCD">
-            <End Role="DHCD" EntitySet="DHCDs" />
-            <End Role="BANGYKIEN" EntitySet="BANGYKIENs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_THANHVIENBKS_MADH" Association="QLDHCDModel.FK_THANHVIENBKS_MADH">
-            <End Role="DHCD" EntitySet="DHCDs" />
-            <End Role="THANHVIENBK" EntitySet="THANHVIENBKS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_THANHVIENHDQT_MADH" Association="QLDHCDModel.FK_THANHVIENHDQT_MADH">
-            <End Role="DHCD" EntitySet="DHCDs" />
-            <End Role="THANHVIENHDQT" EntitySet="THANHVIENHDQTs" />
-          </AssociationSet>
-          <EntitySet Name="CT_DHCD" EntityType="QLDHCDModel.CT_DHCD" />
-          <AssociationSet Name="FK_BBBKS_CTDHCD" Association="QLDHCDModel.FK_BBBKS_CTDHCD">
-            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-            <End Role="BANGBAUBK" EntitySet="BANGBAUBKS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BBHDQT_CTDHCD" Association="QLDHCDModel.FK_BBHDQT_CTDHCD">
-            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-            <End Role="BANGBAUHDQT" EntitySet="BANGBAUHDQTs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DH_CD2" Association="QLDHCDModel.FK_DH_CD2">
-            <End Role="CODONG" EntitySet="CODONGs" />
-            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CTBBKS_CTDHCD" Association="QLDHCDModel.FK_CTBBKS_CTDHCD">
+          <AssociationSet Name="FK_CT_BAUBKS1" Association="Self.FK_CT_BAUBKS1">
             <End Role="CT_DHCD" EntitySet="CT_DHCD" />
             <End Role="CT_BAUBKS" EntitySet="CT_BAUBKS" />
           </AssociationSet>
-          <AssociationSet Name="FK_CTBHDQT_CTDHCD" Association="QLDHCDModel.FK_CTBHDQT_CTDHCD">
+          <AssociationSet Name="FK_CT_BAUBKS2" Association="Self.FK_CT_BAUBKS2">
+            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
+            <End Role="CT_BAUBKS" EntitySet="CT_BAUBKS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CT_BAUHDQT1" Association="Self.FK_CT_BAUHDQT1">
             <End Role="CT_DHCD" EntitySet="CT_DHCD" />
             <End Role="CT_BAUHDQT" EntitySet="CT_BAUHDQT" />
           </AssociationSet>
-          <AssociationSet Name="FK_CTUQ1" Association="QLDHCDModel.FK_CTUQ1">
+          <AssociationSet Name="FK_CT_BAUHDQT2" Association="Self.FK_CT_BAUHDQT2">
             <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-            <End Role="UYQUYEN" EntitySet="UYQUYENs" />
+            <End Role="CT_BAUHDQT" EntitySet="CT_BAUHDQT" />
           </AssociationSet>
-          <AssociationSet Name="FK_CTUQ2" Association="QLDHCDModel.FK_CTUQ2">
-            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-            <End Role="UYQUYEN" EntitySet="UYQUYENs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CTYK_CTDHCD" Association="QLDHCDModel.FK_CTYK_CTDHCD">
-            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
-            <End Role="CTBQYKIEN" EntitySet="CTBQYKIENs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DH_CD1" Association="QLDHCDModel.FK_DH_CD1">
+          <AssociationSet Name="FK_CTDHCD_MADH" Association="Self.FK_CTDHCD_MADH">
             <End Role="DHCD" EntitySet="DHCDs" />
             <End Role="CT_DHCD" EntitySet="CT_DHCD" />
           </AssociationSet>
-          </EntityContainer>
-        <EntityType Name="DHCD">
+          <AssociationSet Name="FK_THANHVIENHDQT" Association="Self.FK_THANHVIENHDQT">
+            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
+            <End Role="THANHVIENHDQT" EntitySet="THANHVIENHDQTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UQ_MANGCHUYEN" Association="Self.FK_UQ_MANGCHUYEN">
+            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
+            <End Role="UYQUYEN" EntitySet="UYQUYENs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UQ_MANGNHAN" Association="Self.FK_UQ_MANGNHAN">
+            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
+            <End Role="UYQUYEN" EntitySet="UYQUYENs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UQ_MADH" Association="Self.FK_UQ_MADH">
+            <End Role="DHCD" EntitySet="DHCDs" />
+            <End Role="UYQUYEN" EntitySet="UYQUYENs" />
+          </AssociationSet>
+          <FunctionImport Name="CT_BAUBKS_INSERT">
+            <Parameter Name="MABKS" Mode="In" Type="String" />
+            <Parameter Name="MANGUOIBAU" Mode="In" Type="String" />
+            <Parameter Name="SLPHIEUBAU" Mode="In" Type="Int32" />
+            <Parameter Name="HINHTHUCBAU" Mode="In" Type="String" />
+            <Parameter Name="CHECKSUCCESS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CT_BAUBKS_INSERT_CURRENTUSER">
+            <Parameter Name="MABKS" Mode="In" Type="String" />
+            <Parameter Name="USERNAME" Mode="In" Type="String" />
+            <Parameter Name="SLPHIEUBAU" Mode="In" Type="Int32" />
+            <Parameter Name="HINHTHUCBAU" Mode="In" Type="String" />
+            <Parameter Name="CHECKSUCCESS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CT_BAUHDQT_INSERT">
+            <Parameter Name="MAHDQT" Mode="In" Type="String" />
+            <Parameter Name="MANGUOIBAU" Mode="In" Type="String" />
+            <Parameter Name="SLPHIEUBAU" Mode="In" Type="Int32" />
+            <Parameter Name="HINHTHUCBAU" Mode="In" Type="String" />
+            <Parameter Name="CHECKSUCCESS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CT_BAUHDQT_INSERT_CURRENTUSER">
+            <Parameter Name="MAHDQT" Mode="In" Type="String" />
+            <Parameter Name="USERNAME" Mode="In" Type="String" />
+            <Parameter Name="SLPHIEUBAU" Mode="In" Type="Int32" />
+            <Parameter Name="HINHTHUCBAU" Mode="In" Type="String" />
+            <Parameter Name="CHECKSUCCESS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UYQUYEN_INSERT">
+            <Parameter Name="MANGCHUYEN" Mode="In" Type="String" />
+            <Parameter Name="MANGNHAN" Mode="In" Type="String" />
+            <Parameter Name="UYQUYENTYPE" Mode="In" Type="String" />
+            <Parameter Name="SLUQ" Mode="In" Type="Int32" />
+            <Parameter Name="HoTen" Mode="In" Type="String" />
+            <Parameter Name="CMND" Mode="In" Type="Int32" />
+            <Parameter Name="NgayCap" Mode="In" Type="DateTime" />
+            <Parameter Name="NoiCap" Mode="In" Type="String" />
+            <Parameter Name="DiaChi" Mode="In" Type="String" />
+            <Parameter Name="QuocTich" Mode="In" Type="String" />
+            <Parameter Name="CHECKSUCCESS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UYQUYEN_INSERT_BYUSERNAME">
+            <Parameter Name="USERNAME" Mode="In" Type="String" />
+            <Parameter Name="MANGNHAN" Mode="In" Type="String" />
+            <Parameter Name="UYQUYENTYPE" Mode="In" Type="String" />
+            <Parameter Name="SLUQ" Mode="In" Type="Int32" />
+            <Parameter Name="HoTen" Mode="In" Type="String" />
+            <Parameter Name="CMND" Mode="In" Type="Int32" />
+            <Parameter Name="NgayCap" Mode="In" Type="DateTime" />
+            <Parameter Name="NoiCap" Mode="In" Type="String" />
+            <Parameter Name="DiaChi" Mode="In" Type="String" />
+            <Parameter Name="QuocTich" Mode="In" Type="String" />
+            <Parameter Name="CHECKSUCCESS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="COMMITDHCDs" EntityType="QLDHCDModel.COMMITDHCD" />
+          <AssociationSet Name="FK__COMMITDHCD__MADH__1B0907CE" Association="QLDHCDModel.FK__COMMITDHCD__MADH__1B0907CE">
+            <End Role="DHCD" EntitySet="DHCDs" />
+            <End Role="COMMITDHCD" EntitySet="COMMITDHCDs" />
+          </AssociationSet>
+          <EntitySet Name="THANHVIENBKS" EntityType="QLDHCDModel.THANHVIENBK" />
+          <AssociationSet Name="FK_THANHVIENBKS" Association="QLDHCDModel.FK_THANHVIENBKS">
+            <End Role="CT_DHCD" EntitySet="CT_DHCD" />
+            <End Role="THANHVIENBK" EntitySet="THANHVIENBKS" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="COMMITDHCD">
           <Key>
-            <PropertyRef Name="MADH" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="MADH" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="TenDH" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="YEARDHCD" Type="Int32" />
-          <Property Name="STTDHTRONGNAM" Type="Int32" />
-          <Property Name="nQKin" Type="Int32" />
-          <Property Name="nQBefore" Type="Int32" />
-          <Property Name="nDeCuHDQT" Type="Int32" />
-          <Property Name="nUngCuHDQT" Type="Int32" />
-          <Property Name="nDeCuBKS" Type="Int32" />
-          <Property Name="nUngCuBKS" Type="Int32" />
-          <Property Name="nBauBoSungHDQT" Type="Int32" />
-          <Property Name="nBauBOSungBKS" Type="Int32" />
-          <Property Name="thoiGian" Type="DateTime" Precision="0" />
-          <Property Name="ACTIVE" Type="Int32" />
-          <Property Name="TONGSOPHIEU" Type="Int32" />
-          <NavigationProperty Name="BANGYKIENs" Relationship="QLDHCDModel.FK_BYKIEN_DHCD" FromRole="DHCD" ToRole="BANGYKIEN" />
-          <NavigationProperty Name="THANHVIENBKS" Relationship="QLDHCDModel.FK_THANHVIENBKS_MADH" FromRole="DHCD" ToRole="THANHVIENBK" />
-          <NavigationProperty Name="THANHVIENHDQTs" Relationship="QLDHCDModel.FK_THANHVIENHDQT_MADH" FromRole="DHCD" ToRole="THANHVIENHDQT" />
-          <NavigationProperty Name="CT_DHCD" Relationship="QLDHCDModel.FK_DH_CD1" FromRole="DHCD" ToRole="CT_DHCD" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DATECOMMIT" Type="DateTime" Precision="0" />
+          <Property Name="MADH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DHCD" Relationship="QLDHCDModel.FK__COMMITDHCD__MADH__1B0907CE" FromRole="COMMITDHCD" ToRole="DHCD" />
         </EntityType>
-        <Association Name="FK_BYKIEN_DHCD">
+        <Association Name="FK__COMMITDHCD__MADH__1B0907CE">
           <End Type="QLDHCDModel.DHCD" Role="DHCD" Multiplicity="0..1" />
-          <End Type="QLDHCDModel.BANGYKIEN" Role="BANGYKIEN" Multiplicity="*" />
+          <End Type="QLDHCDModel.COMMITDHCD" Role="COMMITDHCD" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DHCD">
               <PropertyRef Name="MADH" />
             </Principal>
-            <Dependent Role="BANGYKIEN">
+            <Dependent Role="COMMITDHCD">
               <PropertyRef Name="MADH" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_THANHVIENBKS_MADH">
-          <End Type="QLDHCDModel.DHCD" Role="DHCD" Multiplicity="1" />
-          <End Type="QLDHCDModel.THANHVIENBK" Role="THANHVIENBK" Multiplicity="*" />
+        <EntityType Name="THANHVIENBK">
+          <Key>
+            <PropertyRef Name="MATD" />
+          </Key>
+          <Property Name="MATD" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="HINHTHUCBAU" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SLPHIEUBAU" Type="Int32" />
+          <Property Name="LADECU" Type="Boolean" />
+          <Property Name="LAUNGCU" Type="Boolean" />
+          <Property Name="LATHAYTHE" Type="Boolean" />
+          <Property Name="LACHUTICH" Type="Boolean" />
+          <Property Name="LASUCCESS" Type="Boolean" />
+          <NavigationProperty Name="CT_DHCD" Relationship="QLDHCDModel.FK_THANHVIENBKS" FromRole="THANHVIENBK" ToRole="CT_DHCD" />
+        </EntityType>
+        <Association Name="FK_THANHVIENBKS">
+          <End Type="QLDHCDModel.CT_DHCD" Role="CT_DHCD" Multiplicity="1" />
+          <End Type="QLDHCDModel.THANHVIENBK" Role="THANHVIENBK" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="DHCD">
-              <PropertyRef Name="MADH" />
+            <Principal Role="CT_DHCD">
+              <PropertyRef Name="MATD" />
             </Principal>
             <Dependent Role="THANHVIENBK">
-              <PropertyRef Name="MADH" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_THANHVIENHDQT_MADH">
-          <End Type="QLDHCDModel.DHCD" Role="DHCD" Multiplicity="1" />
-          <End Type="QLDHCDModel.THANHVIENHDQT" Role="THANHVIENHDQT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DHCD">
-              <PropertyRef Name="MADH" />
-            </Principal>
-            <Dependent Role="THANHVIENHDQT">
-              <PropertyRef Name="MADH" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="CT_DHCD">
-          <Key>
-            <PropertyRef Name="MADH" />
-            <PropertyRef Name="MACD" />
-          </Key>
-          <Property Name="MADH" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="MACD" Type="Int32" Nullable="false" />
-          <Property Name="MATD" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
-          <Property Name="SLCP" Type="Int32" />
-          <Property Name="SLDAUQ" Type="Int32" />
-          <Property Name="SLDCUQ" Type="Int32" />
-          <Property Name="HTDK" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SLCPSAUCUNG" Type="Int32" />
-          <Property Name="QUYENBAUCU" Type="Int32" />
-          <NavigationProperty Name="BANGBAUBK" Relationship="QLDHCDModel.FK_BBBKS_CTDHCD" FromRole="CT_DHCD" ToRole="BANGBAUBK" />
-          <NavigationProperty Name="BANGBAUHDQT" Relationship="QLDHCDModel.FK_BBHDQT_CTDHCD" FromRole="CT_DHCD" ToRole="BANGBAUHDQT" />
-          <NavigationProperty Name="CODONG" Relationship="QLDHCDModel.FK_DH_CD2" FromRole="CT_DHCD" ToRole="CODONG" />
-          <NavigationProperty Name="CT_BAUBKS" Relationship="QLDHCDModel.FK_CTBBKS_CTDHCD" FromRole="CT_DHCD" ToRole="CT_BAUBKS" />
-          <NavigationProperty Name="CT_BAUHDQT" Relationship="QLDHCDModel.FK_CTBHDQT_CTDHCD" FromRole="CT_DHCD" ToRole="CT_BAUHDQT" />
-          <NavigationProperty Name="UYQUYENs" Relationship="QLDHCDModel.FK_CTUQ1" FromRole="CT_DHCD" ToRole="UYQUYEN" />
-          <NavigationProperty Name="UYQUYENs1" Relationship="QLDHCDModel.FK_CTUQ2" FromRole="CT_DHCD" ToRole="UYQUYEN" />
-          <NavigationProperty Name="CTBQYKIENs" Relationship="QLDHCDModel.FK_CTYK_CTDHCD" FromRole="CT_DHCD" ToRole="CTBQYKIEN" />
-          <NavigationProperty Name="DHCD" Relationship="QLDHCDModel.FK_DH_CD1" FromRole="CT_DHCD" ToRole="DHCD" />
-        </EntityType>
-        <Association Name="FK_BBBKS_CTDHCD">
-          <End Type="QLDHCDModel.CT_DHCD" Role="CT_DHCD" Multiplicity="1" />
-          <End Type="QLDHCDModel.BANGBAUBK" Role="BANGBAUBK" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="BANGBAUBK">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BBHDQT_CTDHCD">
-          <End Type="QLDHCDModel.CT_DHCD" Role="CT_DHCD" Multiplicity="1" />
-          <End Type="QLDHCDModel.BANGBAUHDQT" Role="BANGBAUHDQT" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="BANGBAUHDQT">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DH_CD2">
-          <End Type="QLDHCDModel.CODONG" Role="CODONG" Multiplicity="1" />
-          <End Type="QLDHCDModel.CT_DHCD" Role="CT_DHCD" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CODONG">
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="CT_DHCD">
-              <PropertyRef Name="MACD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CTBBKS_CTDHCD">
-          <End Type="QLDHCDModel.CT_DHCD" Role="CT_DHCD" Multiplicity="0..1" />
-          <End Type="QLDHCDModel.CT_BAUBKS" Role="CT_BAUBKS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="CT_BAUBKS">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MANGDIBAU" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CTBHDQT_CTDHCD">
-          <End Type="QLDHCDModel.CT_DHCD" Role="CT_DHCD" Multiplicity="0..1" />
-          <End Type="QLDHCDModel.CT_BAUHDQT" Role="CT_BAUHDQT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="CT_BAUHDQT">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MANGDIBAU" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CTUQ1">
-          <End Type="QLDHCDModel.CT_DHCD" Role="CT_DHCD" Multiplicity="1" />
-          <End Type="QLDHCDModel.UYQUYEN" Role="UYQUYEN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="UYQUYEN">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MANGCHUYEN" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CTUQ2">
-          <End Type="QLDHCDModel.CT_DHCD" Role="CT_DHCD" Multiplicity="1" />
-          <End Type="QLDHCDModel.UYQUYEN" Role="UYQUYEN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="UYQUYEN">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MANGNHAN" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CTYK_CTDHCD">
-          <End Type="QLDHCDModel.CT_DHCD" Role="CT_DHCD" Multiplicity="0..1" />
-          <End Type="QLDHCDModel.CTBQYKIEN" Role="CTBQYKIEN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Principal>
-            <Dependent Role="CTBQYKIEN">
-              <PropertyRef Name="MADH" />
-              <PropertyRef Name="MACD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DH_CD1">
-          <End Type="QLDHCDModel.DHCD" Role="DHCD" Multiplicity="1" />
-          <End Type="QLDHCDModel.CT_DHCD" Role="CT_DHCD" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DHCD">
-              <PropertyRef Name="MADH" />
-            </Principal>
-            <Dependent Role="CT_DHCD">
-              <PropertyRef Name="MADH" />
+              <PropertyRef Name="MATD" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1053,26 +1149,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="QLDHCDModelStoreContainer" CdmEntityContainer="QLDHCDEntities">
-          <EntitySetMapping Name="BANGBAUBKS">
-            <EntityTypeMapping TypeName="QLDHCDModel.BANGBAUBK">
-              <MappingFragment StoreEntitySet="BANGBAUBKS">
-                <ScalarProperty Name="MADH" ColumnName="MADH" />
-                <ScalarProperty Name="MACD" ColumnName="MACD" />
-                <ScalarProperty Name="HINHTHUCBAU" ColumnName="HINHTHUCBAU" />
-                <ScalarProperty Name="SLPHIEUBAU" ColumnName="SLPHIEUBAU" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BANGBAUHDQTs">
-            <EntityTypeMapping TypeName="QLDHCDModel.BANGBAUHDQT">
-              <MappingFragment StoreEntitySet="BANGBAUHDQT">
-                <ScalarProperty Name="MADH" ColumnName="MADH" />
-                <ScalarProperty Name="MACD" ColumnName="MACD" />
-                <ScalarProperty Name="HINHTHUCBAU" ColumnName="HINHTHUCBAU" />
-                <ScalarProperty Name="SLPHIEUBAU" ColumnName="SLPHIEUBAU" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="BANGYKIENs">
             <EntityTypeMapping TypeName="QLDHCDModel.BANGYKIEN">
               <MappingFragment StoreEntitySet="BANGYKIEN">
@@ -1082,6 +1158,27 @@
                 <ScalarProperty Name="SLDONGY" ColumnName="SLDONGY" />
                 <ScalarProperty Name="SLKHONGDONGY" ColumnName="SLKHONGDONGY" />
                 <ScalarProperty Name="SLYKKHAC" ColumnName="SLYKKHAC" />
+                <ScalarProperty Name="SOPHIEUPHATRA" ColumnName="SOPHIEUPHATRA" />
+                <ScalarProperty Name="TUONGDUONGCOPHIEU" ColumnName="TUONGDUONGCOPHIEU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BANGYKIENBQPHIEUx">
+            <EntityTypeMapping TypeName="QLDHCDModel.BANGYKIENBQPHIEU">
+              <MappingFragment StoreEntitySet="BANGYKIENBQPHIEU">
+                <ScalarProperty Name="MAYK" ColumnName="MAYK" />
+                <ScalarProperty Name="MADH" ColumnName="MADH" />
+                <ScalarProperty Name="NOIDUNG" ColumnName="NOIDUNG" />
+                <ScalarProperty Name="SLDONGY" ColumnName="SLDONGY" />
+                <ScalarProperty Name="SLKHONGDONGY" ColumnName="SLKHONGDONGY" />
+                <ScalarProperty Name="SL_PHATRA" ColumnName="SL_PHATRA" />
+                <ScalarProperty Name="SLCP_PHATRA" ColumnName="SLCP_PHATRA" />
+                <ScalarProperty Name="SL_THUVAO" ColumnName="SL_THUVAO" />
+                <ScalarProperty Name="SLCP_THUVAO" ColumnName="SLCP_THUVAO" />
+                <ScalarProperty Name="SL_HOPLE" ColumnName="SL_HOPLE" />
+                <ScalarProperty Name="SLCP_HOPLE" ColumnName="SLCP_HOPLE" />
+                <ScalarProperty Name="SL_KHONG_HOPLE" ColumnName="SL_KHONG_HOPLE" />
+                <ScalarProperty Name="SLCP_KHONG_HOPLE" ColumnName="SLCP_KHONG_HOPLE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1108,9 +1205,8 @@
             <EntityTypeMapping TypeName="QLDHCDModel.CT_BAUBKS">
               <MappingFragment StoreEntitySet="CT_BAUBKS">
                 <ScalarProperty Name="MACT" ColumnName="MACT" />
-                <ScalarProperty Name="MADH" ColumnName="MADH" />
-                <ScalarProperty Name="MANGDUOCBAU" ColumnName="MANGDUOCBAU" />
-                <ScalarProperty Name="MANGDIBAU" ColumnName="MANGDIBAU" />
+                <ScalarProperty Name="MABKS" ColumnName="MABKS" />
+                <ScalarProperty Name="MANGUOIBAU" ColumnName="MANGUOIBAU" />
                 <ScalarProperty Name="SLPHIEUBAU" ColumnName="SLPHIEUBAU" />
                 <ScalarProperty Name="HINHTHUCBAU" ColumnName="HINHTHUCBAU" />
                 <ScalarProperty Name="THOIGIANBAU" ColumnName="THOIGIANBAU" />
@@ -1121,25 +1217,78 @@
             <EntityTypeMapping TypeName="QLDHCDModel.CT_BAUHDQT">
               <MappingFragment StoreEntitySet="CT_BAUHDQT">
                 <ScalarProperty Name="MACT" ColumnName="MACT" />
-                <ScalarProperty Name="MADH" ColumnName="MADH" />
-                <ScalarProperty Name="MANGDUOCBAU" ColumnName="MANGDUOCBAU" />
-                <ScalarProperty Name="MANGDIBAU" ColumnName="MANGDIBAU" />
+                <ScalarProperty Name="MAHDQT" ColumnName="MAHDQT" />
+                <ScalarProperty Name="MANGUOIBAU" ColumnName="MANGUOIBAU" />
                 <ScalarProperty Name="SLPHIEUBAU" ColumnName="SLPHIEUBAU" />
                 <ScalarProperty Name="HINHTHUCBAU" ColumnName="HINHTHUCBAU" />
                 <ScalarProperty Name="THOIGIANBAU" ColumnName="THOIGIANBAU" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CT_DHCD">
+            <EntityTypeMapping TypeName="QLDHCDModel.CT_DHCD">
+              <MappingFragment StoreEntitySet="CT_DHCD">
+                <ScalarProperty Name="MATD" ColumnName="MATD" />
+                <ScalarProperty Name="MADH" ColumnName="MADH" />
+                <ScalarProperty Name="MACD" ColumnName="MACD" />
+                <ScalarProperty Name="SLCP" ColumnName="SLCP" />
+                <ScalarProperty Name="SLDAUQ" ColumnName="SLDAUQ" />
+                <ScalarProperty Name="SLDCUQ" ColumnName="SLDCUQ" />
+                <ScalarProperty Name="HTDK" ColumnName="HTDK" />
+                <ScalarProperty Name="SLCPSAUCUNG" ColumnName="SLCPSAUCUNG" />
+                <ScalarProperty Name="NCP_DABAUHDQT" ColumnName="NCP_DABAUHDQT" />
+                <ScalarProperty Name="NCP_DABAUBKS" ColumnName="NCP_DABAUBKS" />
+                <ScalarProperty Name="NCP_DABQYKIEN" ColumnName="NCP_DABQYKIEN" />
+                <ScalarProperty Name="NCP_DABQYKIEN_PHEU" ColumnName="NCP_DABQYKIEN_PHEU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CT_YKIEN_BQPHIEU">
+            <EntityTypeMapping TypeName="QLDHCDModel.CT_YKIEN_BQPHIEU">
+              <MappingFragment StoreEntitySet="CT_YKIEN_BQPHIEU">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MAYK" ColumnName="MAYK" />
+                <ScalarProperty Name="MATD" ColumnName="MATD" />
+                <ScalarProperty Name="LUACHON" ColumnName="LUACHON" />
+                <ScalarProperty Name="THOIGIANBAU" ColumnName="THOIGIANBAU" />
+                <ScalarProperty Name="PHIEUTYPE" ColumnName="PHIEUTYPE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CTBQYKIENs">
             <EntityTypeMapping TypeName="QLDHCDModel.CTBQYKIEN">
               <MappingFragment StoreEntitySet="CTBQYKIEN">
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="MAYK" ColumnName="MAYK" />
-                <ScalarProperty Name="MADH" ColumnName="MADH" />
-                <ScalarProperty Name="MACD" ColumnName="MACD" />
+                <ScalarProperty Name="MATD" ColumnName="MATD" />
                 <ScalarProperty Name="LUACHON" ColumnName="LUACHON" />
-                <ScalarProperty Name="SLPHIEUBAU" ColumnName="SLPHIEUBAU" />
                 <ScalarProperty Name="NOIDUNGYKKHAC" ColumnName="NOIDUNGYKKHAC" />
                 <ScalarProperty Name="THOIGIANBAU" ColumnName="THOIGIANBAU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DHCDs">
+            <EntityTypeMapping TypeName="QLDHCDModel.DHCD">
+              <MappingFragment StoreEntitySet="DHCD">
+                <ScalarProperty Name="nTongBKS" ColumnName="nTongBKS" />
+                <ScalarProperty Name="nTongHDQT" ColumnName="nTongHDQT" />
+                <ScalarProperty Name="TRANGTHAI" ColumnName="TRANGTHAI" />
+                <ScalarProperty Name="MADH" ColumnName="MADH" />
+                <ScalarProperty Name="TenDH" ColumnName="TenDH" />
+                <ScalarProperty Name="YEARDHCD" ColumnName="YEARDHCD" />
+                <ScalarProperty Name="STTDHTRONGNAM" ColumnName="STTDHTRONGNAM" />
+                <ScalarProperty Name="nQKin" ColumnName="nQKin" />
+                <ScalarProperty Name="nQBefore" ColumnName="nQBefore" />
+                <ScalarProperty Name="nDeCuHDQT" ColumnName="nDeCuHDQT" />
+                <ScalarProperty Name="nUngCuHDQT" ColumnName="nUngCuHDQT" />
+                <ScalarProperty Name="nDeCuBKS" ColumnName="nDeCuBKS" />
+                <ScalarProperty Name="nUngCuBKS" ColumnName="nUngCuBKS" />
+                <ScalarProperty Name="nBauBoSungHDQT" ColumnName="nBauBoSungHDQT" />
+                <ScalarProperty Name="nBauBOSungBKS" ColumnName="nBauBOSungBKS" />
+                <ScalarProperty Name="thoiGian" ColumnName="thoiGian" />
+                <ScalarProperty Name="ACTIVE" ColumnName="ACTIVE" />
+                <ScalarProperty Name="TONGSOPHIEU" ColumnName="TONGSOPHIEU" />
+                <ScalarProperty Name="LABAUBOSUNG" ColumnName="LABAUBOSUNG" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1162,23 +1311,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="THANHVIENBKS">
-            <EntityTypeMapping TypeName="QLDHCDModel.THANHVIENBK">
-              <MappingFragment StoreEntitySet="THANHVIENBKS">
-                <ScalarProperty Name="MADH" ColumnName="MADH" />
-                <ScalarProperty Name="MACD" ColumnName="MACD" />
-                <ScalarProperty Name="SOPHIEUBAU" ColumnName="SOPHIEUBAU" />
-                <ScalarProperty Name="LATHAYTHE" ColumnName="LATHAYTHE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="THANHVIENHDQTs">
             <EntityTypeMapping TypeName="QLDHCDModel.THANHVIENHDQT">
               <MappingFragment StoreEntitySet="THANHVIENHDQT">
-                <ScalarProperty Name="MADH" ColumnName="MADH" />
-                <ScalarProperty Name="MACD" ColumnName="MACD" />
-                <ScalarProperty Name="SOPHIEUBAU" ColumnName="SOPHIEUBAU" />
+                <ScalarProperty Name="LASUCCESS" ColumnName="LASUCCESS" />
+                <ScalarProperty Name="MATD" ColumnName="MATD" />
+                <ScalarProperty Name="HINHTHUCBAU" ColumnName="HINHTHUCBAU" />
+                <ScalarProperty Name="SLPHIEUBAU" ColumnName="SLPHIEUBAU" />
+                <ScalarProperty Name="LADECU" ColumnName="LADECU" />
+                <ScalarProperty Name="LAUNGCU" ColumnName="LAUNGCU" />
                 <ScalarProperty Name="LATHAYTHE" ColumnName="LATHAYTHE" />
+                <ScalarProperty Name="LACHUTICH" ColumnName="LACHUTICH" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1198,45 +1341,39 @@
                 <ScalarProperty Name="MAUQ" ColumnName="MAUQ" />
                 <ScalarProperty Name="MADH" ColumnName="MADH" />
                 <ScalarProperty Name="MANGCHUYEN" ColumnName="MANGCHUYEN" />
+                <ScalarProperty Name="UYQUYENTYPE" ColumnName="UYQUYENTYPE" />
                 <ScalarProperty Name="MANGNHAN" ColumnName="MANGNHAN" />
                 <ScalarProperty Name="SLUQ" ColumnName="SLUQ" />
                 <ScalarProperty Name="THOIGIAN" ColumnName="THOIGIAN" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DHCDs">
-            <EntityTypeMapping TypeName="QLDHCDModel.DHCD">
-              <MappingFragment StoreEntitySet="DHCD">
-                <ScalarProperty Name="TONGSOPHIEU" ColumnName="TONGSOPHIEU" />
-                <ScalarProperty Name="ACTIVE" ColumnName="ACTIVE" />
-                <ScalarProperty Name="thoiGian" ColumnName="thoiGian" />
-                <ScalarProperty Name="nBauBOSungBKS" ColumnName="nBauBOSungBKS" />
-                <ScalarProperty Name="nBauBoSungHDQT" ColumnName="nBauBoSungHDQT" />
-                <ScalarProperty Name="nUngCuBKS" ColumnName="nUngCuBKS" />
-                <ScalarProperty Name="nDeCuBKS" ColumnName="nDeCuBKS" />
-                <ScalarProperty Name="nUngCuHDQT" ColumnName="nUngCuHDQT" />
-                <ScalarProperty Name="nDeCuHDQT" ColumnName="nDeCuHDQT" />
-                <ScalarProperty Name="nQBefore" ColumnName="nQBefore" />
-                <ScalarProperty Name="nQKin" ColumnName="nQKin" />
-                <ScalarProperty Name="STTDHTRONGNAM" ColumnName="STTDHTRONGNAM" />
-                <ScalarProperty Name="YEARDHCD" ColumnName="YEARDHCD" />
-                <ScalarProperty Name="TenDH" ColumnName="TenDH" />
+          <FunctionImportMapping FunctionImportName="CT_BAUBKS_INSERT" FunctionName="QLDHCDModel.Store.CT_BAUBKS_INSERT" />
+          <FunctionImportMapping FunctionImportName="CT_BAUBKS_INSERT_CURRENTUSER" FunctionName="QLDHCDModel.Store.CT_BAUBKS_INSERT_CURRENTUSER" />
+          <FunctionImportMapping FunctionImportName="CT_BAUHDQT_INSERT" FunctionName="QLDHCDModel.Store.CT_BAUHDQT_INSERT" />
+          <FunctionImportMapping FunctionImportName="CT_BAUHDQT_INSERT_CURRENTUSER" FunctionName="QLDHCDModel.Store.CT_BAUHDQT_INSERT_CURRENTUSER" />
+          <FunctionImportMapping FunctionImportName="UYQUYEN_INSERT" FunctionName="QLDHCDModel.Store.UYQUYEN_INSERT" />
+          <FunctionImportMapping FunctionImportName="UYQUYEN_INSERT_BYUSERNAME" FunctionName="QLDHCDModel.Store.UYQUYEN_INSERT_BYUSERNAME" />
+          <EntitySetMapping Name="COMMITDHCDs">
+            <EntityTypeMapping TypeName="QLDHCDModel.COMMITDHCD">
+              <MappingFragment StoreEntitySet="COMMITDHCD">
                 <ScalarProperty Name="MADH" ColumnName="MADH" />
+                <ScalarProperty Name="DATECOMMIT" ColumnName="DATECOMMIT" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CT_DHCD">
-            <EntityTypeMapping TypeName="QLDHCDModel.CT_DHCD">
-              <MappingFragment StoreEntitySet="CT_DHCD">
-                <ScalarProperty Name="QUYENBAUCU" ColumnName="QUYENBAUCU" />
-                <ScalarProperty Name="SLCPSAUCUNG" ColumnName="SLCPSAUCUNG" />
-                <ScalarProperty Name="HTDK" ColumnName="HTDK" />
-                <ScalarProperty Name="SLDCUQ" ColumnName="SLDCUQ" />
-                <ScalarProperty Name="SLDAUQ" ColumnName="SLDAUQ" />
-                <ScalarProperty Name="SLCP" ColumnName="SLCP" />
+          <EntitySetMapping Name="THANHVIENBKS">
+            <EntityTypeMapping TypeName="QLDHCDModel.THANHVIENBK">
+              <MappingFragment StoreEntitySet="THANHVIENBKS">
+                <ScalarProperty Name="LASUCCESS" ColumnName="LASUCCESS" />
+                <ScalarProperty Name="LACHUTICH" ColumnName="LACHUTICH" />
+                <ScalarProperty Name="LATHAYTHE" ColumnName="LATHAYTHE" />
+                <ScalarProperty Name="LAUNGCU" ColumnName="LAUNGCU" />
+                <ScalarProperty Name="LADECU" ColumnName="LADECU" />
+                <ScalarProperty Name="SLPHIEUBAU" ColumnName="SLPHIEUBAU" />
+                <ScalarProperty Name="HINHTHUCBAU" ColumnName="HINHTHUCBAU" />
                 <ScalarProperty Name="MATD" ColumnName="MATD" />
-                <ScalarProperty Name="MACD" ColumnName="MACD" />
-                <ScalarProperty Name="MADH" ColumnName="MADH" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -3,17 +3,17 @@
 @{
     ViewBag.Title = "Register";
 }
-@using (Html.BeginForm("Register", "UserCoDong", FormMethod.Post, new {  @class = "formRegister form-horizontal", role = "form" }))
+@using (Html.BeginForm("Register", "UserCoDong", FormMethod.Post, new { @class = "formRegister form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <h2>Register</h2>
-    <div class="Notify messError" >
-            <span id="mssError" style="color:red">@(ViewBag.AlertText + string.Empty)</span>
-        </div>
+    <div class="Notify messError">
+        <span id="mssError" style="color:red">@(ViewBag.AlertText + string.Empty)</span>
+    </div>
     <div class="form-group">
         <label class="col-md-2 control-label required">Username :</label>
         <div class="col-md-10">
-            <input id="USERNAME" name="USERNAME" type="text" class="form-control"  required />
+            <input id="USERNAME" name="USERNAME" type="text" class="form-control" required />
         </div>
     </div>
     <div class="form-group">
@@ -37,8 +37,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        function btnRegister_click()
-        {
+        function btnRegister_click() {
             if (ValidateForm() == true) $('.formRegister')[0].submit();
 
         }

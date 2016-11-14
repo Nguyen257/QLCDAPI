@@ -86,6 +86,7 @@ namespace QLDHCDAPI.Controllers
         // GET: /UserCoDong/
         public ActionResult Index()
         {
+            ViewBag.Alert = TempData["Message"] + string.Empty;
             if (string.Equals(HttpContext.Session["UserName"] + string.Empty, "AdminQLDHCD") && !string.IsNullOrWhiteSpace(HttpContext.Session["isLogin"] + string.Empty))
             {
                 var usercds = db.USERCDs.Include(u => u.CODONG);
@@ -99,6 +100,10 @@ namespace QLDHCDAPI.Controllers
 
         public ActionResult Login()
         {
+            if(HttpContext!=null && HttpContext.Session!=null && HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             string strMaDH = new DHCDController().GetCurrentMaDH();
             if (!string.IsNullOrWhiteSpace(strMaDH) && !string.Equals(strMaDH, "NULL"))
             {
@@ -188,6 +193,7 @@ namespace QLDHCDAPI.Controllers
 
                         db.USERCDs.Add(usercd);
                         db.SaveChanges();
+                        TempData["Message"] = "Chỉnh sửa tham dự đại hội thành công";
                         return RedirectToLocal("~/");
                     }
                     else

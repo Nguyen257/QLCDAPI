@@ -43,3 +43,16 @@
 }
 
 </table>
+
+<span id="popupNotification"></span>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var popupAlert = $("#popupNotification").kendoNotification().data("kendoNotification");
+            if ('@(ViewBag.Alert + string.Empty)' != null && '@(ViewBag.Alert + string.Empty)' != '') {
+                popupAlert.show('@(ViewBag.Alert + string.Empty)');
+            }
+        });
+    </script>
+}

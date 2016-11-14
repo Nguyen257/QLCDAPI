@@ -12,11 +12,11 @@ namespace QLDHCDAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BANGYKIEN
+    public partial class BANGYKIENBQPHIEU
     {
-        public BANGYKIEN()
+        public BANGYKIENBQPHIEU()
         {
-            this.CTBQYKIENs = new HashSet<CTBQYKIEN>();
+            this.CT_YKIEN_BQPHIEU = new HashSet<CT_YKIEN_BQPHIEU>();
         }
     
         public int MAYK { get; set; }
@@ -24,11 +24,16 @@ namespace QLDHCDAPI.Models
         public string NOIDUNG { get; set; }
         public int SLDONGY { get; set; }
         public int SLKHONGDONGY { get; set; }
-        public int SLYKKHAC { get; set; }
-        public int SOPHIEUPHATRA { get; set; }
-        public int TUONGDUONGCOPHIEU { get; set; }
+        public int SL_PHATRA { get; set; }
+        public int SLCP_PHATRA { get; set; }
+        public int SL_THUVAO { get; set; }
+        public int SLCP_THUVAO { get; set; }
+        public int SL_HOPLE { get; set; }
+        public int SLCP_HOPLE { get; set; }
+        public int SL_KHONG_HOPLE { get; set; }
+        public int SLCP_KHONG_HOPLE { get; set; }
     
         public virtual DHCD DHCD { get; set; }
-        public virtual ICollection<CTBQYKIEN> CTBQYKIENs { get; set; }
+        public virtual ICollection<CT_YKIEN_BQPHIEU> CT_YKIEN_BQPHIEU { get; set; }
     }
 }

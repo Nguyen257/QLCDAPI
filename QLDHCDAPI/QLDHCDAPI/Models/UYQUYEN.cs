@@ -16,12 +16,14 @@ namespace QLDHCDAPI.Models
     {
         public int MAUQ { get; set; }
         public string MADH { get; set; }
-        public int MANGCHUYEN { get; set; }
-        public int MANGNHAN { get; set; }
+        public string MANGCHUYEN { get; set; }
+        public string UYQUYENTYPE { get; set; }
+        public string MANGNHAN { get; set; }
         public Nullable<int> SLUQ { get; set; }
         public Nullable<System.DateTime> THOIGIAN { get; set; }
     
-        public virtual CT_DHCD NGUOICHUYEN { get; set; }
-        public virtual CT_DHCD NGUOINHAN { get; set; }
+        public virtual CT_DHCD CT_DHCD { get; set; }
+        public virtual CT_DHCD CT_DHCD1 { get; set; }
+        public virtual DHCD DHCD { get; set; }
     }
 }

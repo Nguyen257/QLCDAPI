@@ -57,6 +57,55 @@ namespace QLDHCDAPI.API
             
         }
 
+        [ResponseType(typeof(string))]
+        public IHttpActionResult GetCoDongFromMaTD(string matd, string role)
+        {
+
+            UserCoDongController control = new UserCoDongController();
+            CODONG cd = new CODONG();
+            cd.HoTen = string.Empty;
+            //string CurrentUserRole = control.GetRoleCurrentUser(username, pass);
+            if (string.Equals(role, "Admin") || string.Equals(role, "User"))
+            {
+                if (!string.IsNullOrWhiteSpace(matd))
+                {
+                    try
+                    {
+                        
+                        List<CT_DHCD> ListTD = (from l in db.CT_DHCD
+                                               where l.MATD == matd
+                                               select l).ToList();
+
+                        if (ListTD.Count > 0)
+                        {
+                            List<CODONG> ListCD = (from l in db.CODONGs
+                                                   where l.MACD == ListTD.First().MACD
+                                                   select l).ToList();
+                            if(ListCD!=null && ListCD.Count>0)
+                            {
+                                cd = ListCD.First();
+
+
+                                return Ok(cd.HoTen);
+                            }
+                            
+                        }
+                        return Ok(cd.HoTen);
+                    }
+                    catch { return Ok(cd.HoTen); }
+
+                }
+                else
+                    return Ok(cd.HoTen);
+            }
+            else
+            {
+                return Ok(cd.HoTen);
+            }
+
+
+        }
+
         //// GET api/CoDongAPI
         //public IQueryable<CODONG> GetCODONGs()
         //{

@@ -12,6 +12,13 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.MADH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MADH)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.TenDH)
         </dt>
 
@@ -94,7 +101,7 @@
     </dl>
 
     @using (Html.BeginForm("DeleteDHCD", "DHCD", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

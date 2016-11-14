@@ -12,19 +12,15 @@ namespace QLDHCDAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BANGBAUHDQT
+    public partial class CT_YKIEN_BQPHIEU
     {
-        public BANGBAUHDQT()
-        {
-            this.CT_BAUHDQT = new HashSet<CT_BAUHDQT>();
-        }
+        public int ID { get; set; }
+        public int MAYK { get; set; }
+        public string MATD { get; set; }
+        public Nullable<int> LUACHON { get; set; }
+        public Nullable<System.DateTime> THOIGIANBAU { get; set; }
+        public Nullable<bool> PHIEUTYPE { get; set; }
     
-        public string MADH { get; set; }
-        public int MACD { get; set; }
-        public string HINHTHUCBAU { get; set; }
-        public Nullable<int> SLPHIEUBAU { get; set; }
-    
-        public virtual ICollection<CT_BAUHDQT> CT_BAUHDQT { get; set; }
-        public virtual CT_DHCD CT_DHCD { get; set; }
+        public virtual BANGYKIENBQPHIEU BANGYKIENBQPHIEU { get; set; }
     }
 }

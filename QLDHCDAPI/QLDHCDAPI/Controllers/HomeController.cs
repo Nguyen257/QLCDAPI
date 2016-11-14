@@ -10,6 +10,7 @@ namespace QLDHCDAPI.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Alert = TempData["Message"] + string.Empty;
             string strMaDH = new DHCDController().GetCurrentMaDH();
             if(!string.IsNullOrWhiteSpace(strMaDH) && !string.Equals(strMaDH,"NULL"))
             {

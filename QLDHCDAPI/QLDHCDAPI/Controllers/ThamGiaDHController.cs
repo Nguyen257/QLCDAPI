@@ -10,143 +10,262 @@ using System.Data.Entity.Infrastructure;
 using System.Net;
 using System.Data.Entity;
 
+
 namespace QLDHCDAPI.Controllers
 {
     public class ThamGiaDHController : Controller
     {
-        //
+        private QLDHCDEntities db = new QLDHCDEntities();
+
         // GET: /ThamGiaDH/
         public ActionResult Index(string currentFilter, string searchString, int? page)
         {
-            QLDHCDEntities data = new QLDHCDEntities();
-            List<CT_DHCD> lst = new List<CT_DHCD>();
-            lst = (from l in data.CT_DHCD
-                   where l.DHCD.ACTIVE==1
-                   select l).ToList();
-
-            if (searchString != null)
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                              && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewBag.CurrentFilter = searchString;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                lst = lst.Where(s => s.DHCD.TenDH.Contains(searchString) || s.CODONG.HoTen.Contains(searchString)).ToList();
-            }
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            return View(lst.ToPagedList(pageNumber, pageSize));
-        }
-        public ActionResult Create()
-        {
-            CT_DHCD cd = new CT_DHCD();
-            PopulateDHDropDownList();
-            PopulateCDDropDownList();
-            return View(cd);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Insert([Bind(Include ="MADH,MACD,SLCP,SLDAUQ,SLDCUQ,HTDK,SLCPSAUCUNG,QUYENBAUCU")] CT_DHCD f)
-        {
-
-            try
-            {
-                if (ModelState.IsValid)
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
                 {
+                    ViewBag.Alert = TempData["Message"] + string.Empty;
                     QLDHCDEntities data = new QLDHCDEntities();
-                    data.CT_DHCD.Add(f);
-                    data.SaveChanges();
-                    ViewBag.kq = "Đã thêm cổ đông thành công !!!";
+                    List<CT_DHCD> lst = new List<CT_DHCD>();
+                    List<CT_DHCD> CurrentCT_DHCD = db.CT_DHCD.Where(q => q.DHCD.ACTIVE == 1).ToList(); ;
+
+                    if (searchString != null)
+                    {
+                        page = 1;
+                    }
+                    else
+                    {
+                        searchString = currentFilter;
+                    }
+
+                    ViewBag.CurrentFilter = searchString;
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        if (CurrentCT_DHCD != null && CurrentCT_DHCD.Count >= 0)
+                        {
+                            lst = CurrentCT_DHCD.Where(q => q.CODONG.HoTen.Contains(searchString) || q.DHCD.TenDH.Contains(searchString)).ToList();
+                        }
+                    }
+                    else
+                    {
+                        lst = CurrentCT_DHCD;
+                    }
+                    int pageSize = 10;
+                    int pageNumber = (page ?? 1);
+                    return View(lst.ToPagedList(pageNumber, pageSize));
+
                 }
             }
-            catch (RetryLimitExceededException /* dex */)
-            {
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-                ViewBag.kq = "Thêm cổ đông thất bại !!!";
-            }
-            PopulateCDDropDownList(f.MACD);
-            PopulateDHDropDownList(f.MADH);
-            return View("InsertResult");
-        }
-        public ActionResult Details(string mdh,int mcd)
-        {
-            QLDHCDEntities data = new QLDHCDEntities();
-            CT_DHCD dd = (from d in data.CT_DHCD
-                          where d.MACD == mcd && d.MADH == mdh
-                          select d).First();
-            PopulateCDDropDownList(dd.MACD);
-            PopulateDHDropDownList(dd.MADH);
-            return View(dd);
-        }
-        public ActionResult Edit(string mdh ,int mcd)
-        {
-            
-            if (mdh == null && mcd == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            QLDHCDEntities data = new QLDHCDEntities();
-            CT_DHCD ff = (from d in data.CT_DHCD
-                          where d.MACD == mcd && d.MADH == mdh
-                          select d).First();
-            if (ff == null)
-            {
-                return HttpNotFound();
-            }
-            PopulateDHDropDownList(ff.MADH);
-            PopulateCDDropDownList(ff.MACD);
-            return View(ff);
+            return new HttpStatusCodeResult(401);
         }
 
-        public ActionResult Update([Bind(Include = "MADH,MACD,SLCP,SLDAUQ,SLDCUQ,HTDK,SLCPSAUCUNG,QUYENBAUCU")]CT_DHCD f)
+        // GET: /ThamGiaDH/Details/5
+        public ActionResult Details(string matd)
         {
-            QLDHCDEntities db = new QLDHCDEntities();
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                     && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+            {
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+                {
+                    if (string.IsNullOrWhiteSpace(matd))
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    CT_DHCD ct_dhcd = db.CT_DHCD.Find(matd);
+                    if (ct_dhcd == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(ct_dhcd);
+                }
+                else
+                {
+                    if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User")
+                    {
+                        List<int> lCT_DHCD = (from td in db.CT_DHCD where td.MATD == matd select td.MACD).ToList();
+                        int macd = (lCT_DHCD != null && lCT_DHCD.Count > 0) ? lCT_DHCD.First() : 0;
+                        string UserName = db.USERCDs.Where(q => q.MACD == macd).First().USERNAME;
+                        if (UserName == HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                        {
+                            CT_DHCD ct_dhcd = db.CT_DHCD.Find(matd);
+                            if (ct_dhcd == null)
+                            {
+                                return HttpNotFound();
+                            }
+                            return View(ct_dhcd);
+                        }
+                    }
+                }
+            }
+            return new HttpStatusCodeResult(401);
+
+        }
+
+        // GET: /ThamGiaDH/Create
+        public ActionResult Create()
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                      && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+            {
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+                {
+                    CT_DHCD ct = new CT_DHCD();
+                    DHCD dhcd = db.DHCDs.Where(q => q.ACTIVE == 1).ToList().First();
+                    ViewBag.MADH = dhcd.MADH + string.Empty;
+                    ViewBag.TenDH = dhcd.TenDH + string.Empty;
+                    ViewBag.MaCoDinh = "HDC" + dhcd.YEARDHCD + dhcd.STTDHTRONGNAM + string.Empty;
+
+                    return View(ct);
+                }
+            }
+            return new HttpStatusCodeResult(401);
+
+        }
+
+        // POST: /ThamGiaDH/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "MATD,MADH,MACD,SLCP,SLDAUQ,SLDCUQ,HTDK,SLCPSAUCUNG")] CT_DHCD ct_dhcd)
+        {
             if (ModelState.IsValid)
             {
-                db.Entry(f).State = EntityState.Modified;
+                ct_dhcd.SLCP = (ct_dhcd.SLCP.HasValue) ? (ct_dhcd.SLCP.Value) : 0;
+                ct_dhcd.SLDAUQ = (ct_dhcd.SLDAUQ.HasValue) ? (ct_dhcd.SLDAUQ.Value) : 0;
+                ct_dhcd.SLDCUQ = (ct_dhcd.SLDCUQ.HasValue) ? (ct_dhcd.SLDCUQ.Value) : 0;
+                ct_dhcd.SLCPSAUCUNG = ct_dhcd.SLCP - ct_dhcd.SLDAUQ + ct_dhcd.SLDCUQ;
+                db.CT_DHCD.Add(ct_dhcd);
                 db.SaveChanges();
+                TempData["Message"] = "Đăng ký tham dự đại hội thành công";
                 return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+
+            ViewBag.MACD = new SelectList(db.CODONGs, "MACD", "HoTen", ct_dhcd.MACD);
+            ViewBag.MADH = new SelectList(db.DHCDs, "MADH", "TenDH", ct_dhcd.MADH);
+            ViewBag.MATD = new SelectList(db.THANHVIENBKS, "MATD", "HINHTHUCBAU", ct_dhcd.MATD);
+            ViewBag.MATD = new SelectList(db.THANHVIENHDQTs, "MATD", "HINHTHUCBAU", ct_dhcd.MATD);
+            return View(ct_dhcd);
         }
 
-        public ActionResult Delete(string mdh, int mcd)
+        // GET: /ThamGiaDH/Edit/5
+        public ActionResult Edit(string matd)
         {
-            QLDHCDEntities db = new QLDHCDEntities();
-            CT_DHCD ct_dhcd = (from d in db.CT_DHCD
-                               where d.MADH == mdh && d.MACD == mcd
-                               select d).First();
-            db.CT_DHCD.Remove(ct_dhcd);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                      && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+            {
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+                {
+                    if (string.IsNullOrWhiteSpace(matd))
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    CT_DHCD ct_dhcd = db.CT_DHCD.Find(matd);
+                    if (ct_dhcd == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    return View(ct_dhcd);
+                }
+            }
+            return new HttpStatusCodeResult(401);
+
         }
 
-
-
-
-
-
-
-
-        public void PopulateDHDropDownList (object selectedDH=null)
+        // POST: /ThamGiaDH/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "MATD,MADH,MACD,SLCP,SLDAUQ,SLDCUQ,HTDK,SLCPSAUCUNG")] CT_DHCD ct_dhcd)
         {
-            QLDHCDEntities data = new QLDHCDEntities();
-            var dhQuery = from d in data.DHCDs
-                          where d.ACTIVE == 1
-                          select d;
-            ViewBag.MADH = new SelectList(dhQuery, "MADH", "TenDH", selectedDH);
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                     && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+            {
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+                {
+                    try
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            ct_dhcd.SLCP = (ct_dhcd.SLCP.HasValue) ? (ct_dhcd.SLCP.Value) : 0;
+                            ct_dhcd.SLDAUQ = (ct_dhcd.SLDAUQ.HasValue) ? (ct_dhcd.SLDAUQ.Value) : 0;
+                            ct_dhcd.SLDCUQ = (ct_dhcd.SLDCUQ.HasValue) ? (ct_dhcd.SLDCUQ.Value) : 0;
+                            ct_dhcd.SLCPSAUCUNG = ct_dhcd.SLCP - ct_dhcd.SLDAUQ + ct_dhcd.SLDCUQ;
+                            db.Entry(ct_dhcd).State = EntityState.Modified;
+                            db.SaveChanges();
+                            TempData["Message"] = "Chỉnh sửa tham dự đại hội thành công";
+                            return RedirectToAction("Index");
+                        }
+                        return View(ct_dhcd);
+                    }
+                    catch (Exception ex)
+                    {
+                        ModelState.AddModelError(string.Empty, ex.Message);
+                    }
+                }
+            }
+            return new HttpStatusCodeResult(401);
         }
-        public void PopulateCDDropDownList(object selectedCD = null)
+
+        // GET: /ThamGiaDH/Delete/5
+        public ActionResult Delete(string matd)
         {
-            QLDHCDEntities data = new QLDHCDEntities();
-            var cdQuery = from d in data.CODONGs
-                          select d;
-            ViewBag.MACD = new SelectList(cdQuery, "MACD", "HoTen", selectedCD);
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                      && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+            {
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+                {
+                    if (string.IsNullOrWhiteSpace(matd))
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    CT_DHCD ct_dhcd = db.CT_DHCD.Find(matd);
+                    if (ct_dhcd == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(ct_dhcd);
+                }
+            }
+            return new HttpStatusCodeResult(401);
+
         }
-	}
+
+        // POST: /ThamGiaDH/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string matd)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                      && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+            {
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+                {
+                    if (string.IsNullOrWhiteSpace(matd))
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    CT_DHCD ct_dhcd = db.CT_DHCD.Find(matd);
+                    db.CT_DHCD.Remove(ct_dhcd);
+                    db.SaveChanges();
+                    TempData["Message"] = "Xóa tham dự đại hội thành công";
+                    return RedirectToAction("Index");
+                }
+            }
+            return new HttpStatusCodeResult(401);
+
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }

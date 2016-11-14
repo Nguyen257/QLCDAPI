@@ -16,96 +16,141 @@
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.MADH)
+        @Html.HiddenFor(model => model.TRANGTHAI);
+        @Html.HiddenFor(model => model.nTongHDQT);
+        @Html.HiddenFor(model => model.nTongBKS);
+        <div>
+            <div class="divMyLeft DHCDCreate">
+                <div class="form-group" style="display:none">
+                    @Html.LabelFor(model => model.MADH, new { @class = "control-label col-lg-2 DHCDLabel DHCDLabel" })
+                    <div class="col-lg-10 DHCDInput">
+                        @Html.HiddenFor(model => model.MADH, new { @class = "k-textbox myCSSInput", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.MADH)
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TenDH, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.TenDH, new { @class = "k-textbox myCSSInput" })
-                @Html.ValidationMessageFor(model => model.TenDH)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TenDH, new { @class = "control-label col-lg-2 DHCDLabel" })
+                    <div class="col-lg-10 DHCDInput">
+                        @Html.TextBoxFor(model => model.TenDH, new { @class = "k-textbox myCSSInput" })
+                        @Html.ValidationMessageFor(model => model.TenDH)
+                    </div>
+                </div>
+                <div class="form-group" style="display: none !important">
+                    @Html.LabelFor(model => model.YEARDHCD, new { @class = "control-label col-lg-2" })
+                    <div class="col-lg-10 DHCDInput">
+                        @Html.HiddenFor(model => model.YEARDHCD)
+                        @Html.ValidationMessageFor(model => model.YEARDHCD)
+                    </div>
+                </div>
+                <div class="form-group" style="display: none !important">
+                    @Html.LabelFor(model => model.STTDHTRONGNAM, new { @class = "control-label col-lg-2 DHCDLabel" })
+                    <div class="col-lg-10 DHCDInput">
+                        @Html.HiddenFor(model => model.STTDHTRONGNAM)
+                        @Html.ValidationMessageFor(model => model.STTDHTRONGNAM)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.thoiGian, new { @class = "control-label col-lg-2 DHCDLabel" })
+                    <div class="col-lg-10 DHCDInput">
+                        @Html.TextBoxFor(model => model.thoiGian)
+                        @Html.ValidationMessageFor(model => model.thoiGian)
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ACTIVE, new { @class = "control-label col-lg-2 DHCDLabel" })
+                    <div class="col-lg-10 DHCDInput">
+                        @Html.HiddenFor(model => model.ACTIVE)
+                        <input type="checkbox" id="CheckBoxActive" name="CheckBoxActive" value="0" />
+                        @Html.ValidationMessageFor(model => model.ACTIVE)
+                    </div>
+                </div>
+                <div class="form-group" style="display:none">
+                    @Html.LabelFor(model => model.LABAUBOSUNG, new { @class = "control-label col-lg-2 DHCDLabel" })
+                    <div class="col-lg-10 DHCDInput">
+                        @Html.HiddenFor(model => model.LABAUBOSUNG)
+                        @Html.ValidationMessageFor(model => model.LABAUBOSUNG)
+                    </div>
+                </div>
+
             </div>
+
+
+            <div class="divMyRight">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.nQKin, new { @class = "control-label col-lg-2 DHCDLabel" })
+                    <div class="col-lg-10 DHCDInput">
+                        @Html.TextBoxFor(model => model.nQKin, new { @class = "k-textbox formNumberic myCSSInput" })
+                        @Html.ValidationMessageFor(model => model.nQKin)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.nQBefore, new { @class = "control-label col-lg-2 DHCDLabel" })
+                    <div class="col-lg-10 DHCDInput">
+                        @Html.TextBoxFor(model => model.nQBefore, new { @class = "k-textbox formNumberic myCSSInput" })
+                        @Html.ValidationMessageFor(model => model.nQBefore)
+                    </div>
+                </div>
+
+                <div id="BauMoi">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.nDeCuHDQT, new { @class = "control-label col-lg-2 DHCDLabel" })
+                        <div class="col-lg-10 DHCDInput">
+                            @Html.TextBoxFor(model => model.nDeCuHDQT, new { @class = "k-textbox formNumberic myCSSInput" })
+                            @Html.ValidationMessageFor(model => model.nDeCuHDQT)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.nUngCuHDQT, new { @class = "control-label col-lg-2 DHCDLabel" })
+                        <div class="col-lg-10 DHCDInput">
+                            @Html.TextBoxFor(model => model.nUngCuHDQT, new { @class = "k-textbox formNumberic myCSSInput" })
+                            @Html.ValidationMessageFor(model => model.nUngCuHDQT)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.nDeCuBKS, new { @class = "control-label col-lg-2 DHCDLabel" })
+                        <div class="col-lg-10 DHCDInput">
+                            @Html.TextBoxFor(model => model.nDeCuBKS, new { @class = "k-textbox formNumberic myCSSInput" })
+                            @Html.ValidationMessageFor(model => model.nDeCuBKS)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.nUngCuBKS, new { @class = "control-label col-lg-2 DHCDLabel" })
+                        <div class="col-lg-10 DHCDInput">
+                            @Html.TextBoxFor(model => model.nUngCuBKS, new { @class = "k-textbox formNumberic myCSSInput" })
+                            @Html.ValidationMessageFor(model => model.nUngCuBKS)
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="BauBoSung" style="display:none">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.nBauBoSungHDQT, new { @class = "control-label col-lg-2 DHCDLabel" })
+                        <div class="col-lg-10 DHCDInput">
+                            @Html.TextBoxFor(model => model.nBauBoSungHDQT, new { @class = "k-textbox formNumberic myCSSInput" })
+                            @Html.ValidationMessageFor(model => model.nBauBoSungHDQT)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.nBauBOSungBKS, new { @class = "control-label col-lg-2 DHCDLabel" })
+                        <div class="col-lg-10 DHCDInput">
+                            @Html.TextBoxFor(model => model.nBauBOSungBKS, new { @class = "k-textbox formNumberic myCSSInput" })
+                            @Html.ValidationMessageFor(model => model.nBauBOSungBKS)
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="divMyClearBoth"></div>
         </div>
-
-        <div class="form-group" style="display:none !important">
-            @Html.LabelFor(model => model.STTDHTRONGNAM, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.HiddenFor(model => model.STTDHTRONGNAM)
-                @Html.ValidationMessageFor(model => model.STTDHTRONGNAM)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.nQKin, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.nQKin, new { @class = "k-textbox formNumberic myCSSInput" })
-                @Html.ValidationMessageFor(model => model.nQKin)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.nQBefore, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.nQBefore, new { @class = "k-textbox formNumberic myCSSInput" })
-                @Html.ValidationMessageFor(model => model.nQBefore)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.nDeCuHDQT, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.nDeCuHDQT, new { @class = "k-textbox formNumberic myCSSInput" })
-                @Html.ValidationMessageFor(model => model.nDeCuHDQT)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.nUngCuHDQT, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.nUngCuHDQT, new { @class = "k-textbox formNumberic myCSSInput" })
-                @Html.ValidationMessageFor(model => model.nUngCuHDQT)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.nDeCuBKS, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.nDeCuBKS, new { @class = "k-textbox formNumberic myCSSInput" })
-                @Html.ValidationMessageFor(model => model.nDeCuBKS)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.nUngCuBKS, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.nUngCuBKS, new { @class = "k-textbox formNumberic myCSSInput" })
-                @Html.ValidationMessageFor(model => model.nUngCuBKS)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.thoiGian, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.thoiGian)
-                @Html.ValidationMessageFor(model => model.thoiGian)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ACTIVE, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.HiddenFor(model => model.ACTIVE)
-                <input type="checkbox" id="CheckBoxActive" name="CheckBoxActive" value="0" />
-                @Html.ValidationMessageFor(model => model.ACTIVE)
-            </div>
-        </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.TONGSOPHIEU, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TONGSOPHIEU)
-                @Html.ValidationMessageFor(model => model.TONGSOPHIEU)
-            </div>
-        </div>*@
-
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
                 <button type="reset" class="btn btn-default">Hủy</button>
@@ -121,8 +166,18 @@
 @section Scripts{
     <script>
 
-       
+
         $(document).ready(function () {
+            var bosung = $('#LABAUBOSUNG').val();
+            if (bosung == 'True') {
+                $('#BauMoi').css('display', 'none');
+                $('#BauBoSung').css('display', '');
+            }
+            else
+            {
+                $('#BauMoi').css('display', '');
+                $('#BauBoSung').css('display', 'none');
+            }
             if ($('#ACTIVE').val() == 1) $('#CheckBoxActive').prop("checked", true);
             else $('#CheckBoxActive').prop("checked", false);
 

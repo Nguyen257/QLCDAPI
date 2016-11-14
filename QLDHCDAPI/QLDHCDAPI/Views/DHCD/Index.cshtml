@@ -1,4 +1,5 @@
-﻿@model IEnumerable<QLDHCDAPI.Models.DHCD>
+﻿@model PagedList.IPagedList<QLDHCDAPI.Models.DHCD>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Danh sách đại hội cổ đông";
@@ -8,25 +9,35 @@
 <h2>Danh sách đại hội cổ đông</h2>
 
 <p>
-    @Html.ActionLink("Tạo mới đại hội cổ đông", "Create")
+    @Html.ActionLink("Tạo mới đại hội cổ đông", "Create") | @Html.ActionLink("Thêm ứng viên HĐQT", "AddUngVienHDQT") |@Html.ActionLink("Thêm ứng viên BKS", "AddUngVienBKS")
+ 
 </p>
+@using (Html.BeginForm("Index", "DHCD", FormMethod.Get))
+{
+    <p>
+        Tìm theo tên: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+    </p>
+}
 <table class="table table-striped table-hover ">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.MADH)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().MADH)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TenDH)
-        </th>
-        
-        <th>
-            @Html.DisplayNameFor(model => model.thoiGian)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TenDH)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ACTIVE)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().LABAUBOSUNG)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TONGSOPHIEU)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().thoiGian)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ACTIVE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TONGSOPHIEU)
         </th>
         <th></th>
     </tr>
@@ -39,6 +50,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TenDH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LABAUBOSUNG)
             </td>
             
             <td>
@@ -59,3 +73,19 @@
     }
 
 </table>
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+</div>
+
+<span id="popupNotification"></span>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var popupAlert = $("#popupNotification").kendoNotification().data("kendoNotification");
+            if ('@(ViewBag.Alert + string.Empty)' != null && '@(ViewBag.Alert + string.Empty)' != '') {
+                popupAlert.show('@(ViewBag.Alert + string.Empty)');
+            }
+        });
+    </script>
+}

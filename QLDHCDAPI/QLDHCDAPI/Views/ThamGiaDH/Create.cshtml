@@ -1,93 +1,159 @@
 ﻿@model QLDHCDAPI.Models.CT_DHCD
 
 @{
-    ViewBag.Title = "Đăng kí tham gia đại hội";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Create";
 }
 
-<h2>Đăng kí tham gia đại hội</h2>
+<h2>Create</h2>
 
-@using (Html.BeginForm("Insert","ThamGiaDH",FormMethod.Post)) 
+@using (Html.BeginForm("Create", "ThamGiaDH", FormMethod.Post, new { @class = "formCreate form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
+        <h4>Đăng ký tham dự @ViewBag.TenDH</h4>
         <hr />
         @Html.ValidationSummary(true)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MADH, "Tên đại hội", new { @class = "control-label col-lg-2" })
-            <div class="col-lg-10">
-                @Html.DropDownList("MADH", String.Empty)
+            @Html.LabelFor(model => model.MATD, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.MATD)
+                <input type="text" id="MaCoDinh" name="MaCoDinh" class="form-control k-textbox" value="@ViewBag.MaCoDinh" readonly />
+                <input type="text" id="MACD" name="MACD" class="form-control formNumberic k-textbox" />
+                <input type="text" id="HoTen" name="HoTen" class="form-control k-textbox" readonly />
+                @Html.ValidationMessageFor(model => model.MATD)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MADH, "MADH", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownList("MADH", String.Empty)*@
+                <input type="text" id="MADH" name="MADH" value="@ViewBag.MADH" class="form-control k-textbox" readonly />
                 @Html.ValidationMessageFor(model => model.MADH)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MACD, "Tên cổ đông", new { @class = "control-label col-lg-2" })
-            <div class="col-lg-10">
-                @Html.DropDownList("MACD", String.Empty)
-                @Html.ValidationMessageFor(model => model.MACD)
+            @Html.LabelFor(model => model.HTDK, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.HTDK)
+                <input type="text" id="ddlHTDK" class="form-control" />
+                <input type="text" id="txtKhacHTDK" class="form-control k-textbox" disabled />
+                @Html.ValidationMessageFor(model => model.HTDK)
             </div>
         </div>
 
+
+        @*<div class="form-group" style="display:none">
+                @Html.LabelFor(model => model.MACD, "MACD", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("MACD", String.Empty)
+                    @Html.ValidationMessageFor(model => model.MACD)
+                </div>
+            </div>*@
+
         <div class="form-group">
-            @Html.LabelFor(model => model.SLCP, new { @class = "control-label col-lg-2" })
-            <div class="col-lg-10">
-                @Html.EditorFor(model => model.SLCP)
+            @Html.LabelFor(model => model.SLCP, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.SLCP, new { @class = "k-textbox formNumberic myCSSInput" })
                 @Html.ValidationMessageFor(model => model.SLCP)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SLDAUQ, new { @class = "control-label col-lg-2" })
-            <div class="col-lg-10">
-                @Html.EditorFor(model => model.SLDAUQ)
+            @Html.LabelFor(model => model.SLDAUQ, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.SLDAUQ, new { @class = "k-textbox formNumberic  myCSSInput" })
                 @Html.ValidationMessageFor(model => model.SLDAUQ)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SLDCUQ, new { @class = "control-label col-lg-2" })
-            <div class="col-lg-10">
-                @Html.EditorFor(model => model.SLDCUQ)
+            @Html.LabelFor(model => model.SLDCUQ, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.SLDCUQ, new { @class = "k-textbox formNumberic myCSSInput" })
                 @Html.ValidationMessageFor(model => model.SLDCUQ)
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.HTDK, new { @class = "control-label col-lg-2" })
-            <div class="col-lg-10">
-                @Html.EditorFor(model => model.HTDK)
-                @Html.ValidationMessageFor(model => model.HTDK)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SLCPSAUCUNG, new { @class = "control-label col-lg-2" })
-            <div class="col-lg-10">
-                @Html.EditorFor(model => model.SLCPSAUCUNG)
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.SLCPSAUCUNG, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.SLCPSAUCUNG, new { @class = "k-textbox formNumberic  myCSSInput" })
                 @Html.ValidationMessageFor(model => model.SLCPSAUCUNG)
             </div>
         </div>
-
         <div class="form-group">
-            @Html.LabelFor(model => model.QUYENBAUCU, new { @class = "control-label col-lg-2" })
-            <div class="col-lg-10">
-                @Html.EditorFor(model => model.QUYENBAUCU)
-                @Html.ValidationMessageFor(model => model.QUYENBAUCU)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-lg-10 col-lg-offset-2" style="text-align:center;">
-                <button type="reset" class="btn btn-default">Hủy</button>
-                <button type="submit" class="btn btn-primary">Xác nhận</button>
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" onclick="btnSubmit_Click();" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Trở lại danh sách tham gia đại hội", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+
+@section Scripts{
+    <script>
+        dataHTDK = ["Đăng ký trực tiếp", "Gọi điện thoại", "Fax", "Email", "Thư hồi âm", "Khác"];
+        $(document).ready(function () {
+            $('#HTDK').val("Đăng ký trực tiếp");
+            $('#ddlHTDK').kendoDropDownList({
+                dataSource: dataHTDK,
+                index: 0,
+                change: onHTDKChange
+            });
+            function onHTDKChange() {
+                var valueDDLHTK = $('#ddlHTDK').val();
+                $('#HTDK').val(valueDDLHTK);
+                if (valueDDLHTK == "Khác") {
+                    $('#txtKhacHTDK').prop('disabled', false);
+                }
+                else {
+                    $('#txtKhacHTDK').prop('disabled', true);
+                }
+            };
+            $('#txtKhacHTDK').change(function (e) {
+                if ($('#txtKhacHTDK').prop('disabled') == false) {
+                    var datahtdk = $('#txtKhacHTDK').val();
+                    $('#HTDK').val(datahtdk);
+                }
+            });
+            $('#txtKhacHTDK').focusout(function (e) {
+                if ($('#txtKhacHTDK').prop('disabled') == false) {
+                    var datahtdk = $('#txtKhacHTDK').val();
+                    $('#HTDK').val(datahtdk);
+                }
+            });
+            $('#MACD').change(function (e) {
+                var mymacd = $('#MACD').val();
+                $.get("@(Request.Url.Scheme + "://"+ Request.Url.Authority)/qldhcdapi/CoDongAPI/GetCoDongFromMaCD?macd=" + mymacd + "&role=@(HttpContext.Current.Session["Role"]+ string.Empty)",
+                function (data) {
+                    $('#HoTen').val(data);
+                });
+            });
+        });
+
+        function ValidateData() {
+            if ($('#MATD').val().length == 0) return false;
+            if ($('#MACD').val().length == 0) return false;
+            if ($('#MADH').val().length == 0) return false;
+            return true;
+        }
+        function btnSubmit_Click() {
+            var macodinh = $('#MaCoDinh').val();
+            var pad = "00000";
+            var str = $('#MACD').val();
+            var mymacd = pad.substring(0, pad.length - str.length) + str;
+            $('#MATD').val(macodinh + mymacd);
+            if (ValidateData() == true)
+                $('.formCreate')[0].submit();
+        }
+    </script>
+}

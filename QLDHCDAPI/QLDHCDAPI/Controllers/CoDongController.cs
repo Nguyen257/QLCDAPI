@@ -6,158 +6,255 @@ using System.Web.Mvc;
 using QLDHCDAPI.Models;
 using PagedList;
 using PagedList.Mvc;
+using System.Net;
+using System.Data.Entity;
+
 namespace QLDHCDAPI.Controllers
 {
     public class CoDongController : Controller
     {
-        QLDHCDEntities db = new QLDHCDEntities();
-        //
+        private QLDHCDEntities db = new QLDHCDEntities();
+
         // GET: /CoDong/
         public ActionResult Index(string currentFilter, string searchString, int? page)
         {
-            QLDHCDEntities data = new QLDHCDEntities();
-            List<CODONG> lst = new List<CODONG>();
-            lst = (from l in data.CODONGs select l).ToList();
-
-            if (searchString != null)
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
-                page = 1;
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+                {
+                    ViewBag.Alert = TempData["Message"] + string.Empty;
+                    QLDHCDEntities data = new QLDHCDEntities();
+                    List<CODONG> lst = new List<CODONG>();
+                    lst = (from l in data.CODONGs select l).ToList();
+
+                    if (searchString != null)
+                    {
+                        page = 1;
+                    }
+                    else
+                    {
+                        searchString = currentFilter;
+                    }
+
+                    ViewBag.CurrentFilter = searchString;
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        lst = lst.Where(s => s.HoTen.Contains(searchString)).ToList();
+                    }
+                    int pageSize = 10;
+                    int pageNumber = (page ?? 1);
+                    return View(lst.ToPagedList(pageNumber, pageSize));
+                }
+                else
+                {
+                    if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User")
+                    {
+                        QLDHCDEntities data = new QLDHCDEntities();
+                        USERCD User = null;
+                        try
+                        {
+                            string currentUserName = HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty;
+                            List<USERCD> lstUser = (from l in db.USERCDs
+                                                    where l.USERNAME == currentUserName
+                                                    select l).ToList();
+                            if (lstUser != null && lstUser.Count > 0)
+                                User = lstUser.First();
+                        }
+                        catch (Exception ex)
+                        {
+                            return new HttpStatusCodeResult(400, "Error Index CoDong  - " + ex.Message);
+                        }
+
+                        if (User != null)
+                        {
+                            List<CODONG> lst = (from l in data.CODONGs
+                                                where l.MACD == User.MACD
+                                                select l).ToList();
+                            if (lst != null && lst.Count > 0)
+                            {
+                                return Details(lst.First().MACD);
+                            }
+                        }
+
+
+                    }
+                    return new HttpStatusCodeResult(400, "Error Index CoDong  ");
+                }
+
             }
             else
             {
-                searchString = currentFilter;
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
             }
 
-            ViewBag.CurrentFilter = searchString;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                lst = lst.Where(s => s.HoTen.Contains(searchString)).ToList();
-            }
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            return View(lst.ToPagedList(pageNumber,pageSize));
         }
 
+        // GET: /CoDong/Details/5
+        public ActionResult Details(int? macd)
+        {
+            if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User" || HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+            {
+
+                if (macd == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                CODONG codong = db.CODONGs.Find(macd);
+                if (codong == null)
+                {
+                    return HttpNotFound();
+                }
+                return View("Details", codong);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "QLDHCD not allow you");
+            }
+        }
+
+        // GET: /CoDong/Create
         public ActionResult Create()
         {
-            CODONG cd = new CODONG();
-            return View(cd);
-        }
-
-        public ActionResult InsertCD(CODONG f)
-        {
-            
-            try
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                   && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
-                QLDHCDEntities data = new QLDHCDEntities();
-                data.CODONGs.Add(f);
-                data.SaveChanges();
-                ViewBag.kq = "Đã thêm cổ đông thành công !!!";
-            }
-            catch
-            {
-                ViewBag.kq = "Thêm cổ đông thất bại !!!";
-            }
-            return View("InsertResult");
-        }
-
-        public ActionResult DetailCoDong(int macd)
-        {
-            QLDHCDEntities data = new QLDHCDEntities();
-            CODONG cd = (from v in data.CODONGs
-                         where v.MACD == macd
-                         select v).First();
-            return View(cd);
-        }
-        public ActionResult EditCoDong(int macd)
-        {
-            QLDHCDEntities data = new QLDHCDEntities();
-            CODONG cd = (from v in data.CODONGs
-                         where v.MACD == macd
-                         select v).First();
-            return View("EditCoDong", cd);
-
-        }
-
-        public ActionResult UpdateCoDong (CODONG f)
-        {
-            try
-            {
-
-
-                QLDHCDEntities data = new QLDHCDEntities();
-                CODONG cd = (from v in data.CODONGs
-                             where v.MACD == f.MACD
-                             select v).First();
-
-                cd.HoTen = f.HoTen;
-                cd.CMND = f.CMND;
-                cd.NgayCap = f.NgayCap;
-                cd.NoiCap = f.NoiCap;
-                cd.DiaChi = f.DiaChi;
-                cd.QuocTich = f.QuocTich;
-                cd.ChucVu = f.ChucVu;
-                cd.Email = f.Email;
-                cd.SDT = f.SDT;
-
-                data.SaveChanges();
-                ViewBag.kq = "Chỉnh sửa cổ đông thành công";
-            }
-            catch
-            {
-                ViewBag.kq = " Chỉnh sửa cổ đông thất bại ";
-            }
-            return View("UpdateResult");
-        }
-
-        public ActionResult DeleteCoDong(int macd)
-        {
-            try
-            {
-                QLDHCDEntities data = new QLDHCDEntities();
-                CODONG cd = (from v in data.CODONGs
-                             where v.MACD == macd
-                             select v).First();
-                data.CODONGs.Remove(cd);
-                data.SaveChanges();
-
-                ViewBag.kq = "Xóa cổ đông thành công ";
-            }
-            catch
-            {
-                ViewBag.kq = "Xóa cổ đông thất bại ";
-
-            }
-            return View("DeleteResult");
-        }
-
-        #region Method
-        public string GetHoTen(string macd)
-        {
-            if (!string.IsNullOrWhiteSpace(macd))
-            {
-                try
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
                 {
-                    int MaCoDong = int.Parse(macd);
-                    List<CODONG> ListCD = (from l in db.CODONGs
-                                       where l.MACD == MaCoDong
-                                       select l).ToList();
-                    
-                    if(ListCD.Count>0)
-                    {
-                        CODONG cd = ListCD.First();
-                        return cd.HoTen;
-                    }
-                    return string.Empty;
+                    return View();
                 }
-                catch { return string.Empty; }
-
-                return string.Empty;
             }
-            else
-                return string.Empty;
+            return new HttpStatusCodeResult(401);
         }
 
-        #endregion
+        // POST: /CoDong/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "MACD,HoTen,CMND,NgayCap,NoiCap,DiaChi,QuocTich,ChucVu,Email,SDT,TrinhDoVanHoa,TrinhDoChuyenMon,ANHCD")] CODONG codong)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                   && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+            {
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+                {
+                    if (ModelState.IsValid)
+                    {
+                        db.CODONGs.Add(codong);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+
+                    return View(codong);
+                }
+            }
+            return new HttpStatusCodeResult(401);
+
+        }
+
+        // GET: /CoDong/Edit/5
+        public ActionResult Edit(int? macd)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                      && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+            {
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin" || HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User")
+                {
+                    if (macd == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                    }
+                    CODONG codong = db.CODONGs.Find(macd);
+                    if (codong == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(codong);
+                }
+            }
+            return new HttpStatusCodeResult(401);
+
+        }
+
+        // POST: /CoDong/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "MACD,HoTen,CMND,NgayCap,NoiCap,DiaChi,QuocTich,ChucVu,Email,SDT,TrinhDoVanHoa,TrinhDoChuyenMon,ANHCD")] CODONG codong)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                      && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+            {
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+                {
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(codong).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    return View(codong);
+                }
+            }
+            return new HttpStatusCodeResult(401);
+
+        }
+
+        // GET: /CoDong/Delete/5
+        public ActionResult Delete(int? macd)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                      && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+            {
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+                {
+                    if (macd == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                    CODONG codong = db.CODONGs.Find(macd);
+                    if (codong == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(codong);
+                }
+            }
+            return new HttpStatusCodeResult(401);
+            
+        }
+
+        // POST: /CoDong/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int macd)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                   && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+            {
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+                {
+                    CODONG codong = db.CODONGs.Find(macd);
+                    db.CODONGs.Remove(codong);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            return new HttpStatusCodeResult(401);
+            
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 }

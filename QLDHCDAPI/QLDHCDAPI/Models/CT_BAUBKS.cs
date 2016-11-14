@@ -15,14 +15,13 @@ namespace QLDHCDAPI.Models
     public partial class CT_BAUBKS
     {
         public int MACT { get; set; }
-        public string MADH { get; set; }
-        public Nullable<int> MANGDUOCBAU { get; set; }
-        public Nullable<int> MANGDIBAU { get; set; }
-        public Nullable<int> SLPHIEUBAU { get; set; }
+        public string MABKS { get; set; }
+        public string MANGUOIBAU { get; set; }
+        public int SLPHIEUBAU { get; set; }
         public string HINHTHUCBAU { get; set; }
         public Nullable<System.DateTime> THOIGIANBAU { get; set; }
     
-        public virtual BANGBAUBK BANGBAUBK { get; set; }
         public virtual CT_DHCD CT_DHCD { get; set; }
+        public virtual CT_DHCD CT_DHCD1 { get; set; }
     }
 }

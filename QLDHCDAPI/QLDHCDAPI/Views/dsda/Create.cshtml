@@ -32,6 +32,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.YEARDHCD, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.YEARDHCD)
+                @Html.ValidationMessageFor(model => model.YEARDHCD)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.STTDHTRONGNAM, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.STTDHTRONGNAM)
@@ -88,6 +96,22 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.nBauBoSungHDQT, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nBauBoSungHDQT)
+                @Html.ValidationMessageFor(model => model.nBauBoSungHDQT)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nBauBOSungBKS, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nBauBOSungBKS)
+                @Html.ValidationMessageFor(model => model.nBauBOSungBKS)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.thoiGian, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.thoiGian)
@@ -108,6 +132,22 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.TONGSOPHIEU)
                 @Html.ValidationMessageFor(model => model.TONGSOPHIEU)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LABAUBOSUNG, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LABAUBOSUNG)
+                @Html.ValidationMessageFor(model => model.LABAUBOSUNG)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TRANGTHAI, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TRANGTHAI)
+                @Html.ValidationMessageFor(model => model.TRANGTHAI)
             </div>
         </div>
 

@@ -14,7 +14,9 @@ namespace QLDHCDAPI.Core
             public static string Role = "Role";
             public static string MaChungKhoangCT = "HDC";
             public static string MaDH = "MaDH";
+            
         }
+        
 
     }
 }

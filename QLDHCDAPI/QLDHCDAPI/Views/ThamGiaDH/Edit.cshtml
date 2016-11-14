@@ -1,13 +1,12 @@
 ﻿@model QLDHCDAPI.Models.CT_DHCD
 
 @{
-    ViewBag.Title = "Chỉnh sửa tham gia đại hội";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
 }
 
-<h2>Chỉnh sửa tham gia đại hội</h2>
+<h2>Edit</h2>
 
-@using (Html.BeginForm("Update","ThamGiaDH",FormMethod.Post))
+@using (Html.BeginForm("Edit","ThamGiaDH", FormMethod.Post, new { @class = "formCreate form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     
@@ -15,14 +14,24 @@
         <h4>CT_DHCD</h4>
         <hr />
         @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.MATD)
         @Html.HiddenFor(model => model.MADH)
-
         @Html.HiddenFor(model => model.MACD)
 
         <div class="form-group">
+            @Html.LabelFor(model => model.HTDK, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.HTDK)
+                <input type="text" id="ddlHTDK" class="form-control" />
+                <input type="text" id="txtKhacHTDK" class="form-control k-textbox" disabled />
+                @Html.ValidationMessageFor(model => model.HTDK)
+            </div>
+        </div>
+        <hr/>
+        <div class="form-group">
             @Html.LabelFor(model => model.SLCP, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SLCP)
+                @Html.TextBoxFor(model => model.SLCP, new { @class = "k-textbox formNumberic myCSSInput" })
                 @Html.ValidationMessageFor(model => model.SLCP)
             </div>
         </div>
@@ -30,7 +39,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SLDAUQ, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SLDAUQ)
+                @Html.TextBoxFor(model => model.SLDAUQ, new { @class = "k-textbox formNumberic  myCSSInput" })
                 @Html.ValidationMessageFor(model => model.SLDAUQ)
             </div>
         </div>
@@ -38,38 +47,22 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SLDCUQ, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SLDCUQ)
+                @Html.TextBoxFor(model => model.SLDCUQ, new { @class = "k-textbox formNumberic myCSSInput" })
                 @Html.ValidationMessageFor(model => model.SLDCUQ)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HTDK, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HTDK)
-                @Html.ValidationMessageFor(model => model.HTDK)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.SLCPSAUCUNG, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SLCPSAUCUNG)
+                @Html.TextBoxFor(model => model.SLCPSAUCUNG, new { @class = "k-textbox formNumberic  myCSSInput" })
                 @Html.ValidationMessageFor(model => model.SLCPSAUCUNG)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.QUYENBAUCU, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.QUYENBAUCU)
-                @Html.ValidationMessageFor(model => model.QUYENBAUCU)
-            </div>
-        </div>
-
-        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default"  />
             </div>
         </div>
     </div>
@@ -78,3 +71,57 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts{
+    <script>
+        dataHTDK = ["Đăng ký trực tiếp", "Gọi điện thoại", "Fax", "Email", "Thư hồi âm", "Khác"];
+        function getIndexData()
+        {
+            if($('#HTDK').val()=="Thư hồi âm")
+            {
+                return 4;
+            }
+            else
+            {
+                if(dataHTDK.indexOf('@Model.HTDK')<0)
+                {
+                    $('#txtKhacHTDK').val('@Model.HTDK');
+                    $('#txtKhacHTDK').prop('disabled', false);
+                    return 5;
+                }
+            }
+        }
+        $(document).ready(function () {
+            $('#ddlHTDK').kendoDropDownList({
+                dataSource: dataHTDK,
+                index : getIndexData(),
+                change: onHTDKChange
+            });
+            function onHTDKChange() {
+                var valueDDLHTK = $('#ddlHTDK').val();
+                $('#HTDK').val(valueDDLHTK);
+                if (valueDDLHTK == "Khác") {
+                    $('#txtKhacHTDK').prop('disabled', false);
+                }
+                else {
+                    $('#txtKhacHTDK').prop('disabled', true);
+                }
+            };
+            $('#txtKhacHTDK').change(function (e) {
+                if ($('#txtKhacHTDK').prop('disabled') == false) {
+                    var datahtdk = $('#txtKhacHTDK').val();
+                    $('#HTDK').val(datahtdk);
+                }
+            });
+            $('#txtKhacHTDK').focusout(function (e) {
+                if ($('#txtKhacHTDK').prop('disabled') == false) {
+                    var datahtdk = $('#txtKhacHTDK').val();
+                    $('#HTDK').val(datahtdk);
+                }
+            });
+            
+        });
+
+
+    </script>
+}

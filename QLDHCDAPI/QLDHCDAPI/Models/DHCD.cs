@@ -16,10 +16,14 @@ namespace QLDHCDAPI.Models
     {
         public DHCD()
         {
+            this.nQKin = 0;
+            this.nQBefore = 0;
+            this.TONGSOPHIEU = 0;
             this.BANGYKIENs = new HashSet<BANGYKIEN>();
-            this.THANHVIENBKS = new HashSet<THANHVIENBK>();
-            this.THANHVIENHDQTs = new HashSet<THANHVIENHDQT>();
+            this.BANGYKIENBQPHIEUx = new HashSet<BANGYKIENBQPHIEU>();
             this.CT_DHCD = new HashSet<CT_DHCD>();
+            this.UYQUYENs = new HashSet<UYQUYEN>();
+            this.COMMITDHCDs = new HashSet<COMMITDHCD>();
         }
     
         public string MADH { get; set; }
@@ -35,12 +39,17 @@ namespace QLDHCDAPI.Models
         public Nullable<int> nBauBoSungHDQT { get; set; }
         public Nullable<int> nBauBOSungBKS { get; set; }
         public Nullable<System.DateTime> thoiGian { get; set; }
-        public Nullable<int> ACTIVE { get; set; }
+        public int ACTIVE { get; set; }
         public Nullable<int> TONGSOPHIEU { get; set; }
+        public bool LABAUBOSUNG { get; set; }
+        public Nullable<bool> TRANGTHAI { get; set; }
+        public Nullable<int> nTongHDQT { get; set; }
+        public Nullable<int> nTongBKS { get; set; }
     
         public virtual ICollection<BANGYKIEN> BANGYKIENs { get; set; }
-        public virtual ICollection<THANHVIENBK> THANHVIENBKS { get; set; }
-        public virtual ICollection<THANHVIENHDQT> THANHVIENHDQTs { get; set; }
+        public virtual ICollection<BANGYKIENBQPHIEU> BANGYKIENBQPHIEUx { get; set; }
         public virtual ICollection<CT_DHCD> CT_DHCD { get; set; }
+        public virtual ICollection<UYQUYEN> UYQUYENs { get; set; }
+        public virtual ICollection<COMMITDHCD> COMMITDHCDs { get; set; }
     }
 }

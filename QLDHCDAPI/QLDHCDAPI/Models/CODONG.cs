@@ -16,10 +16,8 @@ namespace QLDHCDAPI.Models
     {
         public CODONG()
         {
-            this.THANHVIENBKS = new HashSet<THANHVIENBK>();
-            this.THANHVIENHDQTs = new HashSet<THANHVIENHDQT>();
-            this.USERCDs = new HashSet<USERCD>();
             this.CT_DHCD = new HashSet<CT_DHCD>();
+            this.USERCDs = new HashSet<USERCD>();
         }
     
         public int MACD { get; set; }
@@ -36,9 +34,7 @@ namespace QLDHCDAPI.Models
         public string TrinhDoChuyenMon { get; set; }
         public string ANHCD { get; set; }
     
-        public virtual ICollection<THANHVIENBK> THANHVIENBKS { get; set; }
-        public virtual ICollection<THANHVIENHDQT> THANHVIENHDQTs { get; set; }
-        public virtual ICollection<USERCD> USERCDs { get; set; }
         public virtual ICollection<CT_DHCD> CT_DHCD { get; set; }
+        public virtual ICollection<USERCD> USERCDs { get; set; }
     }
 }

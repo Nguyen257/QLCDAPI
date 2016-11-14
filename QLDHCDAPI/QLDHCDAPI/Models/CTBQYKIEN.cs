@@ -14,15 +14,13 @@ namespace QLDHCDAPI.Models
     
     public partial class CTBQYKIEN
     {
+        public int ID { get; set; }
         public int MAYK { get; set; }
-        public string MADH { get; set; }
-        public int MACD { get; set; }
+        public string MATD { get; set; }
         public Nullable<int> LUACHON { get; set; }
-        public Nullable<int> SLPHIEUBAU { get; set; }
         public string NOIDUNGYKKHAC { get; set; }
         public Nullable<System.DateTime> THOIGIANBAU { get; set; }
     
         public virtual BANGYKIEN BANGYKIEN { get; set; }
-        public virtual CT_DHCD CT_DHCD { get; set; }
     }
 }

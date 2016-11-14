@@ -9,7 +9,7 @@ namespace QLDHCDAPI.Core
     public class DAO
     {
         QLDHCDEntities db = new QLDHCDEntities();
-
+        
         internal bool SaveException(string methodName, string exceptionMessage)
         {
             bool DataReturn = true;

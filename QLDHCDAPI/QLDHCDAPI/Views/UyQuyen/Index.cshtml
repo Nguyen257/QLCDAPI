@@ -1,31 +1,47 @@
 ﻿@model PagedList.IPagedList<QLDHCDAPI.Models.UYQUYEN>
-
 @using PagedList.Mvc;
-
+@using QLDHCDAPI.Core;
 @{
-    ViewBag.Title = "Danh sách các ủy quyền xảy ra";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
 }
 
-<h2>Danh sách các ủy quyền xảy ra</h2>
+<h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Tạo mới một ủy quyền", "Create")
+    @{
+        if (HttpContext.Current.Session[Define.SessionName.isLogin] + string.Empty == "Yes" 
+            && HttpContext.Current.Session[Define.SessionName.Role] + string.Empty == "Admin")
+        {
+            @Html.ActionLink("Tạo mới bằng quyền Admin", "Create")
+        }
+        else
+        {
+            @Html.ActionLink("Ủy quyền", "UyQuyenUser")
+        }
+    }
+    
 </p>
-@using (Html.BeginForm("Index", "UyQuyen", FormMethod.Get))
+
+@using (Html.BeginForm("Index", "UYQUYEN", FormMethod.Get))
 {
     <p>
         Tìm theo tên: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Tìm kiếm" class="btn btn-success" />
     </p>
 }
-<table class="table table-striped table-hover ">
+<table class="table table-striped table-hover">
     <tr>
         <th>
-            Họ tên người chuyển
+            @Html.DisplayNameFor(model => model.FirstOrDefault().MAUQ)
         </th>
         <th>
-            Họ tên người nhận
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CT_DHCD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CT_DHCD1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().UYQUYENTYPE)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().SLUQ)
@@ -33,7 +49,6 @@
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().THOIGIAN)
         </th>
-        
         <th></th>
     </tr>
 
@@ -41,10 +56,16 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.NGUOICHUYEN.CODONG.HoTen)
+                @Html.DisplayFor(modelItem => item.MAUQ)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NGUOINHAN.CODONG.HoTen)
+                @Html.DisplayFor(modelItem => item.CT_DHCD.CODONG.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CT_DHCD1.CODONG.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UYQUYENTYPE)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SLUQ)
@@ -52,11 +73,28 @@
             <td>
                 @Html.DisplayFor(modelItem => item.THOIGIAN)
             </td>
-            
+
             <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MAUQ }) |
                 @Html.ActionLink("Details", "Details", new { id = item.MAUQ }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MAUQ })
             </td>
         </tr>
     }
 
 </table>
+
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+</div>
+<span id="popupNotification"></span>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var popupAlert = $("#popupNotification").kendoNotification().data("kendoNotification");
+            if ('@(ViewBag.Alert + string.Empty)' != null && '@(ViewBag.Alert + string.Empty)' != '') {
+                popupAlert.show('@(ViewBag.Alert + string.Empty)');
+            }
+        });
+    </script>
+}

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using QLDHCDAPI.Models;
 using System.Security.Cryptography;
 using System.Text;
+using System.Globalization;
 
 namespace QLDHCDAPI.Controllers
 {
@@ -16,6 +17,12 @@ namespace QLDHCDAPI.Controllers
     {
         private QLDHCDEntities db = new QLDHCDEntities();
         private Core.DAO DAO = new Core.DAO();
+        CultureInfo culture = CultureInfo.CurrentCulture;
+
+        public UserCoDongController()
+        {
+            culture = new CultureInfo(1033);
+        }
 
 
         #region Method
@@ -100,7 +107,7 @@ namespace QLDHCDAPI.Controllers
 
         public ActionResult Login()
         {
-            if(HttpContext!=null && HttpContext.Session!=null && HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+            if (HttpContext != null && HttpContext.Session != null && HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -240,7 +247,7 @@ namespace QLDHCDAPI.Controllers
                     List<USERCD> listUserCD = (from l in db.USERCDs
                                                where l.USERNAME == USERNAME
                                                select l).ToList();
-                    if(listUserCD!=null && listUserCD.Count>0)
+                    if (listUserCD != null && listUserCD.Count > 0)
                     {
                         MD5CryptoServiceProvider md5Hasher = new MD5CryptoServiceProvider();
                         byte[] hashedDataBytes;
@@ -373,7 +380,7 @@ namespace QLDHCDAPI.Controllers
             if (string.Equals(HttpContext.Session["UserName"] + string.Empty, "AdminQLDHCD") && !string.IsNullOrWhiteSpace(HttpContext.Session["isLogin"] + string.Empty))
             {
                 USERCD usercd = db.USERCDs.Find(id);
-                if (usercd.USERNAME == "AdminQLDHCD" || usercd.ID==1)
+                if (usercd.USERNAME == "AdminQLDHCD" || usercd.ID == 1)
                 {
                     return new HttpStatusCodeResult(401, "Error in cloud - UserCoDong");
                 }
@@ -389,7 +396,7 @@ namespace QLDHCDAPI.Controllers
                 return new HttpStatusCodeResult(401, "Error in cloud - UserCoDong");
             }
 
-           
+
         }
 
         protected override void Dispose(bool disposing)

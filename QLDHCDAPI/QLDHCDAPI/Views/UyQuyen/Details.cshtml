@@ -1,30 +1,48 @@
 ﻿@model QLDHCDAPI.Models.UYQUYEN
 
 @{
-    ViewBag.Title = "Chi tiết ủy quyền";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Details";
 }
 
-<h2>Chi tiết ủy quyền</h2>
+<h2>Details</h2>
 
 <div>
+    <h4>UYQUYEN</h4>
 	<hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.NGUOICHUYEN.CODONG.HoTen)
+            @Html.DisplayNameFor(model => model.MAUQ)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.NGUOICHUYEN.CODONG.HoTen)
+            @Html.DisplayFor(model => model.MAUQ)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MADH)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MADH)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CT_DHCD)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CT_DHCD.CODONG.HoTen)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CT_DHCD1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CT_DHCD1.CODONG.HoTen)
+        </dd>
+
 
         <dt>
-            @Html.DisplayNameFor(model => model.NGUOINHAN.CODONG.HoTen)
+            @Html.DisplayNameFor(model => model.UYQUYENTYPE)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.NGUOINHAN.CODONG.HoTen)
+            @Html.DisplayFor(model => model.UYQUYENTYPE)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.SLUQ)
         </dt>
@@ -40,11 +58,10 @@
         <dd>
             @Html.DisplayFor(model => model.THOIGIAN)
         </dd>
-
-        
-
+                
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Trở lại danh sách", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MAUQ }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>

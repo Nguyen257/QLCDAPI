@@ -9,6 +9,7 @@ using PagedList.Mvc;
 using System.Data.Entity.Infrastructure;
 using System.Net;
 using System.Data.Entity;
+using System.Globalization;
 
 
 namespace QLDHCDAPI.Controllers
@@ -16,6 +17,12 @@ namespace QLDHCDAPI.Controllers
     public class ThamGiaDHController : Controller
     {
         private QLDHCDEntities db = new QLDHCDEntities();
+        CultureInfo culture = CultureInfo.CurrentCulture;
+
+        public ThamGiaDHController()
+        {
+            culture = new CultureInfo(1033);
+        }
 
         // GET: /ThamGiaDH/
         public ActionResult Index(string currentFilter, string searchString, int? page)
@@ -23,7 +30,7 @@ namespace QLDHCDAPI.Controllers
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
                               && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
-                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+                if (!string.IsNullOrEmpty(HttpContext.Session[Core.Define.SessionName.Role] + string.Empty))
                 {
                     ViewBag.Alert = TempData["Message"] + string.Empty;
                     QLDHCDEntities data = new QLDHCDEntities();

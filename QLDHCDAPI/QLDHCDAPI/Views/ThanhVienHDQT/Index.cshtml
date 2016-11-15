@@ -69,6 +69,12 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.MATD }) |
                 @Html.ActionLink("Details", "Details", new { id = item.MATD }) |
+                @{
+                    if (HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.Role] + string.Empty == "User")
+                    {
+                        @Html.ActionLink("Bầu cử", "BauThanhVien", new { id = item.MATD });
+                    }
+                }
             </td>
         </tr>
     }

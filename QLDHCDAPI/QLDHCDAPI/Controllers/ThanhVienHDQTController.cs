@@ -11,6 +11,7 @@ using System.Data.Entity;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using QLDHCDAPI.Core;
+using System.Globalization;
 
 
 namespace QLDHCDAPI.Controllers
@@ -19,6 +20,13 @@ namespace QLDHCDAPI.Controllers
     {
         private QLDHCDEntities db = new QLDHCDEntities();
         DAO Dao = new DAO();
+        CultureInfo culture = CultureInfo.CurrentCulture;
+
+        public THANHVIENHDQTController()
+        {
+            culture = new CultureInfo(1033);
+        }
+
         // GET: /THANHVIENHDQT/
         public ActionResult Index(string currentFilter, string searchString, int? page)
         {
@@ -75,7 +83,7 @@ namespace QLDHCDAPI.Controllers
                 return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
             }
 
-            
+
         }
 
         // GET: /THANHVIENHDQT/Edit/5
@@ -103,7 +111,7 @@ namespace QLDHCDAPI.Controllers
             }
 
 
-           
+
         }
 
         // POST: /THANHVIENHDQT/Edit/5
@@ -111,7 +119,7 @@ namespace QLDHCDAPI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="MATD,HINHTHUCBAU,SLPHIEUBAU,THANHVIENTYPE,LACHUTICH,LASUCCESS")] THANHVIENHDQT thanhvienhdqt)
+        public ActionResult Edit([Bind(Include = "MATD,HINHTHUCBAU,SLPHIEUBAU,THANHVIENTYPE,LACHUTICH,LASUCCESS")] THANHVIENHDQT thanhvienhdqt)
         {
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
                 && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
@@ -133,11 +141,34 @@ namespace QLDHCDAPI.Controllers
             {
                 return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
             }
-            
+
         }
 
         // GET: /THANHVIENHDQT/Delete/5
-        
+
+        public ActionResult BauThanhVien(string id)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+              && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+              && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User"))
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                THANHVIENHDQT thanhvienhdqt = db.THANHVIENHDQTs.Find(id);
+                if (thanhvienhdqt == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.MATD = thanhvienhdqt.MATD;
+                return View(thanhvienhdqt);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+            }
+        }
 
         protected override void Dispose(bool disposing)
         {

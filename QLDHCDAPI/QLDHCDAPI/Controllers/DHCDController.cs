@@ -11,6 +11,7 @@ using System.Data.Entity;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using QLDHCDAPI.Core;
+using System.Globalization;
 
 
 namespace QLDHCDAPI.Controllers
@@ -19,6 +20,12 @@ namespace QLDHCDAPI.Controllers
     {
         QLDHCDEntities db = new QLDHCDEntities();
         DAO Dao = new DAO();
+        CultureInfo culture = CultureInfo.CurrentCulture;
+
+        public DHCDController()
+        {
+            culture = new CultureInfo(1033);
+        }
         public string GetCurrentMaDH()
         {
             string DataReturn = "NULL";
@@ -187,7 +194,7 @@ namespace QLDHCDAPI.Controllers
                             {
                                 COMMITDHCD lastCommit = listCommit.First();
                                 string lsatCommitmdh = lastCommit.MADH;
-                                List<THANHVIENHDQT> listOldHDQT = db.THANHVIENHDQTs.Where(x => x.CT_DHCD.MADH == lsatCommitmdh).ToList();
+                                List<THANHVIENHDQT> listOldHDQT = db.THANHVIENHDQTs.Where(x => x.CT_DHCD.MADH == lsatCommitmdh && x.LASUCCESS==true).ToList();
                                 if (listOldHDQT != null && listOldHDQT.Count > 0)
                                 {
                                     try
@@ -463,7 +470,7 @@ namespace QLDHCDAPI.Controllers
                             {
                                 COMMITDHCD lastCommit = listCommit.First();
                                 string lsatCommitmdh = lastCommit.MADH;
-                                List<THANHVIENBK> listOldBKS = db.THANHVIENBKS.Where(x => x.CT_DHCD.MADH == lsatCommitmdh).ToList();
+                                List<THANHVIENBK> listOldBKS = db.THANHVIENBKS.Where(x => x.CT_DHCD.MADH == lsatCommitmdh && x.LASUCCESS == true).ToList();
                                 if (listOldBKS != null && listOldBKS.Count > 0)
                                 {
                                     try

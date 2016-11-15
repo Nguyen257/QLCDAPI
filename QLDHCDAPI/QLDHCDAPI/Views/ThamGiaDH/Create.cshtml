@@ -27,13 +27,13 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MADH, "MADH", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @*@Html.DropDownList("MADH", String.Empty)*@
-                <input type="text" id="MADH" name="MADH" value="@ViewBag.MADH" class="form-control k-textbox" readonly />
-                @Html.ValidationMessageFor(model => model.MADH)
-            </div>
-        </div>
+            <label class="control-label col-md-2">Ủy quyền cho</label>
+                <div class="col-md-10">
+                    @*@Html.DropDownList("MADH", String.Empty)*@
+                    <input type="text" id="MADH" name="MADH" value="@ViewBag.MADH" class="form-control k-textbox" readonly />
+                    @Html.ValidationMessageFor(model => model.MADH)
+                </div>
+</div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.HTDK, new { @class = "control-label col-md-2" })

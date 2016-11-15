@@ -11,6 +11,7 @@ using System.Data.Entity;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using QLDHCDAPI.Core;
+using System.Globalization;
 
 namespace QLDHCDAPI.Controllers
 {
@@ -18,6 +19,13 @@ namespace QLDHCDAPI.Controllers
     {
         private QLDHCDEntities db = new QLDHCDEntities();
         DAO Dao = new DAO();
+        CultureInfo culture = CultureInfo.CurrentCulture;
+
+        public THANHVIENBKSController()
+        {
+            culture = new CultureInfo(1033);
+        }
+
         // GET: /THANHVIENHDQT/
         public ActionResult Index(string currentFilter, string searchString, int? page)
         {

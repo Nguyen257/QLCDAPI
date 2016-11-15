@@ -8,20 +8,26 @@ using PagedList;
 using PagedList.Mvc;
 using System.Net;
 using System.Data.Entity;
+using System.Globalization;
 
 namespace QLDHCDAPI.Controllers
 {
     public class CoDongController : Controller
     {
         private QLDHCDEntities db = new QLDHCDEntities();
+        CultureInfo culture = CultureInfo.CurrentCulture;
 
+        public CoDongController()
+        {
+            culture = new CultureInfo(1033);
+        }
         // GET: /CoDong/
         public ActionResult Index(string currentFilter, string searchString, int? page)
         {
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
                 && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
-                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
+                if (!string.IsNullOrEmpty(HttpContext.Session[Core.Define.SessionName.Role] + string.Empty))
                 {
                     ViewBag.Alert = TempData["Message"] + string.Empty;
                     QLDHCDEntities data = new QLDHCDEntities();
@@ -159,8 +165,9 @@ namespace QLDHCDAPI.Controllers
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
                       && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
-                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin" || HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User")
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin" )
                 {
+                    
                     if (macd == null)
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -172,6 +179,29 @@ namespace QLDHCDAPI.Controllers
                         return HttpNotFound();
                     }
                     return View(codong);
+                }
+                else
+                {
+                    if(HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User")
+                    {
+                        if (macd == null)
+                        {
+                            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                        }
+                        string userName = HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty;
+                        USERCD User = db.USERCDs.Where(x => x.USERNAME == userName).First();
+                        if (macd != User.MACD) return new HttpStatusCodeResult(401);
+                        else
+                        {
+                            CODONG codong = db.CODONGs.Find(macd);
+                            if (codong == null)
+                            {
+                                return HttpNotFound();
+                            }
+                            return View(codong);
+                        }
+                    }
                 }
             }
             return new HttpStatusCodeResult(401);

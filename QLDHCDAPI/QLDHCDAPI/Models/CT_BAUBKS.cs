@@ -20,8 +20,9 @@ namespace QLDHCDAPI.Models
         public int SLPHIEUBAU { get; set; }
         public string HINHTHUCBAU { get; set; }
         public Nullable<System.DateTime> THOIGIANBAU { get; set; }
+        public bool LAHOPLE { get; set; }
     
+        public virtual THANHVIENBK THANHVIENBK { get; set; }
         public virtual CT_DHCD CT_DHCD { get; set; }
-        public virtual CT_DHCD CT_DHCD1 { get; set; }
     }
 }

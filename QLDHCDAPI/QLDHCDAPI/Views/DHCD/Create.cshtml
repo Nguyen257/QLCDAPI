@@ -16,6 +16,11 @@
         <hr />
         @Html.ValidationSummary(true)
         <div>
+            @Html.HiddenFor(model => model.nTongHDQT)
+            @Html.HiddenFor(model => model.nTongBKS)
+            @Html.HiddenFor(mode => Model.SLCPPHATRA_BKS)
+            @Html.HiddenFor(mode => Model.SLCPPHATRA_HDQT)
+            @Html.HiddenFor(mode => mode.TONGSOPHIEU)
             <div class="divMyLeft DHCDCreate">
                 <div class="form-group">
                     @Html.LabelFor(model => model.MADH, new { @class = "control-label col-lg-2 DHCDLabel DHCDLabel" })

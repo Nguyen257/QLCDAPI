@@ -45,6 +45,8 @@ namespace QLDHCDAPI.Models
         public Nullable<bool> TRANGTHAI { get; set; }
         public Nullable<int> nTongHDQT { get; set; }
         public Nullable<int> nTongBKS { get; set; }
+        public Nullable<long> SLCPPHATRA_HDQT { get; set; }
+        public Nullable<long> SLCPPHATRA_BKS { get; set; }
     
         public virtual ICollection<BANGYKIEN> BANGYKIENs { get; set; }
         public virtual ICollection<BANGYKIENBQPHIEU> BANGYKIENBQPHIEUx { get; set; }

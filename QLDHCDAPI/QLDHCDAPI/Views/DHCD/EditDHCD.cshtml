@@ -16,9 +16,12 @@
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.MADH)
-        @Html.HiddenFor(model => model.TRANGTHAI);
-        @Html.HiddenFor(model => model.nTongHDQT);
-        @Html.HiddenFor(model => model.nTongBKS);
+        @Html.HiddenFor(model => model.TRANGTHAI)
+        @Html.HiddenFor(model => model.nTongHDQT)
+        @Html.HiddenFor(model => model.nTongBKS)
+        @Html.HiddenFor(mode => mode.SLCPPHATRA_BKS)
+        @Html.HiddenFor(mode => mode.SLCPPHATRA_HDQT)
+        @Html.HiddenFor(mode=>mode.TONGSOPHIEU)
         <div>
             <div class="divMyLeft DHCDCreate">
                 <div class="form-group" style="display:none">

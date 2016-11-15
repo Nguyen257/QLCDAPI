@@ -1,0 +1,78 @@
+﻿@model PagedList.IPagedList<QLDHCDAPI.Models.CT_BAUHDQT>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().MACT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CT_DHCD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().THANHVIENHDQT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SLPHIEUBAU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().HINHTHUCBAU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().THOIGIANBAU)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MACT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CT_DHCD.CODONG.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.THANHVIENHDQT.CT_DHCD.CODONG.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SLPHIEUBAU)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HINHTHUCBAU)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.THOIGIANBAU)
+            </td>
+
+
+            <td>
+
+                @{ if (HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.Role] + string.Empty == "Admin")
+                 {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MACT })
+                    <span>|</span>
+                    @Html.ActionLink("Details", "Details", new { id = item.MACT }) <span>|</span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MACT })
+                 }
+                 
+                 if (HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.Role] + string.Empty == "User")
+                 {
+                    @Html.ActionLink("Details", "Details", new { id = item.MACT }) 
+                 }
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>

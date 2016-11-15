@@ -16,12 +16,10 @@ namespace QLDHCDAPI.Models
     {
         public CT_DHCD()
         {
-            this.CT_BAUBKS = new HashSet<CT_BAUBKS>();
-            this.CT_BAUBKS1 = new HashSet<CT_BAUBKS>();
-            this.CT_BAUHDQT = new HashSet<CT_BAUHDQT>();
-            this.CT_BAUHDQT1 = new HashSet<CT_BAUHDQT>();
             this.UYQUYENs = new HashSet<UYQUYEN>();
             this.UYQUYENs1 = new HashSet<UYQUYEN>();
+            this.CT_BAUBKS = new HashSet<CT_BAUBKS>();
+            this.CT_BAUHDQT = new HashSet<CT_BAUHDQT>();
         }
     
         public string MATD { get; set; }
@@ -38,14 +36,12 @@ namespace QLDHCDAPI.Models
         public Nullable<int> NCP_DABQYKIEN_PHEU { get; set; }
     
         public virtual CODONG CODONG { get; set; }
-        public virtual ICollection<CT_BAUBKS> CT_BAUBKS { get; set; }
-        public virtual ICollection<CT_BAUBKS> CT_BAUBKS1 { get; set; }
-        public virtual ICollection<CT_BAUHDQT> CT_BAUHDQT { get; set; }
-        public virtual ICollection<CT_BAUHDQT> CT_BAUHDQT1 { get; set; }
         public virtual DHCD DHCD { get; set; }
         public virtual ICollection<UYQUYEN> UYQUYENs { get; set; }
         public virtual ICollection<UYQUYEN> UYQUYENs1 { get; set; }
         public virtual THANHVIENBK THANHVIENBK { get; set; }
         public virtual THANHVIENHDQT THANHVIENHDQT { get; set; }
+        public virtual ICollection<CT_BAUBKS> CT_BAUBKS { get; set; }
+        public virtual ICollection<CT_BAUHDQT> CT_BAUHDQT { get; set; }
     }
 }

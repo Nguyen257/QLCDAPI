@@ -146,29 +146,7 @@ namespace QLDHCDAPI.Controllers
 
         // GET: /THANHVIENHDQT/Delete/5
 
-        public ActionResult BauThanhVien(string id)
-        {
-            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
-              && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
-              && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User"))
-            {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                THANHVIENHDQT thanhvienhdqt = db.THANHVIENHDQTs.Find(id);
-                if (thanhvienhdqt == null)
-                {
-                    return HttpNotFound();
-                }
-                ViewBag.MATD = thanhvienhdqt.MATD;
-                return View(thanhvienhdqt);
-            }
-            else
-            {
-                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
-            }
-        }
+        
 
         protected override void Dispose(bool disposing)
         {

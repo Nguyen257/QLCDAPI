@@ -14,13 +14,19 @@ namespace QLDHCDAPI.Models
     
     public partial class THANHVIENHDQT
     {
+        public THANHVIENHDQT()
+        {
+            this.CT_BAUHDQT = new HashSet<CT_BAUHDQT>();
+        }
+    
         public string MATD { get; set; }
         public string HINHTHUCBAU { get; set; }
         public Nullable<int> SLPHIEUBAU { get; set; }
         public string THANHVIENTYPE { get; set; }
-        public Nullable<bool> LACHUTICH { get; set; }
-        public Nullable<bool> LASUCCESS { get; set; }
+        public bool LACHUTICH { get; set; }
+        public bool LASUCCESS { get; set; }
     
         public virtual CT_DHCD CT_DHCD { get; set; }
+        public virtual ICollection<CT_BAUHDQT> CT_BAUHDQT { get; set; }
     }
 }

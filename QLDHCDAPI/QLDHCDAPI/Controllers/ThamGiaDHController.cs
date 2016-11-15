@@ -130,23 +130,32 @@ namespace QLDHCDAPI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MATD,MADH,MACD,SLCP,SLDAUQ,SLDCUQ,HTDK,SLCPSAUCUNG")] CT_DHCD ct_dhcd)
         {
-            if (ModelState.IsValid)
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                      && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
-                ct_dhcd.SLCP = (ct_dhcd.SLCP.HasValue) ? (ct_dhcd.SLCP.Value) : 0;
-                ct_dhcd.SLDAUQ = (ct_dhcd.SLDAUQ.HasValue) ? (ct_dhcd.SLDAUQ.Value) : 0;
-                ct_dhcd.SLDCUQ = (ct_dhcd.SLDCUQ.HasValue) ? (ct_dhcd.SLDCUQ.Value) : 0;
-                ct_dhcd.SLCPSAUCUNG = ct_dhcd.SLCP - ct_dhcd.SLDAUQ + ct_dhcd.SLDCUQ;
-                db.CT_DHCD.Add(ct_dhcd);
-                db.SaveChanges();
-                TempData["Message"] = "Đăng ký tham dự đại hội thành công";
-                return RedirectToAction("Index");
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin" || HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User")
+                {
+                    if (ModelState.IsValid)
+                    {
+                        ct_dhcd.SLCP = (ct_dhcd.SLCP.HasValue) ? (ct_dhcd.SLCP.Value) : 0;
+                        ct_dhcd.SLDAUQ = 0;
+                        ct_dhcd.SLDCUQ = 0;
+                        ct_dhcd.SLCPSAUCUNG = ct_dhcd.SLCP - ct_dhcd.SLDAUQ + ct_dhcd.SLDCUQ;
+                        db.CT_DHCD.Add(ct_dhcd);
+                        string ten = db.CODONGs.Where(x => x.MACD == ct_dhcd.MACD).First().HoTen;
+                        db.SaveChanges();
+                        
+                        TempData["Message"] = "Đăng ký tham dự đại hội của cổ đông " + ten + "  thành công";
+                        return RedirectToAction("Index");
+                    }
+                    DHCD dhcd = db.DHCDs.Where(q => q.ACTIVE == 1).ToList().First();
+                    ViewBag.MADH = ct_dhcd.MADH + string.Empty;
+                    ViewBag.TenDH = dhcd.TenDH + string.Empty;
+                    return View(ct_dhcd);
+                }
             }
+            return new HttpStatusCodeResult(401);
 
-            ViewBag.MACD = new SelectList(db.CODONGs, "MACD", "HoTen", ct_dhcd.MACD);
-            ViewBag.MADH = new SelectList(db.DHCDs, "MADH", "TenDH", ct_dhcd.MADH);
-            ViewBag.MATD = new SelectList(db.THANHVIENBKS, "MATD", "HINHTHUCBAU", ct_dhcd.MATD);
-            ViewBag.MATD = new SelectList(db.THANHVIENHDQTs, "MATD", "HINHTHUCBAU", ct_dhcd.MATD);
-            return View(ct_dhcd);
         }
 
         // GET: /ThamGiaDH/Edit/5
@@ -196,7 +205,8 @@ namespace QLDHCDAPI.Controllers
                             ct_dhcd.SLCPSAUCUNG = ct_dhcd.SLCP - ct_dhcd.SLDAUQ + ct_dhcd.SLDCUQ;
                             db.Entry(ct_dhcd).State = EntityState.Modified;
                             db.SaveChanges();
-                            TempData["Message"] = "Chỉnh sửa tham dự đại hội thành công";
+                            string ten = db.CODONGs.Where(x => x.MACD == ct_dhcd.MACD).First().HoTen;
+                            TempData["Message"] = "Chỉnh sửa tham dự đại hội của cổ đông " + ten + " thành công";
                             return RedirectToAction("Index");
                         }
                         return View(ct_dhcd);
@@ -204,6 +214,7 @@ namespace QLDHCDAPI.Controllers
                     catch (Exception ex)
                     {
                         ModelState.AddModelError(string.Empty, ex.Message);
+                        return View(ct_dhcd);
                     }
                 }
             }
@@ -249,9 +260,10 @@ namespace QLDHCDAPI.Controllers
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
                     CT_DHCD ct_dhcd = db.CT_DHCD.Find(matd);
+                    string ten = ct_dhcd.CODONG.HoTen;
                     db.CT_DHCD.Remove(ct_dhcd);
                     db.SaveChanges();
-                    TempData["Message"] = "Xóa tham dự đại hội thành công";
+                    TempData["Message"] = "Xóa tham dự đại hội của cổ đông " + ten + " thành công";
                     return RedirectToAction("Index");
                 }
             }
@@ -267,5 +279,7 @@ namespace QLDHCDAPI.Controllers
             }
             base.Dispose(disposing);
         }
+
+        
     }
 }

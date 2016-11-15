@@ -38,11 +38,11 @@ namespace QLDHCDAPI.Models
         public virtual DbSet<DHCD> DHCDs { get; set; }
         public virtual DbSet<DHCDSTT> DHCDSTTs { get; set; }
         public virtual DbSet<EXCEPTIONAPP> EXCEPTIONAPPs { get; set; }
-        public virtual DbSet<THANHVIENHDQT> THANHVIENHDQTs { get; set; }
         public virtual DbSet<USERCD> USERCDs { get; set; }
         public virtual DbSet<UYQUYEN> UYQUYENs { get; set; }
         public virtual DbSet<COMMITDHCD> COMMITDHCDs { get; set; }
         public virtual DbSet<THANHVIENBK> THANHVIENBKS { get; set; }
+        public virtual DbSet<THANHVIENHDQT> THANHVIENHDQTs { get; set; }
     
         public virtual int CT_BAUBKS_INSERT(string mABKS, string mANGUOIBAU, Nullable<int> sLPHIEUBAU, string hINHTHUCBAU, ObjectParameter cHECKSUCCESS)
         {

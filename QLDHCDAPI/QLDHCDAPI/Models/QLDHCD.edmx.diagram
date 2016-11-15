@@ -16,7 +16,6 @@
         <EntityTypeShape EntityType="QLDHCDModel.DHCD" Width="1.5" PointX="4.75" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="QLDHCDModel.DHCDSTT" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QLDHCDModel.EXCEPTIONAPP" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDHCDModel.THANHVIENHDQT" Width="1.5" PointX="9.25" PointY="21.625" IsExpanded="true" />
         <EntityTypeShape EntityType="QLDHCDModel.USERCD" Width="1.5" PointX="7" PointY="11.625" IsExpanded="true" />
         <EntityTypeShape EntityType="QLDHCDModel.UYQUYEN" Width="1.5" PointX="12.25" PointY="5.125" IsExpanded="true" />
         <AssociationConnector Association="QLDHCDModel.FK__BANGYKIEN__MADH__693CA210" ManuallyRouted="false" />
@@ -30,14 +29,15 @@
         <AssociationConnector Association="QLDHCDModel.FK_CT_BAUHDQT1" ManuallyRouted="false" />
         <AssociationConnector Association="QLDHCDModel.FK_CT_BAUHDQT2" ManuallyRouted="false" />
         <AssociationConnector Association="QLDHCDModel.FK_CTDHCD_MADH" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDHCDModel.FK_THANHVIENHDQT" ManuallyRouted="false" />
         <AssociationConnector Association="QLDHCDModel.FK_UQ_MANGCHUYEN" ManuallyRouted="false" />
         <AssociationConnector Association="QLDHCDModel.FK_UQ_MANGNHAN" ManuallyRouted="false" />
         <AssociationConnector Association="QLDHCDModel.FK_UQ_MADH" ManuallyRouted="false" />
         <EntityTypeShape EntityType="QLDHCDModel.COMMITDHCD" Width="1.5" PointX="7" PointY="21.875" />
         <AssociationConnector Association="QLDHCDModel.FK__COMMITDHCD__MADH__1B0907CE" />
-        <EntityTypeShape EntityType="QLDHCDModel.THANHVIENBK" Width="1.5" PointX="9.25" PointY="11.25" />
+        <EntityTypeShape EntityType="QLDHCDModel.THANHVIENBK" Width="1.5" PointX="9.25" PointY="11.875" />
+        <EntityTypeShape EntityType="QLDHCDModel.THANHVIENHDQT" Width="1.5" PointX="9.25" PointY="22" />
         <AssociationConnector Association="QLDHCDModel.FK_THANHVIENBKS" />
+        <AssociationConnector Association="QLDHCDModel.FK_THANHVIENHDQT" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

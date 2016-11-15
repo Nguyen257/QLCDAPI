@@ -62,29 +62,14 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SLDAUQ, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.SLDAUQ, new { @class = "k-textbox formNumberic  myCSSInput" })
-                @Html.ValidationMessageFor(model => model.SLDAUQ)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SLDCUQ, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.SLDCUQ, new { @class = "k-textbox formNumberic myCSSInput" })
-                @Html.ValidationMessageFor(model => model.SLDCUQ)
-            </div>
-        </div>
-
-        <div class="form-group" style="display:none">
-            @Html.LabelFor(model => model.SLCPSAUCUNG, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.SLCPSAUCUNG, new { @class = "k-textbox formNumberic  myCSSInput" })
-                @Html.ValidationMessageFor(model => model.SLCPSAUCUNG)
-            </div>
-        </div>
+        
+        @Html.HiddenFor(model => model.SLDAUQ)
+        @Html.HiddenFor(model => model.SLDCUQ)
+        @Html.HiddenFor(model => model.SLCPSAUCUNG)
+        @Html.HiddenFor(model => model.NCP_DABAUBKS)
+        @Html.HiddenFor(model => model.NCP_DABAUHDQT)
+        @Html.HiddenFor(model => model.NCP_DABQYKIEN)
+        @Html.HiddenFor(model => model.NCP_DABQYKIEN_PHEU)
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" onclick="btnSubmit_Click();" />

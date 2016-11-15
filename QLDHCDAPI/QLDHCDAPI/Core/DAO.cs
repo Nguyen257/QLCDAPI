@@ -33,5 +33,22 @@ namespace QLDHCDAPI.Core
             return DataReturn;
         }
 
+        public bool CheckCoDongThamDuDH(int macd, string madh)
+        {
+            bool DataReturn = false;
+            try
+            {
+                List<CT_DHCD> listTD = db.CT_DHCD.Where(x => x.MACD == macd && x.MADH == madh).ToList();
+                if (listTD != null && listTD.Count > 0)
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return DataReturn;
+        }
     }
 }

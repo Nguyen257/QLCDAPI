@@ -1,52 +1,76 @@
-﻿@model IEnumerable<QLDHCDAPI.Models.THANHVIENBK>
+﻿@model PagedList.IPagedList<QLDHCDAPI.Models.THANHVIENBK>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+@using (Html.BeginForm("Index", "THANHVIENBKS", FormMethod.Get))
+{
+    <p>
+        Tìm theo tên: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+    </p>
+}
+<table class="table table-striped table-hover ">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.SOPHIEUBAU)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().MATD)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LATHAYTHE)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CT_DHCD.DHCD.TenDH)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CODONG.HoTen)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CT_DHCD.CODONG.HoTen)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DHCD.TenDH)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().HINHTHUCBAU)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SLPHIEUBAU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().THANHVIENTYPE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().LACHUTICH)
+        </th>
+
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.SOPHIEUBAU)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LATHAYTHE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CODONG.HoTen)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DHCD.TenDH)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { macd = item.MACD, madh = item.MADH }) |
-            @Html.ActionLink("Details", "Details", new { macd = item.MACD,madh = item.MADH }) |
-            @Html.ActionLink("Delete", "Delete", new { macd=item.MACD, madh = item.MADH })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MATD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CT_DHCD.DHCD.TenDH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CT_DHCD.CODONG.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HINHTHUCBAU)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SLPHIEUBAU)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.THANHVIENTYPE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LACHUTICH)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MATD }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MATD }) |
+            </td>
+        </tr>
+    }
 
 </table>

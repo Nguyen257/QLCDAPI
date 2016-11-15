@@ -2,50 +2,64 @@
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Details</h2>
 
 <div>
-    <h4>THANHVIENBK</h4>
-	<hr />
+    <h4>THANHVIENHDQT</h4>
+    <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.SOPHIEUBAU)
+            @Html.DisplayNameFor(model => model.MATD)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SOPHIEUBAU)
+            @Html.DisplayFor(model => model.MATD)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CT_DHCD.CODONG.HoTen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CT_DHCD.CODONG.HoTen)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LATHAYTHE)
+            @Html.DisplayNameFor(model => model.HINHTHUCBAU)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LATHAYTHE)
+            @Html.DisplayFor(model => model.HINHTHUCBAU)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CODONG.HoTen)
+            @Html.DisplayNameFor(model => model.SLPHIEUBAU)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CODONG.HoTen)
+            @Html.DisplayFor(model => model.SLPHIEUBAU)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DHCD.TenDH)
+            @Html.DisplayNameFor(model => model.THANHVIENTYPE)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DHCD.TenDH)
+            @Html.DisplayFor(model => model.THANHVIENTYPE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LACHUTICH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LACHUTICH)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { macd = Model.MACD, madh = Model.MADH }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MATD }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

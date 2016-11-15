@@ -1,145 +1,142 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QLDHCDAPI.Models;
+using PagedList;
+using PagedList.Mvc;
+using System.Net;
+using System.Data.Entity;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using QLDHCDAPI.Core;
 
 namespace QLDHCDAPI.Controllers
 {
     public class THANHVIENBKSController : Controller
     {
         private QLDHCDEntities db = new QLDHCDEntities();
-
-        // GET: /THANHVIENBKS/
-        public ActionResult Index()
+        DAO Dao = new DAO();
+        // GET: /THANHVIENHDQT/
+        public ActionResult Index(string currentFilter, string searchString, int? page)
         {
-            var thanhvienbks = db.THANHVIENBKS.Include(t => t.CODONG).Include(t => t.DHCD);
-            return View(thanhvienbks.ToList());
+            ViewBag.Alert = TempData["Message"] + string.Empty;
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+            {
+                QLDHCDEntities data = new QLDHCDEntities();
+                List<THANHVIENBK> lst = new List<THANHVIENBK>();
+                lst = (from l in db.THANHVIENBKS where l.CT_DHCD.DHCD.ACTIVE == 1 select l).ToList();
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewBag.CurrentFilter = searchString;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    lst = lst.Where(s => s.CT_DHCD.CODONG.HoTen.Contains(searchString)).ToList();
+                }
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return View(lst.ToPagedList(pageNumber, pageSize));
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+            }
         }
 
-        // GET: /THANHVIENBKS/Details/5
-        public ActionResult Details(int macd,string madh)
+        // GET: /THANHVIENHDQT/Details/5
+        public ActionResult Details(string id)
         {
-            if (macd==null || string.IsNullOrEmpty(madh))
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                THANHVIENBK thanhvienhdqt = db.THANHVIENBKS.Find(id);
+                if (thanhvienhdqt == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(thanhvienhdqt);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
             }
 
-            List<THANHVIENBK> ListThanhVienBKS = (from l in db.THANHVIENBKS
-                                        where l.MACD == macd && l.MADH == madh
-                                        select l).ToList();
-            THANHVIENBK ThanhVienbks = (ListThanhVienBKS.Count > 0) ? (ListThanhVienBKS.First()) : (null) ;
-            //THANHVIENBK thanhvienbk = db.THANHVIENBKS.Find(macd, madh);
-            if (ThanhVienbks == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ThanhVienbks);
+
         }
 
-        // GET: /THANHVIENBKS/Create
-        public ActionResult Create()
+        // GET: /THANHVIENHDQT/Edit/5
+        public ActionResult Edit(string id)
         {
-            ViewBag.MACD = new SelectList(db.CODONGs, "MACD", "HoTen");
-            ViewBag.MADH = new SelectList(db.DHCDs, "MADH", "TenDH");
-            return View();
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                THANHVIENBK thanhvienhdqt = db.THANHVIENBKS.Find(id);
+                if (thanhvienhdqt == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.MATD = thanhvienhdqt.MATD;
+                return View(thanhvienhdqt);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+            }
+
+
+
         }
 
-        // POST: /THANHVIENBKS/Create
+        // POST: /THANHVIENHDQT/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="MADH,MACD,SOPHIEUBAU,LATHAYTHE")] THANHVIENBK thanhvienbk)
+        public ActionResult Edit([Bind(Include = "MATD,HINHTHUCBAU,SLPHIEUBAU,THANHVIENTYPE,LACHUTICH,LASUCCESS")] THANHVIENBK thanhvienhdqt)
         {
-            if (ModelState.IsValid)
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
             {
-                db.THANHVIENBKS.Add(thanhvienbk);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(thanhvienhdqt).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    TempData["Message"] = "Chỉnh sửa HĐQT thành công";
+
+                    return RedirectToAction("Index");
+                }
+                ViewBag.MATD = thanhvienhdqt.MATD;
+                return View(thanhvienhdqt);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
             }
 
-            ViewBag.MACD = new SelectList(db.CODONGs, "MACD", "HoTen", thanhvienbk.MACD);
-            ViewBag.MADH = new SelectList(db.DHCDs, "MADH", "TenDH", thanhvienbk.MADH);
-            return View(thanhvienbk);
         }
 
-        // GET: /THANHVIENBKS/Edit/5
-        public ActionResult Edit(int macd, string madh)
-        {
-            if (macd == null || string.IsNullOrEmpty(madh))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            List<THANHVIENBK> ListThanhVienBKS = (from l in db.THANHVIENBKS
-                                        where l.MACD == macd && l.MADH == madh
-                                        select l).ToList();
-            THANHVIENBK thanhvienbk = (ListThanhVienBKS.Count > 0) ? (ListThanhVienBKS.First()) : (null);
-            //THANHVIENBK thanhvienbk = db.THANHVIENBKS.Find(id);
-            if (thanhvienbk == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.MACD = new SelectList(db.CODONGs, "MACD", "HoTen", thanhvienbk.MACD);
-            ViewBag.MADH = new SelectList(db.DHCDs, "MADH", "TenDH", thanhvienbk.MADH);
-            return View(thanhvienbk);
-        }
+        // GET: /THANHVIENHDQT/Delete/5
 
-        // POST: /THANHVIENBKS/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="MADH,MACD,SOPHIEUBAU,LATHAYTHE")] THANHVIENBK thanhvienbk)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(thanhvienbk).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.MACD = new SelectList(db.CODONGs, "MACD", "HoTen", thanhvienbk.MACD);
-            ViewBag.MADH = new SelectList(db.DHCDs, "MADH", "TenDH", thanhvienbk.MADH);
-            return View(thanhvienbk);
-        }
-
-        // GET: /THANHVIENBKS/Delete/5
-        public ActionResult Delete(int macd, string madh)
-        {
-            if (macd == null || string.IsNullOrEmpty(madh))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            List<THANHVIENBK> ListThanhVienBKS = (from l in db.THANHVIENBKS
-                                        where l.MACD == macd && l.MADH == madh
-                                        select l).ToList();
-            THANHVIENBK thanhvienbk = (ListThanhVienBKS.Count > 0) ? (ListThanhVienBKS.First()) : (null);
-            //THANHVIENBK thanhvienbk = db.THANHVIENBKS.Find(id);
-            if (thanhvienbk == null)
-            {
-                return HttpNotFound();
-            }
-            return View(thanhvienbk);
-        }
-
-        // POST: /THANHVIENBKS/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int macd, string madh)
-        {
-            List<THANHVIENBK> ListThanhVienBKS = (from l in db.THANHVIENBKS
-                                        where l.MACD == macd && l.MADH == madh
-                                        select l).ToList();
-            THANHVIENBK thanhvienbk = (ListThanhVienBKS.Count > 0) ? (ListThanhVienBKS.First()) : (null);
-            //THANHVIENBK thanhvienbk = db.THANHVIENBKS.Find(id);
-            db.THANHVIENBKS.Remove(thanhvienbk);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         protected override void Dispose(bool disposing)
         {

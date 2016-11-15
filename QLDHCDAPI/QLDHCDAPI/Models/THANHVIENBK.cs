@@ -17,9 +17,7 @@ namespace QLDHCDAPI.Models
         public string MATD { get; set; }
         public string HINHTHUCBAU { get; set; }
         public Nullable<int> SLPHIEUBAU { get; set; }
-        public Nullable<bool> LADECU { get; set; }
-        public Nullable<bool> LAUNGCU { get; set; }
-        public Nullable<bool> LATHAYTHE { get; set; }
+        public string THANHVIENTYPE { get; set; }
         public Nullable<bool> LACHUTICH { get; set; }
         public Nullable<bool> LASUCCESS { get; set; }
     

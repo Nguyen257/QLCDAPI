@@ -88,27 +88,56 @@ namespace QLDHCDAPI.API
                 if (role == "User" || role == "Admin")
                 {
                     DHCD dhcd = db.DHCDs.Where(x => x.ACTIVE == 1).OrderByDescending(x => x.thoiGian).First();
+                    int macd = int.Parse(id);
                     var listThamDu = (from l in db.CT_DHCD
-                                      where l.CODONG.MACD == int.Parse(id) && l.MADH == dhcd.MADH
-                                      select l.CODONG.HoTen);
+                                      where l.CODONG.MACD == macd && l.MADH == dhcd.MADH
+                                      select new
+                                      {
+                                          HoTen = l.CODONG.HoTen,
+                                          SLCPSauCung = l.SLCPSAUCUNG,
+                                          matd = l.MATD
+                                      });
                     if (listThamDu == null || listThamDu.Count() == 0)
                     {
-                        return Ok("");
+                        var Result = new
+                          {
+                              success = "NoSuccess",
+                              data = new List<string>()
+                          };
+                        return Json(Result);
                     }
-
-                    return Ok(listThamDu.First());
+                    else
+                    {
+                        var Result = new
+                       {
+                           success = "success",
+                           data = listThamDu.First()
+                       };
+                        return Json(Result);
+                    }
                 }
                 else
                 {
-                    return Ok("");
+                    var Result = new
+                    {
+                        success = "NoSuccess",
+                        data = new List<string>()
+                    };
+                    return Json(Result);
                 }
             }
             catch (Exception ex)
             {
-                return Ok("");
+                var Result = new
+                {
+                    success = "NoSuccess",
+                    data = new List<string>()
+                };
+                return Json(Result);
             }
 
         }
+
 
         
         protected override void Dispose(bool disposing)

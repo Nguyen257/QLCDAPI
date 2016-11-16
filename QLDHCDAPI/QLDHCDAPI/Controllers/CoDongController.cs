@@ -215,6 +215,8 @@ namespace QLDHCDAPI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "MACD,HoTen,CMND,NgayCap,NoiCap,DiaChi,QuocTich,ChucVu,Email,SDT,TrinhDoVanHoa,TrinhDoChuyenMon,ANHCD")] CODONG codong)
         {
+
+
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
                       && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
@@ -227,6 +229,26 @@ namespace QLDHCDAPI.Controllers
                         return RedirectToAction("Index");
                     }
                     return View(codong);
+                }
+                else
+                {
+                    if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User")
+                    {
+                        string userName = HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty;
+                        USERCD User = db.USERCDs.Where(x => x.USERNAME == userName).First();
+                        if (codong.MACD != User.MACD) return new HttpStatusCodeResult(401);
+                        else
+                        {
+                            if (ModelState.IsValid)
+                            {
+                                db.Entry(codong).State = EntityState.Modified;
+                                db.SaveChanges();
+                                return RedirectToAction("Index");
+                            }
+                            return View(codong);
+                        }
+                    }
+
                 }
             }
             return new HttpStatusCodeResult(401);

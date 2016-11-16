@@ -85,6 +85,91 @@ namespace QLDHCDAPI.Controllers
 
         }
 
+        public ActionResult Create()
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+            {
+                try
+                {
+                    DHCD dhcd = db.DHCDs.Where(x => x.ACTIVE == 1).OrderByDescending(q => q.thoiGian).First();
+
+                    ViewBag.MaDH = dhcd.MADH;
+                    ViewBag.MaCoDinh = "HDC" + dhcd.YEARDHCD + dhcd.STTDHTRONGNAM;
+                    THANHVIENBK tvhdqt = new THANHVIENBK();
+                    tvhdqt.LACHUTICH = false;
+                    tvhdqt.LASUCCESS = false;
+                    tvhdqt.SLPHIEUBAU = 0;
+
+                    return View(tvhdqt);
+                }
+                catch (Exception ex)
+                {
+                    return new HttpStatusCodeResult(400, "Khong co DHCD dang Active");
+                }
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+            }
+
+        }
+
+        // POST: /Temp/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "MATD,HINHTHUCBAU,SLPHIEUBAU,THANHVIENTYPE,LACHUTICH,LASUCCESS")] THANHVIENBK thanhvienbks)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+               && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+               && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+            {
+                try
+                {
+                    DHCD dhcd = db.DHCDs.Where(x => x.ACTIVE == 1).OrderByDescending(q => q.thoiGian).First();
+                    if (ModelState.IsValid)
+                    {
+                        var ListChecktvHDQT = db.THANHVIENBKS.Where(x => x.MATD == thanhvienbks.MATD);
+                        if (ListChecktvHDQT != null && ListChecktvHDQT.Count() > 0)
+                        {
+                            ModelState.AddModelError("", "Đã có thành viên này trong bầu BKS");
+                            ViewBag.MaDH = dhcd.MADH;
+                            ViewBag.MaCoDinh = "HDC" + dhcd.YEARDHCD + dhcd.STTDHTRONGNAM;
+                            return View(thanhvienbks);
+                        }
+                        else
+                        {
+                            db.THANHVIENBKS.Add(thanhvienbks);
+                            db.SaveChanges();
+                            TempData["Message"] = "Thêm ứng viên vào bầu HĐQT thành công";
+                            return RedirectToAction("Index");
+                        }
+
+
+                    }
+
+                    ViewBag.MaDH = dhcd.MADH;
+                    ViewBag.MaCoDinh = "HDC" + dhcd.YEARDHCD + dhcd.STTDHTRONGNAM;
+                    return View(thanhvienbks);
+                }
+                catch (Exception ex)
+                {
+                    return new HttpStatusCodeResult(400, "Khong co DHCD dang Active");
+                }
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+            }
+
+
+
+        }
+
+
         // GET: /THANHVIENHDQT/Edit/5
         public ActionResult Edit(string id)
         {

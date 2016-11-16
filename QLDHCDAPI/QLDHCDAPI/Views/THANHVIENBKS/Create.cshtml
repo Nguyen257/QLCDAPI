@@ -6,66 +6,47 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "THANHVIENBKS", FormMethod.Post, new { @class = "formCreate form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>THANHVIENBK</h4>
+        <h4>Thành viên BKS</h4>
         <hr />
         @Html.ValidationSummary(true)
-
+        @Html.HiddenFor(x => x.MATD)
+        @Html.HiddenFor(x => x.SLPHIEUBAU)
+        @Html.HiddenFor(x => x.LACHUTICH)
+        @Html.HiddenFor(x => x.LASUCCESS)
         <div class="form-group">
-            @Html.LabelFor(model => model.MATD, "MATD", new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Cổ đông</label>
             <div class="col-md-10">
-                @Html.DropDownList("MATD", String.Empty)
-                @Html.ValidationMessageFor(model => model.MATD)
+                <input type="text" id="MaCoDinh" name="MaCoDinhHDQT" class="form-control k-textbox" value="@ViewBag.MaCoDinh" readonly />
+                <input type="text" id="MACD" name="MACD_DCHDQT" class="form-control formNumberic k-textbox" onchange="getTenCD();" placeholder="Mã cổ đông" />
+                <input type="text" id="HOTEN" name="HoTen_DCHDQT" class="form-control k-textbox" readonly placeholder="Họ tên Cổ đông" />
+                @Html.ValidationMessageFor(x => x.MATD);
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.HINHTHUCBAU, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.HINHTHUCBAU)
+                @Html.TextBoxFor(model => model.HINHTHUCBAU, new { @class = "form-control k-textbox" })
                 @Html.ValidationMessageFor(model => model.HINHTHUCBAU)
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SLPHIEUBAU, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SLPHIEUBAU)
-                @Html.ValidationMessageFor(model => model.SLPHIEUBAU)
-            </div>
-        </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.THANHVIENTYPE, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.THANHVIENTYPE)
+                @Html.TextBoxFor(model => model.THANHVIENTYPE, new { @class = "form-control k-textbox" })
                 @Html.ValidationMessageFor(model => model.THANHVIENTYPE)
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LACHUTICH, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LACHUTICH)
-                @Html.ValidationMessageFor(model => model.LACHUTICH)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LASUCCESS, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LASUCCESS)
-                @Html.ValidationMessageFor(model => model.LASUCCESS)
-            </div>
-        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input id="btnSubmit" type="submit" value="Create" class="btn btn-default" onclick="btnSubmitClick();" disabled />
             </div>
         </div>
     </div>
@@ -74,3 +55,45 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts{
+
+    <script>
+        function getTenCD()
+        {
+            var macd = $('#MACD').val();
+            if (macd != null && macd.length > 0) {
+                $.get("@(Request.Url.Scheme + "://"+ Request.Url.Authority)/qldhcdapi/THAMDUDHAPI/GetCoDongFromMaCD?id="+macd+"&role=@(HttpContext.Current.Session["Role"]+ string.Empty)",
+                function (result) {
+                    if (result.success == 'success')
+                    {
+                        $('#HOTEN').val(result.data.HoTen);
+                        $('#MATD').val(result.data.matd);
+                        ValidateForm();
+                    }
+
+                });
+            }
+        }
+        function ValidateForm()
+        {
+            var check = $('#MATD').val();
+            if(check!=null && check.length>0)
+            {
+                $('#btnSubmit').prop('disabled', false);
+                return true;
+            }
+            else {
+                $('#btnSubmit').prop('disabled', true);
+                return false;
+            }
+        }
+        function btnSubmitClick()
+        {
+            if(ValidateForm())
+            {
+                $('.formCreate').submit();
+            }
+        }
+    </script>
+}

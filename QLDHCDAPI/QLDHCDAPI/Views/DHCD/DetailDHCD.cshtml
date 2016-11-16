@@ -36,65 +36,7 @@
         <dd>
             @Html.DisplayFor(model => model.STTDHTRONGNAM)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.nQKin)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.nQKin)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.nQBefore)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.nQBefore)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.nDeCuHDQT)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.nDeCuHDQT)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.nUngCuHDQT)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.nUngCuHDQT)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.nDeCuBKS)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.nDeCuBKS)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.nUngCuBKS)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.nUngCuBKS)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.nBauBoSungHDQT)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.nBauBoSungHDQT)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.nBauBOSungBKS)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.nBauBOSungBKS)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.thoiGian)
         </dt>
@@ -108,15 +50,108 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ACTIVE)
+            @((Model.ACTIVE == 1) ? "Đang diễn ra" : "Đã diễn ra")
         </dd>
 
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nQKin)
+        </dt>
+
+        <dd>
+            @((Model.nQKin.HasValue) ? Model.nQKin.Value : 0) câu hỏi
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nQBefore)
+        </dt>
+
+        <dd>
+            @((Model.nQBefore.HasValue) ? Model.nQBefore.Value : 0) câu hỏi
+        </dd>
+
+        @if (!Model.LABAUBOSUNG)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.LABAUBOSUNG)
+            </dt>
+
+            <dd>
+                @((Model.LABAUBOSUNG)?"Bổ sung thành viên vào HĐQT/BKS":"Bầu mới thành viên vào HĐQT/BKS")
+            </dd>
+            
+            <dt>
+                @Html.DisplayNameFor(model => model.nDeCuHDQT)
+            </dt>
+
+            <dd>
+                @((Model.nDeCuHDQT.HasValue) ? Model.nDeCuHDQT.Value : 0) thành viên
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.nUngCuHDQT)
+            </dt>
+
+            <dd>
+                @((Model.nUngCuHDQT.HasValue) ? Model.nUngCuHDQT.Value : 0) thành viên
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.nDeCuBKS)
+            </dt>
+
+            <dd>
+                @((Model.nDeCuBKS.HasValue) ? Model.nDeCuBKS.Value : 0) thành viên
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.nUngCuBKS)
+            </dt>
+
+            <dd>
+                @((Model.nUngCuBKS.HasValue) ? Model.nUngCuBKS.Value : 0) thành viên
+            </dd>
+
+        }
+        else
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.nBauBoSungHDQT)
+            </dt>
+            <dd>
+                @((Model.nBauBoSungHDQT.HasValue) ? Model.nBauBoSungHDQT.Value : 0) thành viên
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.nBauBOSungBKS)
+            </dt>
+            <dd>
+                @((Model.nBauBOSungBKS.HasValue) ? Model.nBauBOSungBKS.Value : 0) thành viên
+            </dd>
+        }
+
+       
         <dt>
             @Html.DisplayNameFor(model => model.TONGSOPHIEU)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TONGSOPHIEU)
+            @Html.DisplayFor(model => model.TONGSOPHIEU) phiếu
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCPPHATRA_HDQT)
+        </dt>
+
+        <dd>
+            @((Model.SLCPPHATRA_HDQT.HasValue)? Model.SLCPPHATRA_HDQT.Value : 0) cổ phiếu
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCPPHATRA_BKS)
+        </dt>
+
+        <dd>
+            @((Model.SLCPPHATRA_BKS.HasValue) ? Model.SLCPPHATRA_BKS.Value : 0) cổ phiếu
         </dd>
 
     </dl>

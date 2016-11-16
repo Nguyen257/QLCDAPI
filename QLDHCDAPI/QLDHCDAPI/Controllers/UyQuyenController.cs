@@ -152,7 +152,7 @@ namespace QLDHCDAPI.Controllers
                     {
                         if (uyquyen.SLUQ.HasValue)
                         {
-                            int slSauCung = db.CT_DHCD.Where(x => x.MATD == uyquyen.MANGCHUYEN).ToList().First().SLCPSAUCUNG ?? 0;
+                            long slSauCung = db.CT_DHCD.Where(x => x.MATD == uyquyen.MANGCHUYEN).ToList().First().SLCPSAUCUNG ?? 0;
                             if (!uyquyen.SLUQ.HasValue || uyquyen.SLUQ.Value > slSauCung)
                             {
                                 DHCD dhcd = db.DHCDs.Where(x => x.ACTIVE == 1).OrderByDescending(x => x.thoiGian).ToList().First();
@@ -298,7 +298,7 @@ namespace QLDHCDAPI.Controllers
                         {
                             if (uyquyen.SLUQ.HasValue && uyquyen.SLUQ.Value > 0)
                             {
-                                int slSauCung = db.CT_DHCD.Where(x => x.MATD == uyquyen.MANGCHUYEN).ToList().First().SLCPSAUCUNG ?? 0;
+                                long slSauCung = db.CT_DHCD.Where(x => x.MATD == uyquyen.MANGCHUYEN).ToList().First().SLCPSAUCUNG ?? 0;
                                 if (uyquyen.SLUQ.Value > slSauCung)
                                 {
                                     DHCD dhcd = db.DHCDs.Where(x => x.ACTIVE == 1).OrderByDescending(x => x.thoiGian).ToList().First();

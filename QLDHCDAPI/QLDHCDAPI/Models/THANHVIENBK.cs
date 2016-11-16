@@ -16,6 +16,7 @@ namespace QLDHCDAPI.Models
     {
         public THANHVIENBK()
         {
+            this.SLPHIEUBAU = 0;
             this.CT_BAUBKS = new HashSet<CT_BAUBKS>();
         }
     
@@ -26,7 +27,7 @@ namespace QLDHCDAPI.Models
         public bool LACHUTICH { get; set; }
         public bool LASUCCESS { get; set; }
     
-        public virtual CT_DHCD CT_DHCD { get; set; }
         public virtual ICollection<CT_BAUBKS> CT_BAUBKS { get; set; }
+        public virtual CT_DHCD CT_DHCD { get; set; }
     }
 }

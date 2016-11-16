@@ -4,40 +4,40 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c3eac7ea5e2c42ca8d15166e0172b1d4" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="QLDHCDModel.BANGYKIEN" Width="1.5" PointX="7" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDHCDModel.BANGYKIENBQPHIEU" Width="1.5" PointX="7" PointY="17.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDHCDModel.CODONG" Width="1.5" PointX="4.75" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDHCDModel.CT_DHCD" Width="1.5" PointX="7" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDHCDModel.CT_YKIEN_BQPHIEU" Width="1.5" PointX="9.25" PointY="18" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDHCDModel.CTBQYKIEN" Width="1.5" PointX="9.25" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDHCDModel.DHCD" Width="1.5" PointX="4.75" PointY="3.125" IsExpanded="true" />
+      <Diagram DiagramId="7c837a858ebc4c15a977de2caa78d434" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="QLDHCDModel.BANGYKIEN" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDHCDModel.BANGYKIENBQPHIEU" Width="1.5" PointX="3" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDHCDModel.CODONG" Width="1.5" PointX="5.75" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDHCDModel.COMMITDHCD" Width="1.5" PointX="3" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDHCDModel.CT_BAUBKS" Width="1.5" PointX="12.5" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDHCDModel.CT_BAUHDQT" Width="1.5" PointX="12.5" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDHCDModel.CT_DHCD" Width="1.5" PointX="8" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDHCDModel.CT_YKIEN_BQPHIEU" Width="1.5" PointX="5.25" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDHCDModel.CTBQYKIEN" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDHCDModel.DHCD" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
         <EntityTypeShape EntityType="QLDHCDModel.DHCDSTT" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QLDHCDModel.EXCEPTIONAPP" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDHCDModel.USERCD" Width="1.5" PointX="7" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDHCDModel.UYQUYEN" Width="1.5" PointX="12.25" PointY="5.125" IsExpanded="true" />
-        <AssociationConnector Association="QLDHCDModel.FK__BANGYKIEN__MADH__693CA210" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDHCDModel.FK__CTBQYKIEN__MAYK__70DDC3D8" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDHCDModel.FK__BANGYKIENB__MADH__07C12930" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDHCDModel.FK__CT_YKIEN_B__MAYK__10566F31" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QLDHCDModel.THANHVIENBK" Width="1.5" PointX="10.25" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDHCDModel.THANHVIENHDQT" Width="1.5" PointX="10.25" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDHCDModel.USERCD" Width="1.5" PointX="8" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDHCDModel.UYQUYEN" Width="1.5" PointX="10.25" PointY="14.5" IsExpanded="true" />
+        <AssociationConnector Association="QLDHCDModel.FK__BANGYKIEN__MADH__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDHCDModel.FK__CTBQYKIEN__MAYK__7E37BEF6" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDHCDModel.FK__BANGYKIENB__MADH__151B244E" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDHCDModel.FK__CT_YKIEN_B__MAYK__1DB06A4F" ManuallyRouted="false" />
         <AssociationConnector Association="QLDHCDModel.FK_CTDHCD_MACD" ManuallyRouted="false" />
         <AssociationConnector Association="QLDHCDModel.FK_USERCD" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDHCDModel.FK__COMMITDHCD__MADH__239E4DCF" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDHCDModel.FK_CT_BAUBKS1" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDHCDModel.FK_CT_BAUBKS2" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDHCDModel.FK_CT_BAUHDQT1" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDHCDModel.FK_CT_BAUHDQT2" ManuallyRouted="false" />
         <AssociationConnector Association="QLDHCDModel.FK_CTDHCD_MADH" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDHCDModel.FK_THANHVIENBKS" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDHCDModel.FK_THANHVIENHDQT" ManuallyRouted="false" />
         <AssociationConnector Association="QLDHCDModel.FK_UQ_MANGCHUYEN" ManuallyRouted="false" />
         <AssociationConnector Association="QLDHCDModel.FK_UQ_MANGNHAN" ManuallyRouted="false" />
         <AssociationConnector Association="QLDHCDModel.FK_UQ_MADH" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="QLDHCDModel.COMMITDHCD" Width="1.5" PointX="7" PointY="21.875" />
-        <AssociationConnector Association="QLDHCDModel.FK__COMMITDHCD__MADH__1B0907CE" />
-        <EntityTypeShape EntityType="QLDHCDModel.THANHVIENBK" Width="1.5" PointX="9.25" PointY="11.875" />
-        <EntityTypeShape EntityType="QLDHCDModel.THANHVIENHDQT" Width="1.5" PointX="9.25" PointY="22" />
-        <AssociationConnector Association="QLDHCDModel.FK_THANHVIENBKS" />
-        <AssociationConnector Association="QLDHCDModel.FK_THANHVIENHDQT" />
-        <EntityTypeShape EntityType="QLDHCDModel.CT_BAUBKS" Width="1.5" PointX="11.5" PointY="9.5" />
-        <EntityTypeShape EntityType="QLDHCDModel.CT_BAUHDQT" Width="1.5" PointX="11.5" PointY="13.5" />
-        <AssociationConnector Association="QLDHCDModel.FK_CT_BAUBKS1" />
-        <AssociationConnector Association="QLDHCDModel.FK_CT_BAUBKS2" />
-        <AssociationConnector Association="QLDHCDModel.FK_CT_BAUHDQT1" />
-        <AssociationConnector Association="QLDHCDModel.FK_CT_BAUHDQT2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

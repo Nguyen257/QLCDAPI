@@ -122,7 +122,10 @@ namespace QLDHCDAPI.Controllers
                     ViewBag.MADH = dhcd.MADH + string.Empty;
                     ViewBag.TenDH = dhcd.TenDH + string.Empty;
                     ViewBag.MaCoDinh = "HDC" + dhcd.YEARDHCD + dhcd.STTDHTRONGNAM + string.Empty;
-
+                    ct.NCP_DABAUBKS = 0;
+                    ct.NCP_DABAUHDQT = 0;
+                    ct.NCP_DABQYKIEN = 0;
+                    ct.NCP_DABQYKIEN_PHEU = 0;
                     return View(ct);
                 }
             }

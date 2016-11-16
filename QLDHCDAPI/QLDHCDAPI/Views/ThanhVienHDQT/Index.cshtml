@@ -6,7 +6,21 @@
 }
 
 <h2>Index</h2>
+@{
+    if (HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.Role] + string.Empty == "Admin")
+    {
+        @Html.ActionLink("Thêm ứng viên vào bầu HĐQT","Create")
+        <span>|</span>
+        <a href="@(Request.Url.Scheme + "://" + Request.Url.Authority + "/CT_BauHDQT/BauThanhVien/")">Bầu cử</a>
+        
+    }
 
+    if (!string.IsNullOrEmpty(HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.Role] + string.Empty))
+    {
+        <span>|</span>
+        <a href="@(Request.Url.Scheme + "://" + Request.Url.Authority + "/CT_BauHDQT/Index/")">Xem lượt bầu</a>
+    }
+}
 @using (Html.BeginForm("Index", "THANHVIENHDQT", FormMethod.Get))
 {
     <p>
@@ -70,20 +84,21 @@
                 @Html.ActionLink("Edit", "Edit", new { id = item.MATD }) |
                 @Html.ActionLink("Details", "Details", new { id = item.MATD }) 
                 <br />
-                @{
-                    if (HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.Role] + string.Empty == "User")
-                    {
-                        <a href="@(Request.Url.Scheme + "://" + Request.Url.Authority + "/CT_BauHDQT/BauThanhVien/")">Bầu cử</a>
-                        <span>|</span>
-                    }
-                   
-                    if(!string.IsNullOrEmpty(HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.Role] + string.Empty))
-                    {
-                         <a href="@(Request.Url.Scheme + "://" + Request.Url.Authority + "/CT_BauHDQT/Index/" + item.MATD)">Xem lượt bầu</a>
-                    }
-                }
+                
             </td>
         </tr>
     }
 
 </table>
+
+<span id="popupNotification"></span>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var popupAlert = $("#popupNotification").kendoNotification().data("kendoNotification");
+            if ('@(ViewBag.Alert + string.Empty)' != null && '@(ViewBag.Alert + string.Empty)' != '') {
+                popupAlert.show('@(ViewBag.Alert + string.Empty)');
+            }
+        });
+    </script>
+}

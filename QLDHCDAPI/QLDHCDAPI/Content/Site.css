@@ -72,3 +72,9 @@ input[type="checkbox"].input-validation-error {
 .myAlertError {
     color:red;
 }
+
+.clearboth{
+    float: none;
+ clear: both;
+ height: 0px;
+}

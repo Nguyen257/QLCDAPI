@@ -16,14 +16,11 @@ namespace QLDHCDAPI.Models
     {
         public DHCD()
         {
-            this.nQKin = 0;
-            this.nQBefore = 0;
-            this.TONGSOPHIEU = 0;
             this.BANGYKIENs = new HashSet<BANGYKIEN>();
             this.BANGYKIENBQPHIEUx = new HashSet<BANGYKIENBQPHIEU>();
+            this.COMMITDHCDs = new HashSet<COMMITDHCD>();
             this.CT_DHCD = new HashSet<CT_DHCD>();
             this.UYQUYENs = new HashSet<UYQUYEN>();
-            this.COMMITDHCDs = new HashSet<COMMITDHCD>();
         }
     
         public string MADH { get; set; }
@@ -50,8 +47,8 @@ namespace QLDHCDAPI.Models
     
         public virtual ICollection<BANGYKIEN> BANGYKIENs { get; set; }
         public virtual ICollection<BANGYKIENBQPHIEU> BANGYKIENBQPHIEUx { get; set; }
+        public virtual ICollection<COMMITDHCD> COMMITDHCDs { get; set; }
         public virtual ICollection<CT_DHCD> CT_DHCD { get; set; }
         public virtual ICollection<UYQUYEN> UYQUYENs { get; set; }
-        public virtual ICollection<COMMITDHCD> COMMITDHCDs { get; set; }
     }
 }

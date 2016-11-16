@@ -81,6 +81,8 @@ namespace QLDHCDAPI.Controllers
             }
 
         }
+
+        #region CRUD
         public ActionResult Create()
         {
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
@@ -88,7 +90,6 @@ namespace QLDHCDAPI.Controllers
                 && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
             {
                 DHCD dhcd = new DHCD();
-
                 return View(dhcd);
             }
             else
@@ -96,6 +97,7 @@ namespace QLDHCDAPI.Controllers
                 return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
             }
         }
+
         public ActionResult InsertDHCD(DHCD f)
         {
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
@@ -127,8 +129,184 @@ namespace QLDHCDAPI.Controllers
             }
         }
 
+        public ActionResult EditDHCD(string madh)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+            {
+                QLDHCDEntities data = new QLDHCDEntities();
+                DHCD dhcd = (from v in data.DHCDs
+                             where v.MADH == madh
+                             select v).First();
+                return View("EditDHCD", dhcd);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+            }
+
+        }
+
+        public ActionResult UpdateDHCD(DHCD f)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+            {
+                QLDHCDEntities data = new QLDHCDEntities();
+                if (f.ACTIVE == 1)
+                {
+                    List<DHCD> ListDHCD = (from l in db.DHCDs
+                                           where l.ACTIVE == 1
+                                           select l).ToList();
+                    if (ListDHCD != null && ListDHCD.Count > 0)
+                    {
+                        DHCD curretnActivedhcd = ListDHCD.First();
+                        curretnActivedhcd.ACTIVE = 0;
+
+                        db.Entry(curretnActivedhcd).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+                if (!f.TRANGTHAI.HasValue)
+                {
+                    f.TRANGTHAI = false;
+                }
 
 
+                data.Entry(f).State = EntityState.Modified;
+                //DHCD dhcd = (from v in data.DHCDs
+                //             where v.MADH == f.MADH
+                //             select v).First();
+                //dhcd.TenDH = f.TenDH;
+                //dhcd.nQKin = f.nQKin;
+                //dhcd.nQBefore = f.nQBefore;
+                //dhcd.nDeCuHDQT = f.nDeCuHDQT;
+                //dhcd.nDeCuBKS = f.nDeCuBKS;
+                //dhcd.nUngCuBKS = f.nUngCuBKS;
+                //dhcd.nUngCuHDQT = f.nUngCuHDQT;
+                //dhcd.thoiGian = f.thoiGian;
+                //dhcd.ACTIVE = f.ACTIVE;
+                //dhcd.TONGSOPHIEU = f.TONGSOPHIEU;
+
+                data.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+            }
+
+        }
+
+        public ActionResult DetailDHCD(string madh)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+            {
+                QLDHCDEntities data = new QLDHCDEntities();
+                DHCD dhcd = (from v in data.DHCDs
+                             where v.MADH == madh
+                             select v).First();
+                ViewBag.madh = dhcd.MADH;
+                return View(dhcd);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+            }
+        }
+
+
+        [HttpGet]
+        public ActionResult Delete(string madh)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+            {
+                DHCD dhcd = (from v in db.DHCDs
+                             where v.MADH == madh
+                             select v).First();
+                return View(dhcd);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteDHCD(string madh)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+            {
+                try
+                {
+                    DHCD dhcd = (from v in db.DHCDs
+                                 where v.MADH == madh
+                                 select v).ToList().First();
+                    dhcd.ACTIVE = 0;
+                    dhcd.TRANGTHAI = true;
+                    db.Entry(dhcd).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    return new HttpStatusCodeResult(400);
+                }
+
+
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+            }
+        }
+        #endregion
+
+
+        public ActionResult ChotCoDongThamDu()
+        {
+             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+             {
+                 DHCD dhcd = db.DHCDs.Where(x=>x.ACTIVE ==1).OrderByDescending(q=>q.thoiGian).First();
+                 long tongSoCPCoDong = db.CT_DHCD.Where(x => x.MADH == dhcd.MADH).Sum(q => q.SLCP)??0;
+                 int TichSoHDQT = 0;
+                 int TichSoBKS = 0;
+                 if(dhcd.LABAUBOSUNG)
+                 {
+                     TichSoHDQT = dhcd.nBauBoSungHDQT??0;
+                     TichSoBKS = dhcd.nBauBOSungBKS ?? 0;
+                 }
+                 else
+                 {
+                     TichSoHDQT = dhcd.nDeCuHDQT ?? 0 + dhcd.nUngCuHDQT ?? 0;
+                     TichSoBKS = dhcd.nDeCuBKS ?? 0 + dhcd.nUngCuBKS ?? 0;
+                 }
+                 int TongSOPhieu = db.CT_DHCD.Where(x => x.MADH == dhcd.MADH).Count();
+                 dhcd.SLCPPHATRA_HDQT = tongSoCPCoDong * TichSoHDQT;
+                 dhcd.SLCPPHATRA_BKS = tongSoCPCoDong * TichSoBKS;
+                 dhcd.TONGSOPHIEU = TongSOPhieu;
+
+                 db.SaveChanges();
+                 TempData["Message"] = "Cập nhật số lương phát hành cổ phiếu thành công";
+                 return RedirectToAction("Index");
+             }
+             else
+             {
+                 return new HttpStatusCodeResult(401, "Ban khong co quyen");
+             }
+        }
+
+        #region AddUngVien
         public ActionResult AddUngVienHDQT()
         {
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
@@ -321,90 +499,7 @@ namespace QLDHCDAPI.Controllers
             }
         }
 
-        #region MyRegion
-        //public ActionResult AddUngVienHDQT(string myDataForm)
-        //{
-        //    if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
-        //        && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
-        //        && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
-        //    {
-        //        try
-        //        {
-        //            string[] ArrayValue = myDataForm.Split(new string[] { "##$$##" }, StringSplitOptions.RemoveEmptyEntries);
-
-        //            if (ArrayValue.Length > 0 && !string.IsNullOrWhiteSpace(ArrayValue[0]) && ArrayValue[0].Contains("HDC"))
-        //            {
-        //                string tempMaTD = ArrayValue[0] + string.Empty;
-        //                CT_DHCD tempTV = db.CT_DHCD.Where(x => x.MATD == tempMaTD).ToList().First();
-        //                if (tempTV != null)
-        //                {
-        //                    string myMDH = db.CT_DHCD.Where(x => x.MATD == tempTV.MATD).First().MADH;
-        //                    List<THANHVIENHDQT> listErrTV = db.THANHVIENHDQTs.Where(x => x.CT_DHCD.MADH == myMDH).ToList();
-        //                    if (listErrTV != null && listErrTV.Count > 0)
-        //                    {
-        //                        foreach (THANHVIENHDQT v in listErrTV)
-        //                        {
-        //                            db.THANHVIENHDQTs.Remove(v);
-        //                        }
-        //                        db.SaveChanges();
-        //                    }
-        //                }
-        //            }
-
-        //            for (int i = 0; i < ArrayValue.Length - 1; i = i + 2)
-        //            {
-        //                string matd = ArrayValue[i];
-        //                string type = ArrayValue[i + 1];
-
-        //                List<CT_DHCD> listTD = db.CT_DHCD.Where(x => x.MATD == matd).ToList();
-        //                if (listTD != null && listTD.Count > 0)
-        //                {
-        //                    THANHVIENHDQT tvhdqt = new THANHVIENHDQT();
-        //                    tvhdqt.MATD = matd;
-        //                    switch (type)
-        //                    {
-        //                        case "decu": tvhdqt.LADECU = true; break;
-        //                        case "ungcu": tvhdqt.LAUNGCU = true; break;
-        //                        default: tvhdqt.LATHAYTHE = true; break;
-        //                    }
-        //                    tvhdqt.SLPHIEUBAU = 0;
-        //                    tvhdqt.LACHUTICH = false;
-        //                    tvhdqt.LASUCCESS = false;
-
-        //                    db.THANHVIENHDQTs.Add(tvhdqt);
-        //                }
-        //                else
-        //                {
-        //                    DHCD_ThanhVien ThanhVien = new DHCD_ThanhVien();
-        //                    ThanhVien.DHCD = db.DHCDs.Where(x => x.ACTIVE == 1).OrderByDescending(o => o.thoiGian).ToList().First();
-        //                    ThanhVien.lstHDQT = new THANHVIENHDQT();
-        //                    ThanhVien.lstBKS = new THANHVIENBK();
-        //                    ThanhVien.THAMDU = new CT_DHCD();
-        //                    ViewBag.MaCoDinh = "HDC" + ThanhVien.DHCD.YEARDHCD + ThanhVien.DHCD.STTDHTRONGNAM;
-        //                    ModelState.AddModelError("error", "cổ đông chưa đăng ký tham dự đại hội");
-        //                    ViewBag.AlertErr = "Cổ đông chưa đăng ký tham dự đại hội";
-        //                    return View(ThanhVien);
-        //                }
-
-
-
-
-        //            }
-        //            db.SaveChanges();
-        //            TempData["Message"] = "Thêm ứng viên vào HĐQT thành công";
-        //            return RedirectToAction("Index");
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return new HttpStatusCodeResult(400, " Loi " + ex.Message);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
-        //    }
-        //}
-        #endregion
+        
         public ActionResult AddUngVienBKS()
         {
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
@@ -596,146 +691,95 @@ namespace QLDHCDAPI.Controllers
                 return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
             }
         }
+        #endregion
+        
+
+        #region MyRegion
+        //public ActionResult AddUngVienHDQT(string myDataForm)
+        //{
+        //    if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+        //        && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+        //        && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+        //    {
+        //        try
+        //        {
+        //            string[] ArrayValue = myDataForm.Split(new string[] { "##$$##" }, StringSplitOptions.RemoveEmptyEntries);
+
+        //            if (ArrayValue.Length > 0 && !string.IsNullOrWhiteSpace(ArrayValue[0]) && ArrayValue[0].Contains("HDC"))
+        //            {
+        //                string tempMaTD = ArrayValue[0] + string.Empty;
+        //                CT_DHCD tempTV = db.CT_DHCD.Where(x => x.MATD == tempMaTD).ToList().First();
+        //                if (tempTV != null)
+        //                {
+        //                    string myMDH = db.CT_DHCD.Where(x => x.MATD == tempTV.MATD).First().MADH;
+        //                    List<THANHVIENHDQT> listErrTV = db.THANHVIENHDQTs.Where(x => x.CT_DHCD.MADH == myMDH).ToList();
+        //                    if (listErrTV != null && listErrTV.Count > 0)
+        //                    {
+        //                        foreach (THANHVIENHDQT v in listErrTV)
+        //                        {
+        //                            db.THANHVIENHDQTs.Remove(v);
+        //                        }
+        //                        db.SaveChanges();
+        //                    }
+        //                }
+        //            }
+
+        //            for (int i = 0; i < ArrayValue.Length - 1; i = i + 2)
+        //            {
+        //                string matd = ArrayValue[i];
+        //                string type = ArrayValue[i + 1];
+
+        //                List<CT_DHCD> listTD = db.CT_DHCD.Where(x => x.MATD == matd).ToList();
+        //                if (listTD != null && listTD.Count > 0)
+        //                {
+        //                    THANHVIENHDQT tvhdqt = new THANHVIENHDQT();
+        //                    tvhdqt.MATD = matd;
+        //                    switch (type)
+        //                    {
+        //                        case "decu": tvhdqt.LADECU = true; break;
+        //                        case "ungcu": tvhdqt.LAUNGCU = true; break;
+        //                        default: tvhdqt.LATHAYTHE = true; break;
+        //                    }
+        //                    tvhdqt.SLPHIEUBAU = 0;
+        //                    tvhdqt.LACHUTICH = false;
+        //                    tvhdqt.LASUCCESS = false;
+
+        //                    db.THANHVIENHDQTs.Add(tvhdqt);
+        //                }
+        //                else
+        //                {
+        //                    DHCD_ThanhVien ThanhVien = new DHCD_ThanhVien();
+        //                    ThanhVien.DHCD = db.DHCDs.Where(x => x.ACTIVE == 1).OrderByDescending(o => o.thoiGian).ToList().First();
+        //                    ThanhVien.lstHDQT = new THANHVIENHDQT();
+        //                    ThanhVien.lstBKS = new THANHVIENBK();
+        //                    ThanhVien.THAMDU = new CT_DHCD();
+        //                    ViewBag.MaCoDinh = "HDC" + ThanhVien.DHCD.YEARDHCD + ThanhVien.DHCD.STTDHTRONGNAM;
+        //                    ModelState.AddModelError("error", "cổ đông chưa đăng ký tham dự đại hội");
+        //                    ViewBag.AlertErr = "Cổ đông chưa đăng ký tham dự đại hội";
+        //                    return View(ThanhVien);
+        //                }
 
 
 
-        public ActionResult EditDHCD(string madh)
-        {
-            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
-                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
-                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
-            {
-                QLDHCDEntities data = new QLDHCDEntities();
-                DHCD dhcd = (from v in data.DHCDs
-                             where v.MADH == madh
-                             select v).First();
-                return View("EditDHCD", dhcd);
-            }
-            else
-            {
-                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
-            }
 
-        }
-        public ActionResult UpdateDHCD(DHCD f)
-        {
-            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
-                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
-                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
-            {
-                QLDHCDEntities data = new QLDHCDEntities();
-                if (f.ACTIVE == 1)
-                {
-                    List<DHCD> ListDHCD = (from l in db.DHCDs
-                                           where l.ACTIVE == 1
-                                           select l).ToList();
-                    if (ListDHCD != null && ListDHCD.Count > 0)
-                    {
-                        DHCD curretnActivedhcd = ListDHCD.First();
-                        curretnActivedhcd.ACTIVE = 0;
+        //            }
+        //            db.SaveChanges();
+        //            TempData["Message"] = "Thêm ứng viên vào HĐQT thành công";
+        //            return RedirectToAction("Index");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return new HttpStatusCodeResult(400, " Loi " + ex.Message);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+        //    }
+        //}
+        #endregion
 
-                        db.Entry(curretnActivedhcd).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-                }
-                if (!f.TRANGTHAI.HasValue)
-                {
-                    f.TRANGTHAI = false;
-                }
-
-
-                data.Entry(f).State = EntityState.Modified;
-                //DHCD dhcd = (from v in data.DHCDs
-                //             where v.MADH == f.MADH
-                //             select v).First();
-                //dhcd.TenDH = f.TenDH;
-                //dhcd.nQKin = f.nQKin;
-                //dhcd.nQBefore = f.nQBefore;
-                //dhcd.nDeCuHDQT = f.nDeCuHDQT;
-                //dhcd.nDeCuBKS = f.nDeCuBKS;
-                //dhcd.nUngCuBKS = f.nUngCuBKS;
-                //dhcd.nUngCuHDQT = f.nUngCuHDQT;
-                //dhcd.thoiGian = f.thoiGian;
-                //dhcd.ACTIVE = f.ACTIVE;
-                //dhcd.TONGSOPHIEU = f.TONGSOPHIEU;
-
-                data.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
-            }
-
-        }
-
-        public ActionResult DetailDHCD(string madh)
-        {
-            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
-                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
-                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
-            {
-                QLDHCDEntities data = new QLDHCDEntities();
-                DHCD dhcd = (from v in data.DHCDs
-                             where v.MADH == madh
-                             select v).First();
-                ViewBag.madh = dhcd.MADH;
-                return View(dhcd);
-            }
-            else
-            {
-                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
-            }
-        }
-
-        [HttpGet]
-        public ActionResult Delete(string madh)
-        {
-            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
-                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
-                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
-            {
-                DHCD dhcd = (from v in db.DHCDs
-                             where v.MADH == madh
-                             select v).First();
-                return View(dhcd);
-            }
-            else
-            {
-                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
-            }
-        }
-
-        [HttpPost]
-        public ActionResult DeleteDHCD(string madh)
-        {
-            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
-                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
-                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
-            {
-                try
-                {
-                    DHCD dhcd = (from v in db.DHCDs
-                                 where v.MADH == madh
-                                 select v).ToList().First();
-                    dhcd.ACTIVE = 0;
-                    dhcd.TRANGTHAI = true;
-                    db.Entry(dhcd).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                catch (Exception ex)
-                {
-                    return new HttpStatusCodeResult(400);
-                }
-
-
-            }
-            else
-            {
-                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
-            }
-        }
+        
 
 
     }

@@ -87,11 +87,16 @@
             }
             else
             {
-                if(dataHTDK.indexOf('@Model.HTDK')<0)
-                {
+                if (dataHTDK.indexOf('@Model.HTDK') < 0) {
                     $('#txtKhacHTDK').val('@Model.HTDK');
                     $('#txtKhacHTDK').prop('disabled', false);
                     return 5;
+                }
+                else {
+                    $('#txtKhacHTDK').prop('disabled', true);
+
+                    return dataHTDK.indexOf('@Model.HTDK');
+
                 }
             }
         }

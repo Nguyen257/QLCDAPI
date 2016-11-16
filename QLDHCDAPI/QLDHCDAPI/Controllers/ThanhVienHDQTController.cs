@@ -22,6 +22,27 @@ namespace QLDHCDAPI.Controllers
         DAO Dao = new DAO();
         CultureInfo culture = CultureInfo.CurrentCulture;
 
+        public bool checkThanhVien(string matd)
+        {
+            bool DataReturn = false;
+            try
+            {
+                var listThanhVien = (from l in db.THANHVIENHDQTs
+                                     where l.MATD == matd
+                                     select l);
+                if (listThanhVien != null && listThanhVien.Count() > 0)
+                {
+                    DataReturn = true;
+                    return DataReturn;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return DataReturn;
+        }
+
         public THANHVIENHDQTController()
         {
             culture = new CultureInfo(1033);
@@ -86,6 +107,90 @@ namespace QLDHCDAPI.Controllers
 
         }
 
+        public ActionResult Create()
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+            {
+                try
+                {
+                    DHCD dhcd = db.DHCDs.Where(x => x.ACTIVE == 1).OrderByDescending(q => q.thoiGian).First();
+
+                    ViewBag.MaDH = dhcd.MADH;
+                    ViewBag.MaCoDinh = "HDC" + dhcd.YEARDHCD + dhcd.STTDHTRONGNAM;
+                    THANHVIENHDQT tvhdqt = new THANHVIENHDQT();
+                    tvhdqt.LACHUTICH = false;
+                    tvhdqt.LASUCCESS = false;
+                    tvhdqt.SLPHIEUBAU = 0;
+
+                    return View(tvhdqt);
+                }
+                catch (Exception ex)
+                {
+                    return new HttpStatusCodeResult(400, "Khong co DHCD dang Active");
+                }
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+            }
+
+        }
+
+        // POST: /Temp/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "MATD,HINHTHUCBAU,SLPHIEUBAU,THANHVIENTYPE,LACHUTICH,LASUCCESS")] THANHVIENHDQT thanhvienhdqt)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+               && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+               && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+            {
+                try
+                {
+                    DHCD dhcd = db.DHCDs.Where(x => x.ACTIVE == 1).OrderByDescending(q => q.thoiGian).First();
+                    if (ModelState.IsValid)
+                    {
+                        var ListChecktvHDQT = db.THANHVIENHDQTs.Where(x => x.MATD == thanhvienhdqt.MATD);
+                        if(ListChecktvHDQT!=null && ListChecktvHDQT.Count()>0)
+                        {
+                            ModelState.AddModelError("", "Đã có thành viên này trong bầu HĐQT");
+                            ViewBag.MaDH = dhcd.MADH;
+                            ViewBag.MaCoDinh = "HDC" + dhcd.YEARDHCD + dhcd.STTDHTRONGNAM;
+                            return View(thanhvienhdqt);
+                        }
+                        else
+                        {
+                            db.THANHVIENHDQTs.Add(thanhvienhdqt);
+                            db.SaveChanges();
+                            TempData["Message"] = "Thêm ứng viên vào bầu HĐQT thành công";
+                            return RedirectToAction("Index");
+                        }
+
+                        
+                    }
+
+                     ViewBag.MaDH = dhcd.MADH;
+                    ViewBag.MaCoDinh = "HDC" + dhcd.YEARDHCD + dhcd.STTDHTRONGNAM;
+                    return View(thanhvienhdqt);
+                }
+                catch (Exception ex)
+                {
+                    return new HttpStatusCodeResult(400, "Khong co DHCD dang Active");
+                }
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+            }
+
+
+            
+        }
+
         // GET: /THANHVIENHDQT/Edit/5
         public ActionResult Edit(string id)
         {
@@ -146,7 +251,7 @@ namespace QLDHCDAPI.Controllers
 
         // GET: /THANHVIENHDQT/Delete/5
 
-        
+
 
         protected override void Dispose(bool disposing)
         {

@@ -16,6 +16,7 @@ namespace QLDHCDAPI.Models
     {
         public THANHVIENHDQT()
         {
+            this.SLPHIEUBAU = 0;
             this.CT_BAUHDQT = new HashSet<CT_BAUHDQT>();
         }
     
@@ -26,7 +27,7 @@ namespace QLDHCDAPI.Models
         public bool LACHUTICH { get; set; }
         public bool LASUCCESS { get; set; }
     
-        public virtual CT_DHCD CT_DHCD { get; set; }
         public virtual ICollection<CT_BAUHDQT> CT_BAUHDQT { get; set; }
+        public virtual CT_DHCD CT_DHCD { get; set; }
     }
 }

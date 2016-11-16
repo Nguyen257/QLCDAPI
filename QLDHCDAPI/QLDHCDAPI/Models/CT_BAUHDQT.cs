@@ -17,10 +17,10 @@ namespace QLDHCDAPI.Models
         public int MACT { get; set; }
         public string MAHDQT { get; set; }
         public string MANGUOIBAU { get; set; }
-        public Nullable<int> SLPHIEUBAU { get; set; }
+        public int SLPHIEUBAU { get; set; }
         public string HINHTHUCBAU { get; set; }
-        public Nullable<System.DateTime> THOIGIANBAU { get; set; }
         public bool LAHOPLE { get; set; }
+        public Nullable<System.DateTime> THOIGIANBAU { get; set; }
     
         public virtual THANHVIENHDQT THANHVIENHDQT { get; set; }
         public virtual CT_DHCD CT_DHCD { get; set; }

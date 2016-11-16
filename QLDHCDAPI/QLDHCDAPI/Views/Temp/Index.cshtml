@@ -1,0 +1,63 @@
+﻿@model IEnumerable<QLDHCDAPI.Models.THANHVIENHDQT>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HINHTHUCBAU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SLPHIEUBAU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.THANHVIENTYPE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LACHUTICH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LASUCCESS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CT_DHCD.MADH)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HINHTHUCBAU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SLPHIEUBAU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.THANHVIENTYPE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LACHUTICH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LASUCCESS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CT_DHCD.MADH)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MATD }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MATD }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MATD })
+        </td>
+    </tr>
+}
+
+</table>

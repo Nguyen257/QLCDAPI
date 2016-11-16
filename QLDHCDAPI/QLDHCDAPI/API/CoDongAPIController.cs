@@ -106,6 +106,76 @@ namespace QLDHCDAPI.API
 
         }
 
+        public IHttpActionResult GetCoDongAndMaTD(string id, string role)
+        {
+            try
+            {
+                if (role == "User" || role == "Admin")
+                {
+                    DHCD dhcd = db.DHCDs.Where(x => x.ACTIVE == 1).OrderByDescending(x => x.thoiGian).First();
+                    int macd = int.Parse(id);
+                    var listThamDu = (from l in db.CT_DHCD
+                                      where l.CODONG.MACD == macd && l.MADH == dhcd.MADH
+                                      select new
+                                      {
+                                          HoTen = l.CODONG.HoTen,
+                                          SLCPSauCung = l.SLCPSAUCUNG,
+                                          matd = l.MATD
+                                      });
+
+                    string MaCoDinh = "HDC"+dhcd.YEARDHCD + dhcd.STTDHTRONGNAM;
+                    if (listThamDu == null || listThamDu.Count() == 0)
+                    {
+                        var ListCoDong = from l in db.CODONGs
+                                         where l.MACD == macd
+                                         select new
+                                         {
+                                             HoTen = l.HoTen,
+                                             macodinh = MaCoDinh,
+                                             macd = l.MACD
+                                         };
+                        if(ListCoDong!=null && ListCoDong.Count()>0)
+                        {
+                            var Result = new
+                            {
+                                success = "ChuaDKTD",
+                                data = ListCoDong.First()
+                            };
+                            return Json(Result);
+                        }
+                    }
+                    else
+                    {
+                        var Result = new
+                        {
+                            success = "success",
+                            data = listThamDu.First()
+                        };
+                        return Json(Result);
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                var Result = new
+                {
+                    success = "NoSuccess",
+                    data = new List<string>(),
+                    exception = ex.Message
+                };
+                return Json(Result);
+            }
+            var myResult = new
+            {
+                success = "NoSuccess",
+                data = new List<string>()
+            };
+            return Json(myResult);
+
+        }
+
+
         //// GET api/CoDongAPI
         //public IQueryable<CODONG> GetCODONGs()
         //{

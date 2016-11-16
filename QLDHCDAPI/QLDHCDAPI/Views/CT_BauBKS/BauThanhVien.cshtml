@@ -1,4 +1,4 @@
-﻿@model ListModel<CT_BAUHDQT>
+﻿@model ListModel<CT_BAUBKS>
 @using QLDHCDAPI.Models
 
 @{
@@ -9,14 +9,14 @@
 
 
 
-@using (Html.BeginForm("BauThanhVien", "CT_BauHDQT", FormMethod.Post, new { @class = "formCreate form-horizontal", role = "form" }))
+@using (Html.BeginForm("BauThanhVien", "CT_BauBKS", FormMethod.Post, new { @class = "formCreate form-horizontal", role = "form" }))
 {
-    <h4>CT_BAUHDQT</h4>
+    <h4>Bầu thành viên BKS</h4>
     <hr />
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     <div class="form-group DownLine">
-        <label class="control-label  divNLeft">Kiểm phiếu bầu ĐHQT  năm @ViewBag.YearDH</label>
+        <label class="control-label  divNLeft">Kiểm phiếu bầu BKS  năm @ViewBag.YearDH</label>
         <label class="control-label  divNRight"></label>
     </div>
     <div class="form-group DownLine">
@@ -66,20 +66,20 @@
 
     <div class="form-horizontal">
         @{ int i = 0;}
-        @foreach(var v in Model.Items)
+        @foreach (var v in Model.Items)
         {
-           @Html.HiddenFor(model => model.Items[i].THOIGIANBAU, new { @class = "myTHOIGIANBAU" })
+            @Html.HiddenFor(model => model.Items[i].THOIGIANBAU, new { @class = "myTHOIGIANBAU" })
             @Html.HiddenFor(model => model.Items[i].HINHTHUCBAU, new { @class = "myHINHTHUCBAU" })
             @Html.HiddenFor(model => model.Items[i].LAHOPLE, new { @class = "myLAHOPLE" })
-            @Html.HiddenFor(model => model.Items[i].MAHDQT, new { @class = "myMATD" })
+            @Html.HiddenFor(model => model.Items[i].MABKS, new { @class = "myMATD" })
             @Html.HiddenFor(model => model.Items[i].MANGUOIBAU, new { @class = "myMANGUOIBAU" })
-            
+
             <div class="form-group DownLine Fourcol">
                 <div class="Fourcol1">
-                    <label>@(i+1) </label>
+                    <label>@(i + 1) </label>
                 </div>
                 <div class="Fourcol2">
-                    <label >@Model.Items[i].THANHVIENHDQT.CT_DHCD.CODONG.HoTen</label>
+                    <label>@Model.Items[i].THANHVIENBK.CT_DHCD.CODONG.HoTen</label>
                 </div>
                 <div class="Fourcol3">
                     @Html.TextBoxFor(model => model.Items[i].SLPHIEUBAU, new { @class = "form-control formNumberic k-textbox mySLPHIEUBAU", @readonly = "readonly" })
@@ -92,35 +92,35 @@
 
 
         @*@for (int i = 0; i < Model.Count; i++)
-        {
+            {
 
-            @Html.HiddenFor(model => model[i].Value.THOIGIANBAU, new { @class = "myTHOIGIANBAU" })
-            @Html.HiddenFor(model => model[i].Value.HINHTHUCBAU, new { @class = "myHINHTHUCBAU" })
-            @Html.HiddenFor(model => model[i].Value.LAHOPLE, new { @class = "myLAHOPLE" })
-            @Html.HiddenFor(model => model[i].Key.MATD, new { @class = "myMATD" })
-            @Html.HiddenFor(model => model[i].Value.MANGUOIBAU, new { @class = "myMANGUOIBAU" })
-        
-            
-            <div class="form-group DownLine Fourcol">
-                <div class="Fourcol1">
-                    <label>@(i+1) </label>
-                </div>
-                <div class="Fourcol2">
-                    <label >@Model[i].Key.CT_DHCD.CODONG.HoTen</label>
-                </div>
-                <div class="Fourcol3">
-                    @Html.TextBoxFor(model => model[i].Value.SLPHIEUBAU, new { @class = "form-control formNumberic k-textbox mySLPHIEUBAU", @readonly="readonly"})
-                </div>
-                <div class="Fourcol4"></div>
-                <div class="clearboth"></div>
-            </div>
+                @Html.HiddenFor(model => model[i].Value.THOIGIANBAU, new { @class = "myTHOIGIANBAU" })
+                @Html.HiddenFor(model => model[i].Value.HINHTHUCBAU, new { @class = "myHINHTHUCBAU" })
+                @Html.HiddenFor(model => model[i].Value.LAHOPLE, new { @class = "myLAHOPLE" })
+                @Html.HiddenFor(model => model[i].Key.MATD, new { @class = "myMATD" })
+                @Html.HiddenFor(model => model[i].Value.MANGUOIBAU, new { @class = "myMANGUOIBAU" })
 
-        }*@
-       
-        </div> 
+
+                <div class="form-group DownLine Fourcol">
+                    <div class="Fourcol1">
+                        <label>@(i+1) </label>
+                    </div>
+                    <div class="Fourcol2">
+                        <label >@Model[i].Key.CT_DHCD.CODONG.HoTen</label>
+                    </div>
+                    <div class="Fourcol3">
+                        @Html.TextBoxFor(model => model[i].Value.SLPHIEUBAU, new { @class = "form-control formNumberic k-textbox mySLPHIEUBAU", @readonly="readonly"})
+                    </div>
+                    <div class="Fourcol4"></div>
+                    <div class="clearboth"></div>
+                </div>
+
+            }*@
+
+    </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input id="btnSubmitForm" type="submit" value="Create" class="btn btn-default" onclick="SubmitFormBauCu();" disabled/>
+            <input id="btnSubmitForm" type="submit" value="Create" class="btn btn-default" onclick="SubmitFormBauCu();" disabled />
             <input type="reset" value="Reset" class="btn btn-default" />
         </div>
     </div>
@@ -140,10 +140,9 @@
         function getNameGlobal() {
             var macd = $('#GlobalMaCD').val();
             if (macd != null && macd.length > 0) {
-                $.get("@(Request.Url.Scheme + "://"+ Request.Url.Authority)/qldhcdapi/THAMDUDHAPI/GetCoDongFromMaCD?id="+macd+"&role=@(HttpContext.Current.Session["Role"]+ string.Empty)",
+                $.get("@(Request.Url.Scheme + "://"+ Request.Url.Authority)/qldhcdapi/THAMDUDHAPI/GetCoDongFromMaCD?id=" + macd + "&role=@(HttpContext.Current.Session["Role"]+ string.Empty)",
                 function (result) {
-                    if (result.success == 'success')
-                    {
+                    if (result.success == 'success') {
                         $('#GlobalHoTen').val(result.data.HoTen);
                         $('#GlobalMATD').val(result.data.matd);
                         $('.myMANGUOIBAU').val(result.data.matd);
@@ -151,17 +150,16 @@
 
                         NTongSoPhieu = parseInt(result.data.SLCPSauCung) * parseInt('@ViewBag.TichSo');
                         $('#SLPhieuBauRight').html(NTongSoPhieu);
-                        $('.mySLPHIEUBAU').prop("readonly",false) ;
+                        $('.mySLPHIEUBAU').prop("readonly", false);
                     }
-                    
+
                 });
 
 
 
             }
         }
-        function ValidateForm()
-        {
+        function ValidateForm() {
             var slPhieu = $('.mySLPHIEUBAU');
             var nTong = 0;
             if (NTongSoPhieu <= 0) {
@@ -170,8 +168,7 @@
             $.each(slPhieu, function (index, ele) {
                 nTong += parseInt(ele.value);
             });
-            if(nTong== NTongSoPhieu && NTongSoPhieu>0)
-            {
+            if (nTong == NTongSoPhieu && NTongSoPhieu > 0) {
                 $('#btnSubmitForm').prop('disabled', false);
                 return true;
             }
@@ -181,15 +178,12 @@
             }
         }
 
-        function SubmitFormBauCu()
-        {
-            if($('#GlobalMATD').val() ==null || $('#GlobalMATD') == '')
-            {
+        function SubmitFormBauCu() {
+            if ($('#GlobalMATD').val() == null || $('#GlobalMATD') == '') {
                 return false;
             }
             else {
-                if(ValidateForm())
-                {
+                if (ValidateForm()) {
                     $('.formCreate').submit();
                 }
             }
@@ -198,10 +192,9 @@
         $(document).ready(function () {
             $('input:radio[name="GlobalRadio"]').on("change", function () {
                 var checked = $('input[name="GlobalRadio"]:checked').val();
-                if(checked == 1)
-                {
+                if (checked == 1) {
                     $('.myLAHOPLE').val('True');
-                    
+
                 }
                 else {
                     $('.myLAHOPLE').val('False');

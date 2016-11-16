@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using QLDHCDAPI.Core;
 using System.Globalization;
+using System.Data.Entity.Core.Objects;
 
 
 namespace QLDHCDAPI.Controllers
@@ -28,15 +29,14 @@ namespace QLDHCDAPI.Controllers
         }
 
         // GET: /CT_BauHDQT/
-        public ActionResult Index(string id, string currentFilter, string searchString, int? page)
+        public ActionResult Index( string currentFilter, string searchString, int? page)
         {
             ViewBag.Alert = TempData["Message"] + string.Empty;
+            ViewBag.ListAlert = TempData["listMess"];
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
                 && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
-                if (string.IsNullOrEmpty(id)) return new HttpStatusCodeResult(400, "Loi ma TV");
-
-
+                
                 List<CT_BAUHDQT> lst = new List<CT_BAUHDQT>();
                 DHCD dhcd = db.DHCDs.Where(x => x.ACTIVE == 1).OrderByDescending(q => q.thoiGian).First();
 
@@ -69,7 +69,7 @@ namespace QLDHCDAPI.Controllers
         {
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
               && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
-              && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User"))
+              && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
             {
                 string htdkOldTV = "HĐQT đại hội trước";
                 DHCD dhcd = db.DHCDs.Where(x => x.ACTIVE == 1).OrderByDescending(q => q.thoiGian).First();
@@ -78,16 +78,16 @@ namespace QLDHCDAPI.Controllers
                                                 select l).ToList();
                 string userName = HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty;
                 USERCD CurrentUser = db.USERCDs.Where(x => x.USERNAME == userName).First();
-                
-                
+
+
                 CT_BAUHDQT CurrentCT = new CT_BAUHDQT();
                 CurrentCT.SLPHIEUBAU = 0;
                 CurrentCT.THOIGIANBAU = DateTime.Now;
                 CurrentCT.LAHOPLE = true;
                 CurrentCT.HINHTHUCBAU = "Trực tiếp";
 
-                long SoPhieuThuVao = db.CT_BAUHDQT.Where(x => x.CT_DHCD.DHCD.MADH == dhcd.MADH && x.SLPHIEUBAU.HasValue).Sum(q => q.SLPHIEUBAU) ?? 0;
-                long SoPhieuHopLe = db.CT_BAUHDQT.Where(x => x.CT_DHCD.DHCD.MADH == dhcd.MADH && x.SLPHIEUBAU.HasValue && x.LAHOPLE == true).Sum(q => q.SLPHIEUBAU) ?? 0;
+                long SoPhieuThuVao = db.CT_BAUHDQT.Where(x => x.CT_DHCD.DHCD.MADH == dhcd.MADH).Sum(q => q.SLPHIEUBAU);
+                long SoPhieuHopLe = db.CT_BAUHDQT.Where(x => x.CT_DHCD.DHCD.MADH == dhcd.MADH && x.LAHOPLE == true).Sum(q => q.SLPHIEUBAU);
                 long SoPhieuKhongHople = SoPhieuThuVao - SoPhieuHopLe;
                 ViewBag.SLHopLe = SoPhieuHopLe;
                 ViewBag.SLKhongHopLe = SoPhieuKhongHople;
@@ -97,33 +97,92 @@ namespace QLDHCDAPI.Controllers
                 ViewBag.MaCoDinh = "HDC" + dhcd.YEARDHCD + dhcd.STTDHTRONGNAM;
                 ViewBag.YearDH = dhcd.YEARDHCD;
 
-                List<KeyValuePair<THANHVIENHDQT, CT_BAUHDQT>> listCT = new List<KeyValuePair<THANHVIENHDQT, CT_BAUHDQT>>();
+                ListModel<CT_BAUHDQT> listReturn = new ListModel<CT_BAUHDQT>();
+
+                //List<KeyValuePair<THANHVIENHDQT, CT_BAUHDQT>> listCT = new List<KeyValuePair<THANHVIENHDQT, CT_BAUHDQT>>();
                 foreach (THANHVIENHDQT v in listHDQT)
                 {
-                    KeyValuePair<THANHVIENHDQT, CT_BAUHDQT> Row = new KeyValuePair<THANHVIENHDQT, CT_BAUHDQT>(v, CurrentCT);
-                    listCT.Add(Row);
+                    CT_BAUHDQT Row = new CT_BAUHDQT();
+                    Row.SLPHIEUBAU = 0;
+                    Row.THOIGIANBAU = DateTime.Now;
+                    Row.LAHOPLE = true;
+                    Row.HINHTHUCBAU = "Trực tiếp";
+                    Row.MAHDQT = v.MATD;
+                    Row.THANHVIENHDQT = v;
+                    listReturn.Items.Add(Row);
                 }
-                return View(listCT);
+                return View(listReturn);
             }
             else
             {
-                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
+                return new HttpStatusCodeResult(401, "Khong co Quyen truy cap");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult BauThanhVien(ListModel<CT_BAUHDQT> listReturn)
+        {
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+              && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+              && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+            {
+                List<string> Mess = new List<string>();
+                foreach (CT_BAUHDQT v in listReturn.Items)
+                {
+                    THANHVIENHDQTController tvhdqtController = new THANHVIENHDQTController();
+                    try
+                    {
+                        if (tvhdqtController.checkThanhVien(v.MAHDQT))
+                        {
+                            ObjectParameter myCheck = new ObjectParameter("CHECKSUCCESS", 0);
+                            db.CT_BAUHDQT_INSERT(v.MAHDQT, v.MANGUOIBAU, v.SLPHIEUBAU, v.HINHTHUCBAU, v.LAHOPLE, myCheck);
+                            if(myCheck.Value.ToString() == "1")
+                            {
+                                Mess.Add("Bầu thành viên " + v.MAHDQT + " thành công ");
+                            }
+                            else
+                            {
+                                Mess.Add("Bầu thành viên " + v.MAHDQT + "không thành công ");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Mess.Add("Bầu thành viên " + v.MAHDQT + " không thành công ");
+                    }
+                }
+
+                TempData["listMess"] = Mess;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Khong co Quyen truy cap");
             }
         }
 
         // GET: /CT_BauHDQT/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
+              && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                CT_BAUHDQT ct_bauhdqt = db.CT_BAUHDQT.Find(id);
+                if (ct_bauhdqt == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(ct_bauhdqt);
             }
-            CT_BAUHDQT ct_bauhdqt = db.CT_BAUHDQT.Find(id);
-            if (ct_bauhdqt == null)
+            else
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(401, "Khong Co quyen");
             }
-            return View(ct_bauhdqt);
+            
         }
 
         //// GET: /CT_BauHDQT/Create

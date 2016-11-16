@@ -1,0 +1,66 @@
+﻿@model QLDHCDAPI.Models.CT_BAUBKS
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CT_BAUBKS</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SLPHIEUBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLPHIEUBAU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HINHTHUCBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HINHTHUCBAU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.THOIGIANBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.THOIGIANBAU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAHOPLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAHOPLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.THANHVIENBK.HINHTHUCBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.THANHVIENBK.HINHTHUCBAU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CT_DHCD.MADH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CT_DHCD.MADH)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MACT }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

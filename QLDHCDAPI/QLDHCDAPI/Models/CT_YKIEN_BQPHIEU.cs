@@ -20,7 +20,9 @@ namespace QLDHCDAPI.Models
         public Nullable<int> LUACHON { get; set; }
         public Nullable<System.DateTime> THOIGIANBAU { get; set; }
         public Nullable<bool> PHIEUTYPE { get; set; }
+        public bool LAHOPLE { get; set; }
     
         public virtual BANGYKIENBQPHIEU BANGYKIENBQPHIEU { get; set; }
+        public virtual CT_DHCD CT_DHCD { get; set; }
     }
 }

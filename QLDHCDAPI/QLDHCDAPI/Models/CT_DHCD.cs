@@ -20,6 +20,8 @@ namespace QLDHCDAPI.Models
             this.CT_BAUHDQT = new HashSet<CT_BAUHDQT>();
             this.UYQUYENs = new HashSet<UYQUYEN>();
             this.UYQUYENs1 = new HashSet<UYQUYEN>();
+            this.CT_YKIEN_BQPHIEU = new HashSet<CT_YKIEN_BQPHIEU>();
+            this.CTBQYKIENs = new HashSet<CTBQYKIEN>();
         }
     
         public string MATD { get; set; }
@@ -43,5 +45,7 @@ namespace QLDHCDAPI.Models
         public virtual THANHVIENHDQT THANHVIENHDQT { get; set; }
         public virtual ICollection<UYQUYEN> UYQUYENs { get; set; }
         public virtual ICollection<UYQUYEN> UYQUYENs1 { get; set; }
+        public virtual ICollection<CT_YKIEN_BQPHIEU> CT_YKIEN_BQPHIEU { get; set; }
+        public virtual ICollection<CTBQYKIEN> CTBQYKIENs { get; set; }
     }
 }

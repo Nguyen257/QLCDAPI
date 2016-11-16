@@ -35,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SLCP, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.SLCP, new { @class = "k-textbox formNumberic myCSSInput" })
+                @Html.TextBoxFor(model => model.SLCP, new { @class = "form-control k-textbox formNumberic myCSSInput" })
                 @Html.ValidationMessageFor(model => model.SLCP)
             </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SLDAUQ, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.SLDAUQ, new { @class = "k-textbox formNumberic  myCSSInput" })
+                @Html.TextBoxFor(model => model.SLDAUQ, new { @class = "form-control k-textbox formNumberic  myCSSInput" })
                 @Html.ValidationMessageFor(model => model.SLDAUQ)
             </div>
         </div>
@@ -51,7 +51,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SLDCUQ, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.SLDCUQ, new { @class = "k-textbox formNumberic myCSSInput" })
+                @Html.TextBoxFor(model => model.SLDCUQ, new { @class = "form-control k-textbox formNumberic myCSSInput" })
                 @Html.ValidationMessageFor(model => model.SLDCUQ)
             </div>
         </div>
@@ -59,7 +59,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SLCPSAUCUNG, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.SLCPSAUCUNG, new { @class = "k-textbox formNumberic  myCSSInput" })
+                @Html.TextBoxFor(model => model.SLCPSAUCUNG, new { @class = " form-control k-textbox formNumberic  myCSSInput",@readonly="readonly" })
                 @Html.ValidationMessageFor(model => model.SLCPSAUCUNG)
             </div>
         </div>

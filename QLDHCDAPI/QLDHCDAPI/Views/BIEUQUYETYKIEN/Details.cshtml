@@ -1,0 +1,78 @@
+﻿@model QLDHCDAPI.Models.BANGYKIEN
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BANGYKIEN</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MAYK)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MAYK)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MADH)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MADH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NOIDUNG)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NOIDUNG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLKHONGDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLKHONGDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLYKKHAC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLYKKHAC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SOPHIEUPHATRA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SOPHIEUPHATRA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TUONGDUONGCOPHIEU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TUONGDUONGCOPHIEU)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MAYK }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

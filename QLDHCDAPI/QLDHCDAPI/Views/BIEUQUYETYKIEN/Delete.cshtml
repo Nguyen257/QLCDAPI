@@ -1,0 +1,80 @@
+﻿@model QLDHCDAPI.Models.BANGYKIEN
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>BANGYKIEN</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NOIDUNG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NOIDUNG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLKHONGDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLKHONGDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLYKKHAC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLYKKHAC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SOPHIEUPHATRA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SOPHIEUPHATRA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TUONGDUONGCOPHIEU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TUONGDUONGCOPHIEU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DHCD.TenDH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DHCD.TenDH)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

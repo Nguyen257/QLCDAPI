@@ -32,7 +32,7 @@ namespace QLDHCDAPI.Controllers
                     ViewBag.Alert = TempData["Message"] + string.Empty;
                     QLDHCDEntities data = new QLDHCDEntities();
                     List<CODONG> lst = new List<CODONG>();
-                    lst = (from l in data.CODONGs select l).ToList();
+                    lst = (from l in data.CODONGs where l.TRANGTHAI==false select l).ToList();
 
                     if (searchString != null)
                     {
@@ -127,7 +127,9 @@ namespace QLDHCDAPI.Controllers
             {
                 if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
                 {
-                    return View();
+                    CODONG CD = new CODONG();
+                    CD.TRANGTHAI = false;
+                    return View(CD);
                 }
             }
             return new HttpStatusCodeResult(401);
@@ -138,7 +140,7 @@ namespace QLDHCDAPI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MACD,HoTen,CMND,NgayCap,NoiCap,DiaChi,QuocTich,ChucVu,Email,SDT,TrinhDoVanHoa,TrinhDoChuyenMon,ANHCD")] CODONG codong)
+        public ActionResult Create([Bind(Include = "MACD,HoTen,CMND,NgayCap,NoiCap,DiaChi,QuocTich,ChucVu,Email,SDT,TrinhDoVanHoa,TrinhDoChuyenMon,ANHCD,CODONGTYPE,TRANGTHAI")] CODONG codong)
         {
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
                    && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
@@ -213,7 +215,7 @@ namespace QLDHCDAPI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MACD,HoTen,CMND,NgayCap,NoiCap,DiaChi,QuocTich,ChucVu,Email,SDT,TrinhDoVanHoa,TrinhDoChuyenMon,ANHCD")] CODONG codong)
+        public ActionResult Edit([Bind(Include = "MACD,HoTen,CMND,NgayCap,NoiCap,DiaChi,QuocTich,ChucVu,Email,SDT,TrinhDoVanHoa,TrinhDoChuyenMon,ANHCD,CODONGTYPE,TRANGTHAI")] CODONG codong)
         {
 
 
@@ -290,7 +292,7 @@ namespace QLDHCDAPI.Controllers
                 if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
                 {
                     CODONG codong = db.CODONGs.Find(macd);
-                    db.CODONGs.Remove(codong);
+                    codong.TRANGTHAI = true;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }

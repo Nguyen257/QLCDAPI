@@ -23,7 +23,9 @@ namespace QLDHCDAPI.Models
         public string MADH { get; set; }
         public string NOIDUNG { get; set; }
         public int SLDONGY { get; set; }
+        public long NCPDONGY { get; set; }
         public int SLKHONGDONGY { get; set; }
+        public long NCPKHONGDONGY { get; set; }
         public int SL_PHATRA { get; set; }
         public int SLCP_PHATRA { get; set; }
         public int SL_THUVAO { get; set; }

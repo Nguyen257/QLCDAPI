@@ -1,0 +1,66 @@
+﻿@model QLDHCDAPI.Models.CTBQYKIEN
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CTBQYKIEN</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MATD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MATD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LUACHON)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LUACHON)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NOIDUNGYKKHAC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NOIDUNGYKKHAC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.THOIGIANBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.THOIGIANBAU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAHOPLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAHOPLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BANGYKIEN.MADH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BANGYKIEN.MADH)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

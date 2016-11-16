@@ -138,7 +138,7 @@ namespace QLDHCDAPI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MATD,MADH,MACD,SLCP,SLDAUQ,SLDCUQ,HTDK,SLCPSAUCUNG")] CT_DHCD ct_dhcd)
+        public ActionResult Create([Bind(Include = "MATD,MADH,MACD,SLCP,SLDAUQ,SLDCUQ,HTDK,SLCPSAUCUNG,NCP_DABAUHDQT,NCP_DABAUBKS,NCP_DABQYKIEN,NCP_DABQYKIEN_PHEU")]CT_DHCD ct_dhcd)
         {
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
                       && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
@@ -198,7 +198,7 @@ namespace QLDHCDAPI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MATD,MADH,MACD,SLCP,SLDAUQ,SLDCUQ,HTDK,SLCPSAUCUNG")] CT_DHCD ct_dhcd)
+        public ActionResult Edit([Bind(Include = "MATD,MADH,MACD,SLCP,SLDAUQ,SLDCUQ,HTDK,SLCPSAUCUNG,NCP_DABAUHDQT,NCP_DABAUBKS,NCP_DABQYKIEN,NCP_DABQYKIEN_PHEU")]CT_DHCD ct_dhcd)
         {
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
                      && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))

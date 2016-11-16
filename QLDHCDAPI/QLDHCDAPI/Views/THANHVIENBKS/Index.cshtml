@@ -90,7 +90,9 @@
     }
 
 </table>
-
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+</div>
 <span id="popupNotification"></span>
 @section Scripts{
     <script>

@@ -33,6 +33,8 @@ namespace QLDHCDAPI.Models
         public string TrinhDoVanHoa { get; set; }
         public string TrinhDoChuyenMon { get; set; }
         public string ANHCD { get; set; }
+        public string CODONGTYPE { get; set; }
+        public Nullable<bool> TRANGTHAI { get; set; }
     
         public virtual ICollection<CT_DHCD> CT_DHCD { get; set; }
         public virtual ICollection<USERCD> USERCDs { get; set; }

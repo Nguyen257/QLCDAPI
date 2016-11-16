@@ -16,7 +16,6 @@ namespace QLDHCDAPI.Models
     {
         public THANHVIENBK()
         {
-            this.SLPHIEUBAU = 0;
             this.CT_BAUBKS = new HashSet<CT_BAUBKS>();
         }
     

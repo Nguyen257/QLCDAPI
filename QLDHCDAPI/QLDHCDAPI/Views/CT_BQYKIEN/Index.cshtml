@@ -1,0 +1,122 @@
+﻿@model PagedList.IPagedList<QLDHCDAPI.Models.CTBQYKIEN>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@Html.ActionLink("Biểu quyết ý kiến", "BieuQuyetYKien") || @Html.ActionLink("Trở lại danh sách ý kiến", "Index","BIEUQUYETYKIEN")
+@using (Html.BeginForm("Index", "CT_BQYKIEN", FormMethod.Get))
+{
+    <p>
+        Tìm theo tên: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().MAYK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().MAYK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().MATD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().LUACHON)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().THOIGIANBAU)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().LAHOPLE)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MAYK)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BANGYKIEN.NOIDUNG)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MATD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CT_DHCD.CODONG.HoTen)
+            </td>
+            <td>
+              @if(item.LUACHON == 1)
+              {
+                    <label>Đồng ý</label>
+              }
+              else
+              {
+                  if(item.LUACHON==0)
+                  {
+                      <label>Không đồng ý</label>
+                  }
+                  else
+                  {
+                      <label>Ý kiến khác</label>
+                  }
+              }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem=>item.THOIGIANBAU)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LAHOPLE)
+            </td>
+
+            <td>
+
+                @Html.ActionLink("Details", "Details", new { id = item.ID })
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+</div>
+
+<span id="popupNotification"></span>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var popupAlert = $("#popupNotification").kendoNotification().data("kendoNotification");
+            if ('@(ViewBag.Alert + string.Empty)' != null && '@(ViewBag.Alert + string.Empty)' != '') {
+                popupAlert.show('@(ViewBag.Alert + string.Empty)');
+            }
+            @{
+                List<string> ListAlert = ViewBag.ListAlert as List<string>;
+                if(ListAlert!=null && ListAlert.Count>0)
+                {
+                    foreach(var v in ListAlert)
+                    {
+                         <text>
+            popupAlert.show('@(v + string.Empty)');
+            </text>
+                    }
+
+                }
+            }
+        });
+    </script>
+}

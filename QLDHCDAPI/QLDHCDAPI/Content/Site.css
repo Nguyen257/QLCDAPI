@@ -78,3 +78,14 @@ input[type="checkbox"].input-validation-error {
  clear: both;
  height: 0px;
 }
+
+.myTextArea{
+    max-height:150px;
+    height:150px;
+    max-width : 250px;
+}
+.myTextAreaFullWidth{
+    max-height:200px;
+    height:100px;
+    max-width : 500px;
+}

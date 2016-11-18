@@ -31,7 +31,7 @@ namespace QLDHCDAPI.Models
         public int SOPHIEUPHATRA { get; set; }
         public long TUONGDUONGCOPHIEU { get; set; }
     
-        public virtual DHCD DHCD { get; set; }
         public virtual ICollection<CTBQYKIEN> CTBQYKIENs { get; set; }
+        public virtual DHCD DHCD { get; set; }
     }
 }

@@ -11,12 +11,30 @@
     <h4>CTBQYKIEN</h4>
     <hr />
     <dl class="dl-horizontal">
+        
         <dt>
-            @Html.DisplayNameFor(model => model.MATD)
+            @Html.DisplayNameFor(model => model.BANGYKIEN.DHCD.TenDH)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MATD)
+            @Html.DisplayFor(model => model.BANGYKIEN.DHCD.TenDH)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BANGYKIEN.NOIDUNG)
+        </dt>
+
+        <dd>
+            @Html.TextAreaFor(model => model.BANGYKIEN.NOIDUNG, new { @class = "form-control k-textbox myTextArea", @readonly = "readonly", @style = "width:300px,height:200px" })
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CT_DHCD.CODONG.HoTen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CT_DHCD.CODONG.HoTen)
         </dd>
 
         <dt>
@@ -24,7 +42,21 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LUACHON)
+            @if (Model.LUACHON == -1)
+            {
+                <label>Ý kiến khác</label>
+            }
+            else
+            {
+                if (Model.LUACHON == -0)
+                {
+                    <label>Không đồng ý</label>
+                }
+                else
+                {
+                    <label> Đồng ý</label>
+                }
+            }
         </dd>
 
         <dt>
@@ -32,7 +64,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NOIDUNGYKKHAC)
+            @Html.TextAreaFor(model => model.NOIDUNGYKKHAC, new { @class = "form-control k-textbox myTextArea", @readonly = "readonly", @style = "width:300px,height:200px" })
         </dd>
 
         <dt>
@@ -43,27 +75,16 @@
             @Html.DisplayFor(model => model.THOIGIANBAU)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LAHOPLE)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LAHOPLE)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.BANGYKIEN.MADH)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.BANGYKIEN.MADH)
-        </dd>
 
     </dl>
+</div>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
-
+        @Html.HiddenFor(model=>model.ID)
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
             @Html.ActionLink("Back to List", "Index")

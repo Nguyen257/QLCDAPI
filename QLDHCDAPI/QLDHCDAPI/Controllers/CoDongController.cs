@@ -24,70 +24,33 @@ namespace QLDHCDAPI.Controllers
         // GET: /CoDong/
         public ActionResult Index(string currentFilter, string searchString, int? page)
         {
+            
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
-                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+                && !string.IsNullOrEmpty(HttpContext.Session[Core.Define.SessionName.Role] + string.Empty))
             {
-                if (!string.IsNullOrEmpty(HttpContext.Session[Core.Define.SessionName.Role] + string.Empty))
+                ViewBag.Alert = TempData["Message"] + string.Empty;
+                QLDHCDEntities data = new QLDHCDEntities();
+                List<CODONG> lst = new List<CODONG>();
+                lst = (from l in data.CODONGs where l.TRANGTHAI == false select l).ToList();
+
+                if (searchString != null)
                 {
-                    ViewBag.Alert = TempData["Message"] + string.Empty;
-                    QLDHCDEntities data = new QLDHCDEntities();
-                    List<CODONG> lst = new List<CODONG>();
-                    lst = (from l in data.CODONGs where l.TRANGTHAI==false select l).ToList();
-
-                    if (searchString != null)
-                    {
-                        page = 1;
-                    }
-                    else
-                    {
-                        searchString = currentFilter;
-                    }
-
-                    ViewBag.CurrentFilter = searchString;
-                    if (!String.IsNullOrEmpty(searchString))
-                    {
-                        lst = lst.Where(s => s.HoTen.Contains(searchString)).ToList();
-                    }
-                    int pageSize = 10;
-                    int pageNumber = (page ?? 1);
-                    return View(lst.ToPagedList(pageNumber, pageSize));
+                    page = 1;
                 }
                 else
                 {
-                    if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User")
-                    {
-                        QLDHCDEntities data = new QLDHCDEntities();
-                        USERCD User = null;
-                        try
-                        {
-                            string currentUserName = HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty;
-                            List<USERCD> lstUser = (from l in db.USERCDs
-                                                    where l.USERNAME == currentUserName
-                                                    select l).ToList();
-                            if (lstUser != null && lstUser.Count > 0)
-                                User = lstUser.First();
-                        }
-                        catch (Exception ex)
-                        {
-                            return new HttpStatusCodeResult(400, "Error Index CoDong  - " + ex.Message);
-                        }
-
-                        if (User != null)
-                        {
-                            List<CODONG> lst = (from l in data.CODONGs
-                                                where l.MACD == User.MACD
-                                                select l).ToList();
-                            if (lst != null && lst.Count > 0)
-                            {
-                                return Details(lst.First().MACD);
-                            }
-                        }
-
-
-                    }
-                    return new HttpStatusCodeResult(400, "Error Index CoDong  ");
+                    searchString = currentFilter;
                 }
 
+                ViewBag.CurrentFilter = searchString;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    lst = lst.Where(s => s.HoTen.Contains(searchString)).ToList();
+                }
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+                return View(lst.ToPagedList(pageNumber, pageSize));
             }
             else
             {
@@ -151,6 +114,7 @@ namespace QLDHCDAPI.Controllers
                     {
                         db.CODONGs.Add(codong);
                         db.SaveChanges();
+                        TempData["Message"] = "Tạo mới Cổ đông " + codong.HoTen + " thành công";
                         return RedirectToAction("Index");
                     }
 
@@ -167,9 +131,9 @@ namespace QLDHCDAPI.Controllers
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
                       && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
-                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin" )
+                if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
                 {
-                    
+
                     if (macd == null)
                     {
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -184,7 +148,7 @@ namespace QLDHCDAPI.Controllers
                 }
                 else
                 {
-                    if(HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User")
+                    if (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "User")
                     {
                         if (macd == null)
                         {
@@ -228,6 +192,7 @@ namespace QLDHCDAPI.Controllers
                     {
                         db.Entry(codong).State = EntityState.Modified;
                         db.SaveChanges();
+                        TempData["Message"] = "Chỉnh sửa Cổ đông " + codong.HoTen + " thành công";
                         return RedirectToAction("Index");
                     }
                     return View(codong);
@@ -278,7 +243,7 @@ namespace QLDHCDAPI.Controllers
                 }
             }
             return new HttpStatusCodeResult(401);
-            
+
         }
 
         // POST: /CoDong/Delete/5
@@ -298,7 +263,7 @@ namespace QLDHCDAPI.Controllers
                 }
             }
             return new HttpStatusCodeResult(401);
-            
+
         }
 
         protected override void Dispose(bool disposing)

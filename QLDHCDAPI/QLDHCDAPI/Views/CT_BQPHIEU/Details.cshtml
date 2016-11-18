@@ -1,0 +1,57 @@
+﻿@model QLDHCDAPI.Models.CT_YKIEN_BQPHIEU
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CT_YKIEN_BQPHIEU</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MAYK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MAYK)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MATD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MATD)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LUACHON)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LUACHON)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.THOIGIANBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.THOIGIANBAU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAHOPLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAHOPLE)
+        </dd>
+
+        
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -13,13 +13,13 @@ using Newtonsoft.Json;
 using QLDHCDAPI.Core;
 using System.Globalization;
 
-
 namespace QLDHCDAPI.Controllers
 {
-    public class BIEUQUYETYKIENController : Controller
+    public class BIEUQUYETPHIEUController : Controller
     {
         private QLDHCDEntities db = new QLDHCDEntities();
-        DAO Dao = new DAO();
+
+         DAO Dao = new DAO();
         CultureInfo culture = CultureInfo.CurrentCulture;
 
         public bool checkThanhVien(string matd)
@@ -43,21 +43,23 @@ namespace QLDHCDAPI.Controllers
             return DataReturn;
         }
 
-        public BIEUQUYETYKIENController()
+        public BIEUQUYETPHIEUController()
         {
             culture = new CultureInfo(1033);
         }
 
-        // GET: /BIEUQUYETYKIEN/
+        // GET: /BIEUQUYETPHIEU/
         public ActionResult Index(string currentFilter, string searchString, int? page)
         {
             ViewBag.Alert = TempData["Message"] + string.Empty;
+            ViewBag.ListAlert = TempData["listMess"];
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
                 && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
                 QLDHCDEntities data = new QLDHCDEntities();
-                List<BANGYKIEN> lst = new List<BANGYKIEN>();
-                lst = (from l in db.BANGYKIENs where l.DHCD.ACTIVE == 1 select l).ToList();
+                List<BANGYKIENBQPHIEU> lst = new List<BANGYKIENBQPHIEU>();
+                DHCD dhcd = db.DHCDs.Where(x => x.ACTIVE == 1).OrderByDescending(q => q.thoiGian).First();
+                lst = (from l in db.BANGYKIENBQPHIEUx where l.MADH == dhcd.MADH select l).ToList();
                 if (searchString != null)
                 {
                     page = 1;
@@ -80,31 +82,29 @@ namespace QLDHCDAPI.Controllers
             {
                 return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
             }
-
-            
         }
 
         public ActionResult UpdateSLCPPhatra(string Role)
         {
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
                 && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
-                && HttpContext.Session[Core.Define.SessionName.Role]+string.Empty == "Admin")
+                && HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin")
             {
                 try
                 {
                     DHCD dhcdh = db.DHCDs.Where(x => x.ACTIVE == 1).OrderBy(q => q.thoiGian).First();
                     long tongslcp = db.CT_DHCD.Where(x => x.MADH == dhcdh.MADH).Sum(q => q.SLCP) ?? 0;
                     int sophieu = db.CT_DHCD.Where(x => x.MADH == dhcdh.MADH).Count();
-                    List<BANGYKIEN> listBangYK = db.BANGYKIENs.Where(x => x.MADH == dhcdh.MADH).ToList();
+                    List<BANGYKIENBQPHIEU> listBangYK = db.BANGYKIENBQPHIEUx.Where(x => x.MADH == dhcdh.MADH).ToList();
                     if (listBangYK != null && listBangYK.Count > 0)
                     {
-                        foreach (BANGYKIEN v in listBangYK)
+                        foreach (BANGYKIENBQPHIEU v in listBangYK)
                         {
                             try
                             {
-                                v.SOPHIEUPHATRA = sophieu;
-                                v.TUONGDUONGCOPHIEU = tongslcp;
-                                TempData["Message"] = "Cập nhập thông tin ý kiến thành công";
+                                v.SL_PHATRA = sophieu;
+                                v.SLCP_PHATRA = tongslcp;
+                                TempData["Message"] = "Cập nhập thông tin Ý kiên biểu quyết thành công";
                                 db.SaveChanges();
                             }
                             catch
@@ -114,7 +114,7 @@ namespace QLDHCDAPI.Controllers
                         }
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     TempData["Message"] = "Lỗi không thể cập nhật Số lượng cổ phiếu phát ra";
                 }
@@ -126,17 +126,18 @@ namespace QLDHCDAPI.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: /BIEUQUYETYKIEN/Details/5
+
+        // GET: /BIEUQUYETPHIEU/Details/5
         public ActionResult Details(int? id)
         {
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
-                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
+                 && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes"))
             {
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                BANGYKIEN bangykien = db.BANGYKIENs.Find(id);
+                BANGYKIENBQPHIEU bangykien = db.BANGYKIENBQPHIEUx.Find(id);
                 if (bangykien == null)
                 {
                     return HttpNotFound();
@@ -147,30 +148,30 @@ namespace QLDHCDAPI.Controllers
             {
                 return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
             }
-           
         }
 
-        // GET: /BIEUQUYETYKIEN/Create
+        // GET: /BIEUQUYETPHIEU/Create
         public ActionResult Create()
         {
-
             if (HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty == "AdminQLDHCD"
-                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
-                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+                 && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
+                 && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
             {
-                DHCD dhcdh = db.DHCDs.Where(x=>x.ACTIVE==1).OrderBy(q=>q.thoiGian).First();
-                BANGYKIEN bangyk = new BANGYKIEN();
+                DHCD dhcdh = db.DHCDs.Where(x => x.ACTIVE == 1).OrderBy(q => q.thoiGian).First();
+                BANGYKIENBQPHIEU bangyk = new BANGYKIENBQPHIEU();
                 bangyk.MADH = dhcdh.MADH;
                 bangyk.SLDONGY = 0;
                 bangyk.NCPDONGY = 0;
                 bangyk.NCPKHONGDONGY = 0;
-                bangyk.NCPKHAC = 0;
                 bangyk.SLKHONGDONGY = 0;
-                bangyk.SLYKKHAC = 0;
-                long tongslcp = db.CT_DHCD.Where(x=>x.MADH == dhcdh.MADH).Sum(q=>q.SLCP) ?? 0;
-                bangyk.SOPHIEUPHATRA = db.CT_DHCD.Where(x => x.MADH == dhcdh.MADH).Count();
-                bangyk.TUONGDUONGCOPHIEU = tongslcp;
-
+                bangyk.SL_PHATRA = 0;
+                bangyk.SLCP_PHATRA = 0;
+                bangyk.SL_THUVAO = 0;
+                bangyk.SLCP_THUVAO = 0;
+                bangyk.SL_HOPLE = 0;
+                bangyk.SL_KHONG_HOPLE=0;
+                bangyk.SLCP_HOPLE=0;
+                bangyk.SLCP_KHONG_HOPLE=0;
                 ViewBag.TenDH = dhcdh.TenDH;
                 return View(bangyk);
             }
@@ -178,15 +179,14 @@ namespace QLDHCDAPI.Controllers
             {
                 return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
             }
-            
         }
 
-        // POST: /BIEUQUYETYKIEN/Create
+        // POST: /BIEUQUYETPHIEU/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MAYK,MADH,NOIDUNG,SLDONGY,NCPDONGY,SLKHONGDONGY,NCPKHONGDONGY,SLYKKHAC,NCPKHAC,SOPHIEUPHATRA,TUONGDUONGCOPHIEU")] BANGYKIEN bangykien)
+        public ActionResult Create([Bind(Include="MAYK,MADH,NOIDUNG,SLDONGY,NCPDONGY,SLKHONGDONGY,NCPKHONGDONGY,SL_PHATRA,SLCP_PHATRA,SL_THUVAO,SLCP_THUVAO,SL_HOPLE,SLCP_HOPLE,SL_KHONG_HOPLE,SLCP_KHONG_HOPLE")] BANGYKIENBQPHIEU bangykienbqphieu)
         {
             if (HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty == "AdminQLDHCD"
                 && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
@@ -194,25 +194,31 @@ namespace QLDHCDAPI.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    db.BANGYKIENs.Add(bangykien);
-                    db.SaveChanges();
-                    TempData["Message"] = "Tạo mới ý kiến biểu quyết thành công ";
-                    return RedirectToAction("Index");
+                    db.BANGYKIENBQPHIEUx.Add(bangykienbqphieu);
+                    try
+                    {
+                        db.SaveChanges();
+                        TempData["Message"] = "Tạo mới ý kiến biểu quyết thành công ";
+                        return RedirectToAction("Index");
+                    }
+                    catch { }
                 }
 
+                ModelState.AddModelError("", "Dữ liệu nhập không đúng, vui lòng kiểm tra lại");
                 DHCD dhcdh = db.DHCDs.Where(x => x.ACTIVE == 1).OrderBy(q => q.thoiGian).First();
                 ViewBag.TenDH = dhcdh.TenDH;
-                return View(bangykien);
+                return View(bangykienbqphieu);
             }
             else
             {
                 return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
             }
 
+
             
         }
 
-        // GET: /BIEUQUYETYKIEN/Edit/5
+        // GET: /BIEUQUYETPHIEU/Edit/5
         public ActionResult Edit(int? id)
         {
             if (HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty == "AdminQLDHCD"
@@ -223,73 +229,63 @@ namespace QLDHCDAPI.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                BANGYKIEN bangykien = db.BANGYKIENs.Find(id);
-                if (bangykien == null)
+                BANGYKIENBQPHIEU bangykienbqphieu = db.BANGYKIENBQPHIEUx.Find(id);
+                if (bangykienbqphieu == null)
                 {
                     return HttpNotFound();
                 }
-                return View(bangykien);
+
+                DHCD dhcdh = db.DHCDs.Where(x => x.ACTIVE == 1).OrderBy(q => q.thoiGian).First();
+                ViewBag.TenDH = dhcdh.TenDH;
+                return View(bangykienbqphieu);
             }
             else
             {
                 return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
             }
 
-           
+            
         }
 
-        // POST: /BIEUQUYETYKIEN/Edit/5
+        // POST: /BIEUQUYETPHIEU/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MAYK,MADH,NOIDUNG,SLDONGY,NCPDONGY,SLKHONGDONGY,NCPKHONGDONGY,SLYKKHAC,NCPKHAC,SOPHIEUPHATRA,TUONGDUONGCOPHIEU")] BANGYKIEN bangykien)
+        public ActionResult Edit([Bind(Include="MAYK,MADH,NOIDUNG,SLDONGY,NCPDONGY,SLKHONGDONGY,NCPKHONGDONGY,SL_PHATRA,SLCP_PHATRA,SL_THUVAO,SLCP_THUVAO,SL_HOPLE,SLCP_HOPLE,SL_KHONG_HOPLE,SLCP_KHONG_HOPLE")] BANGYKIENBQPHIEU bangykienbqphieu)
         {
-
-            if (HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty == "AdminQLDHCD"
-                && (HttpContext.Session[Core.Define.SessionName.isLogin] + string.Empty == "Yes")
-                && (HttpContext.Session[Core.Define.SessionName.Role] + string.Empty == "Admin"))
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    db.Entry(bangykien).State = EntityState.Modified;
-                    db.SaveChanges();
-                    TempData["Message"] = "Cập nhật ý kiến biểu quyết thành công";
-                    return RedirectToAction("Index");
-                }
-                ViewBag.MADH = new SelectList(db.DHCDs, "MADH", "TenDH", bangykien.MADH);
-                return View(bangykien);
+                db.Entry(bangykienbqphieu).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            else
-            {
-                return new HttpStatusCodeResult(401, "Error in cloud - QLDHCD");
-            }
-
-           
+            ViewBag.MADH = new SelectList(db.DHCDs, "MADH", "TenDH", bangykienbqphieu.MADH);
+            return View(bangykienbqphieu);
         }
 
-        // GET: /BIEUQUYETYKIEN/Delete/5
+        //// GET: /BIEUQUYETPHIEU/Delete/5
         //public ActionResult Delete(int? id)
         //{
         //    if (id == null)
         //    {
         //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         //    }
-        //    BANGYKIEN bangykien = db.BANGYKIENs.Find(id);
-        //    if (bangykien == null)
+        //    BANGYKIENBQPHIEU bangykienbqphieu = db.BANGYKIENBQPHIEUx.Find(id);
+        //    if (bangykienbqphieu == null)
         //    {
         //        return HttpNotFound();
         //    }
-        //    return View(bangykien);
+        //    return View(bangykienbqphieu);
         //}
 
-        //// POST: /BIEUQUYETYKIEN/Delete/5
+        //// POST: /BIEUQUYETPHIEU/Delete/5
         //[HttpPost, ActionName("Delete")]
         //[ValidateAntiForgeryToken]
         //public ActionResult DeleteConfirmed(int id)
         //{
-        //    BANGYKIEN bangykien = db.BANGYKIENs.Find(id);
-        //    db.BANGYKIENs.Remove(bangykien);
+        //    BANGYKIENBQPHIEU bangykienbqphieu = db.BANGYKIENBQPHIEUx.Find(id);
+        //    db.BANGYKIENBQPHIEUx.Remove(bangykienbqphieu);
         //    db.SaveChanges();
         //    return RedirectToAction("Index");
         //}

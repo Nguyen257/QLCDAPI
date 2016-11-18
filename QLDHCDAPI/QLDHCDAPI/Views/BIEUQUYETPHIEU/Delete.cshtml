@@ -1,0 +1,136 @@
+﻿@model QLDHCDAPI.Models.BANGYKIENBQPHIEU
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>BANGYKIENBQPHIEU</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NOIDUNG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NOIDUNG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NCPDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NCPDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLKHONGDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLKHONGDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NCPKHONGDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NCPKHONGDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SL_PHATRA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SL_PHATRA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCP_PHATRA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLCP_PHATRA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SL_THUVAO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SL_THUVAO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCP_THUVAO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLCP_THUVAO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SL_HOPLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SL_HOPLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCP_HOPLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLCP_HOPLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SL_KHONG_HOPLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SL_KHONG_HOPLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCP_KHONG_HOPLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLCP_KHONG_HOPLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DHCD.TenDH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DHCD.TenDH)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -5,10 +5,17 @@
 }
 
 <h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create") || @Html.ActionLink("Xem danh sách biểu quyết","Index","CT_BQYKIEN")
+@if(HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.Role] == "Admin")
+{
+    <p>
+    @Html.ActionLink("Tạo mới ý kiến ", "Create") |@Html.ActionLink("Cập nhật số lượng phát ra","UpdateSLCPPhatra") | @Html.ActionLink("Xem danh sách biểu quyết","Index","CT_BQYKIEN") 
 </p>
+}
+else
+{
+    @Html.ActionLink("Xem danh sách biểu quyết","Index","CT_BQYKIEN") 
+}
+
 @using (Html.BeginForm("Index", "BIEUQUYETYKIEN", FormMethod.Get))
 {
     <p>
@@ -54,8 +61,8 @@
             @Html.DisplayFor(modelItem => item.DHCD.TenDH)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.NOIDUNG)
-        </td>
+            @Html.TextAreaFor(modelItem => item.NOIDUNG, new { @class = "k-textbox myTextArea", @readonly = "readonly" })
+        </td> 
         <td>
             @Html.DisplayFor(modelItem => item.SLDONGY)
         </td>
@@ -79,7 +86,7 @@
                 {
                         @Html.ActionLink("Edit", "Edit", new { id=item.MAYK }) <span>|</span>
                         @Html.ActionLink("Details", "Details", new { id=item.MAYK }) <span>|</span>
-                        @Html.ActionLink("Delete", "Delete", new { id=item.MAYK })
+                        @Html.ActionLink("Biểu quyết","BieuQuyet","CT_BQYKIEN",new {id=item.MAYK},null)
                 }
                 else
                 {

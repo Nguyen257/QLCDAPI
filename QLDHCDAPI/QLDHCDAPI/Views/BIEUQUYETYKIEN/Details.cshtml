@@ -27,7 +27,7 @@
             @Html.DisplayNameFor(model => model.NOIDUNG)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.NOIDUNG)
+            @Html.TextAreaFor(model => model.NOIDUNG, new { @class="form-control k-textbox myTextArea",@readonly ="readonly",@style="width:300px;height:200px" })
         </dd>
 
         <dt>
@@ -37,6 +37,13 @@
         <dd>
             @Html.DisplayFor(model => model.SLDONGY)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NCPDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NCPDONGY)
+        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.SLKHONGDONGY)
@@ -45,6 +52,13 @@
         <dd>
             @Html.DisplayFor(model => model.SLKHONGDONGY)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NCPKHONGDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NCPKHONGDONGY)
+        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.SLYKKHAC)
@@ -52,6 +66,13 @@
 
         <dd>
             @Html.DisplayFor(model => model.SLYKKHAC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NCPKHAC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NCPKHAC)
         </dd>
 
         <dt>

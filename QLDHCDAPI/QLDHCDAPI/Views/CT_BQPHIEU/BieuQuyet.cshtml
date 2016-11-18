@@ -1,0 +1,212 @@
+﻿@model ListModel<CT_YKIEN_BQPHIEU>
+@using QLDHCDAPI.Models
+
+@{
+    ViewBag.Title = "BieuQuyet";
+    int i = 0;
+}
+
+<h2>BieuQuyet</h2>
+
+@using (Html.BeginForm("BieuQuyet", "CT_BQPHIEU", FormMethod.Post, new { @class = "formCreate form-horizontal", role = "form" }))
+{
+    <h4>Biểu quyết bằng phiếu</h4>
+    <hr />
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    DHCD dhcd = ViewBag.DHCD as DHCD;
+
+    <div class="WrapperHeader">
+        <div class="ItemRow ColNum4">
+            <div class="col-lg-4 col-md-4 col-xs-12">
+               <label>Kiểm phiếu @dhcd.TenDH</label> 
+            </div>
+            <div class="clearboth"></div>
+        </div>
+        <div class="ItemRow ColNum4">
+            <div class="col-lg-4 col-md-4 col-xs-8">
+                <label>Tổng số phiếu phát ra</label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-4">
+                <label>@ViewBag.slPhatRa phiếu</label>
+            </div>
+            <div class="col-lg-4 col-md-4 col-xs-8">
+                <label>Tương đương với lượng cổ phần</label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-4">
+                <label>@ViewBag.SLCPPhatRa cổ phần</label>
+            </div>
+            <div class="clearboth"></div>
+        </div>
+        <div class="ItemRow ColNum4">
+            <div class="col-lg-4 col-md-4 col-xs-8">
+                <label>Tổng số phiếu thu vào</label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-4">
+                <label>@ViewBag.slThuVao phiếu</label>
+            </div>
+            <div class="FColcol-lg-4 col-md-4 col-xs-8">
+                <label>Tương đương với lượng cổ phần</label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-4">
+                <label>@ViewBag.SLCPThuVao cổ phần</label>
+            </div>
+            <div class="clearboth"></div>
+        </div>
+        <div class="ItemRow ColNum4">
+            <div class="col-lg-4 col-md-4 col-xs-8">
+                <label class="Trongdo">Trong đó: </label>
+                <label class="SoPhieuKhongHopLe">- Số phiếu hợp lệ </label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-4">
+                <label>@ViewBag.slHople phiếu</label>
+            </div>
+            <div class="FColcol-lg-4 col-md-4 col-xs-8">
+                <label>Tương đương với lượng cổ phần</label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-4">
+                <label>@ViewBag.SLCPHopLe cổ phần</label>
+            </div>
+            <div class="clearboth"></div>
+        </div>
+        <div class="ItemRow ColNum4">
+            <div class="col-lg-4 col-md-4 col-xs-8">
+                <label class="Trongdo"></label>
+                <label class="SoPhieuKhongHopLe"> - Số phiếu không hợp lệ </label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-4">
+                <label>@ViewBag.slKhongHople phiếu</label>
+            </div>
+            <div class="FColcol-lg-4 col-md-4 col-xs-8">
+                <label>Tương đương với lượng cổ phần</label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-4">
+                <label>@ViewBag.SLCPKhongHopLe cổ phần</label>
+            </div>
+            <div class="clearboth"></div>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2"> Mã cổ đông</label>
+        <div class="col-md-10">
+            <input type="hidden" id="GlobalMATD" />
+            <input type="text" class="form-control k-textbox" id="MaCoDinh" value="@ViewBag.MaCoDinh" readonly />
+            <input type="text" id="GlobalMACD" name="GlobalMACD" class="form-control formNumberic k-textbox" onchange="getNameGlobal();" placeholder="Mã cổ đông người chuyển" required/>
+            <input type="text" id="GlobalHoTen" name="GlobalHoTen" class="form-control k-textbox" readonly placeholder="Họ tên" />
+            @Html.ValidationMessageFor(model => model.Items[0].MATD)
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2"> Phiếu</label>
+        <div class="col-md-10">
+            <input type="hidden" id="GlobalLaHopLe" value="True" />
+            <input type="radio" name="GlobalCheckHople" id="GlobalCheckHople1" value="True" checked />
+            <label for="GlobalCheckHople1">Phiếu hợp lệ</label>
+            <input type="radio" name="GlobalCheckHople" id="GlobalCheckHople2" value="False" />
+            <label for="GlobalCheckHople2">Phiếu không hợp lệ</label>
+            @Html.ValidationMessageFor(model => model.Items[0].LAHOPLE)
+        </div>
+    </div>
+
+
+    foreach (CT_YKIEN_BQPHIEU v in Model.Items)
+    {
+        @Html.HiddenFor(model => model.Items[i].MATD, new { @class = "myHiddentMATD" })
+        @Html.HiddenFor(model => model.Items[i].LAHOPLE, new { @class = "myHiddentLAHOPLE" })
+        @Html.HiddenFor(model => model.Items[i].MAYK, new { @class = "myHiddentMAYK" })
+        @Html.HiddenFor(model => model.Items[i].THOIGIANBAU, new { @class = "myHiddentTHOIGIANBAU" })
+        @Html.HiddenFor(model => model.Items[i].LUACHON)
+
+        @Html.ValidationMessageFor(model => model.Items[i].MAYK)
+        <div class="form-group">
+            <label class="control-label col-md-2"> @(i + 1).</label>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Items[i].BANGYKIENBQPHIEU.NOIDUNG, new { @class = "form-control k-textbox myTextAreaFullWidth", @readonly = "readonly", @style = "width:400px;height:100px;" })
+                @Html.ValidationMessageFor(model => model.Items[0].MATD)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2"> </label>
+            <div class="col-md-10">
+                <input type="radio" name="Items@(i)myLuaChon" id="Items@(i)myLuaChon1" data-itemid="@i" class="myGeneralRadio" value="1" checked />
+                <label for="Items@(i)myLuaChon1">Đồng ý</label>
+
+                <input type="radio" name="Items@(i)myLuaChon" id="Items@(i)myLuaChon0" data-itemid="@i" class="myGeneralRadio" value="0" />
+                <label for="Items@(i)myLuaChon0">Không Đồng ý</label>
+                @Html.ValidationMessageFor(model => model.Items[i].LUACHON)
+            </div>
+        </div>
+        i++;
+    }
+    
+    <div class=" form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input id="btnSubmitForm" type="submit" value="Xác nhận" class="btn btn-primary" onclick="SubmitFormBieuQuyet();" disabled />
+            <input type="reset" value="Reset" class="btn btn-danger" />
+        </div>
+    </div>
+
+}
+
+
+@section Scripts{
+
+    <script>
+        function getNameGlobal() {
+            var macd = $('#GlobalMACD').val();
+            if (macd != null && macd.length > 0) {
+                $.get("@(Request.Url.Scheme + "://"+ Request.Url.Authority)/qldhcdapi/THAMDUDHAPI/GetCoDongFromMaCD?id=" + macd + "&role=@(HttpContext.Current.Session["Role"]+ string.Empty)",
+                function (result) {
+                    if (result.success == 'success') {
+                        $('#GlobalHoTen').val(result.data.HoTen);
+                        $('.myHiddentMATD').val(result.data.matd);
+                        $('#GlobalMATD').val(result.data.matd);
+                        $('#btnSubmitForm').prop('disabled', false);
+                    }
+                    else {
+                        $('#GlobalHoTen').val("");
+                        $('.myHiddentMATD').val("");
+                        $('#GlobalMATD').val("");
+                        $('#btnSubmitForm').prop('disabled', true);
+                    }
+                });
+            }
+            else {
+                $('#GlobalHoTen').val("");
+                $('.myHiddentMATD').val("");
+                $('#GlobalMATD').val("");
+                $('#btnSubmitForm').prop('disabled', true);
+            }
+        }
+        function SubmitFormBieuQuyet()
+        {
+            
+            var matd = $('#GlobalMATD').val();
+            if (matd.indexOf("HDC") >= 0)
+            {
+                $('.formCreate').submit();
+            }
+            else
+            {
+                alert("Mã cổ đông không đúng");
+            }
+        }
+
+        $(document).ready(function () {
+            $('input:radio[name=GlobalCheckHople]').change(function (e) {
+                $('#GlobalLaHopLe').val(this.value);
+                $('.myHiddentLAHOPLE').val(this.value);
+            });
+
+            $('input:radio[class=myGeneralRadio]').change(function (e) {
+                var ItemID = $(this).prop('dataset')['itemid']
+
+                $('#Items_' + ItemID + '__LUACHON').val(this.value);
+
+            });
+
+        });
+    </script>
+}

@@ -27,15 +27,15 @@ namespace QLDHCDAPI.Models
         public int SLKHONGDONGY { get; set; }
         public long NCPKHONGDONGY { get; set; }
         public int SL_PHATRA { get; set; }
-        public int SLCP_PHATRA { get; set; }
+        public long SLCP_PHATRA { get; set; }
         public int SL_THUVAO { get; set; }
-        public int SLCP_THUVAO { get; set; }
+        public long SLCP_THUVAO { get; set; }
         public int SL_HOPLE { get; set; }
-        public int SLCP_HOPLE { get; set; }
+        public long SLCP_HOPLE { get; set; }
         public int SL_KHONG_HOPLE { get; set; }
-        public int SLCP_KHONG_HOPLE { get; set; }
+        public long SLCP_KHONG_HOPLE { get; set; }
     
-        public virtual DHCD DHCD { get; set; }
         public virtual ICollection<CT_YKIEN_BQPHIEU> CT_YKIEN_BQPHIEU { get; set; }
+        public virtual DHCD DHCD { get; set; }
     }
 }

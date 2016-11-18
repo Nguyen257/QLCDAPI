@@ -29,6 +29,14 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="col-md-2 control-label">Mã cổ đông </label>
+        <div class="col-md-10">
+            <input id="myCheck" type="hidden" value="0" />
+            <input id="MACD" type="text" name="MACD" onchange="getHoTen()" class="form-control k-textbox" />
+            <input id="HoTen" type="text" name="HoTen" class="form-control k-textbox" readonly />
+        </div>
+    </div>
+    <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <button id="btnRegister_click" onclick="btnRegister_click()"> Register</button>
         </div>
@@ -37,13 +45,13 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        function btnRegister_click() {
-            if (ValidateForm() == true) $('.formRegister')[0].submit();
+    function btnRegister_click() {
+        if (ValidateForm() == true) $('.formRegister')[0].submit();
 
-        }
+    }
 
-        function getHome() {
-            return '@Request.Url.Authority';
+    function getHome() {
+        return '@Request.Url.Authority';
         }
         function ValidateForm() {
             var CheckData = true;
@@ -58,6 +66,13 @@
                 return false;
             }
             return true;
+        }
+        function getHoTen() {
+            var mymacd = $('#MACD').val();
+            $.get("@(Request.Url.Scheme + "://"+ Request.Url.Authority)/qldhcdapi/CoDongAPI/GetCoDongFromMaCD?macd=" + mymacd + "&role=@(HttpContext.Current.Session["Role"]+ string.Empty)",
+                function (data) {
+                    $('#HoTen').val(data);
+                });
         }
 
 

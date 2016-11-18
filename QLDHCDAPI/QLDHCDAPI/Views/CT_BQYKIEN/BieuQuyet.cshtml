@@ -1,0 +1,146 @@
+﻿@model QLDHCDAPI.Models.CTBQYKIEN
+
+@{
+    ViewBag.Title = "BieuQuyet";
+}
+
+<h2>BieuQuyet</h2>
+
+@using (Html.BeginForm("BieuQuyet", "CT_BQYKIEN", FormMethod.Post, new { @class = "formCreate form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>CTBQYKIEN</h4>
+        <hr />
+        
+
+
+        <div class="WrappHeader">
+            <div class="ItemRow FourCol" >
+                <div class="col-lg-4 col-md-4 col-xs-12" >
+                    <label>Kiểm phiếu @Model.BANGYKIEN.DHCD.TenDH</label> 
+                </div>
+                <div class="clearboth"></div>
+            </div>
+            <div class="ItemRow FourCol">
+                <div class="col-lg-4 col-md-4 col-xs-8">
+                    <label>Tổng số phiếu phát ra</label>
+                </div>
+                <div class="col-lg-2 col-md-2 col-xs-4">
+                    <label>@Model.BANGYKIEN.SOPHIEUPHATRA phiếu</label>
+                </div>
+                <div class="col-lg-4 col-md-4 col-xs-8">
+                    <label>Tương đương với lượng cổ phần</label>
+                </div>
+                <div class="col-lg-2 col-md-2 col-xs-4">
+                    <label>@Model.BANGYKIEN.TUONGDUONGCOPHIEU cổ phần</label>
+                </div>
+            </div>
+        </div>
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.MAYK)
+        @Html.HiddenFor(model=>model.THOIGIANBAU)
+        @Html.HiddenFor(model=>model.LAHOPLE)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MATD, "MATD", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.MATD)
+                <input type="text" class="form-control k-textbox" id="MaCoDinh" value="@ViewBag.MaCoDinh" readonly />
+                <input type="text" id="MACD" name="MACD" class="form-control formNumberic k-textbox" onchange="getTenCD();" placeholder="Mã cổ đông người chuyển" />
+                <input type="text" id="HoTen" name="HoTen" class="form-control k-textbox" readonly placeholder="Họ tên" />
+                @Html.ValidationMessageFor(model => model.MATD)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NOIDUNGYKKHAC, "NOIDUNGYKKHAC", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.BANGYKIEN.NOIDUNG, new { @class = "form-control k-textbox myTextArea", @style = "width:400px;height:200px", @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.LUACHON, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model=>model.LUACHON)
+                <div class="col-md-2">
+                    <input type="radio" id="LuachonRadio1" name="LuaChonRadio" value="1" checked />
+                    <label for="LuachonRadio1">Đồng ý</label>
+                </div>
+                <div class="col-md-2">
+                    <input type="radio" id="LuaChonRadio2" name="LuaChonRadio" value="0" />
+                    <label for="LuaChonRadio2">Không đồng ý</label>
+                </div>
+                <div class="col-md-2">
+                    <input type="radio" id="LuaChonRadio3" name="LuaChonRadio" value="-1" />
+                    <label for="LuaChonRadio3">Ý kiến khác</label>
+                </div>
+                @Html.ValidationMessageFor(model => model.LUACHON)
+            </div>
+        </div>
+
+        <div class="form-group" >
+            @Html.LabelFor(model => model.NOIDUNGYKKHAC, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.NOIDUNGYKKHAC, new { @class = "form-control k-textbox myTextArea",@readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.NOIDUNGYKKHAC)
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="reset" value="Reset" onclick="resetForm();" class="btn btn-danger" />
+                
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts{
+    <script>
+        function getTenCD() {
+            var macd = $('#MACD').val();
+            if (macd != null && macd.length > 0) {
+                $.get("@(Request.Url.Scheme + "://" + Request.Url.Authority)/qldhcdapi/CoDongAPI/GetCoDongFromMaCD?macd=" + macd + "&role=@(HttpContext.Current.Session["Role"] + string.Empty)",
+                function (data) {
+                    $('#HoTen').val(data);
+                    if (data != "") {
+                        var clearMaCD = parseInt(macd) + '';
+                        var macodinh = '@(ViewBag.MaCoDinh + string.Empty)';
+                        var pad = "00000";
+                        var mymacd = pad.substring(0, pad.length - clearMaCD.length) + clearMaCD;
+                        $('#MATD').val(macodinh + mymacd);
+
+                    }
+                });
+
+            }
+        }
+        function resetForm() {
+            $('#NOIDUNGYKKHAC').prop('readonly', true);
+        }
+        $(document).ready(function () {
+            $('input:radio[name=LuaChonRadio]').change(function (e) {
+                $('#LUACHON').val(this.value);
+                if(this.value =='-1')
+                {
+                    $('#NOIDUNGYKKHAC').prop('readonly', false);
+                }
+                else {
+                    $('#NOIDUNGYKKHAC').prop('readonly', true);
+                }
+            });
+
+        });
+    </script>
+
+}

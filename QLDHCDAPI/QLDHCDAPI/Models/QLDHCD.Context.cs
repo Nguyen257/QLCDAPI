@@ -34,17 +34,17 @@ namespace QLDHCDAPI.Models
         public virtual DbSet<CT_BAUBKS> CT_BAUBKS { get; set; }
         public virtual DbSet<CT_BAUHDQT> CT_BAUHDQT { get; set; }
         public virtual DbSet<CT_DHCD> CT_DHCD { get; set; }
-        public virtual DbSet<DHCD> DHCDs { get; set; }
+        public virtual DbSet<CT_YKIEN_BQPHIEU> CT_YKIEN_BQPHIEU { get; set; }
+        public virtual DbSet<CTBQYKIEN> CTBQYKIENs { get; set; }
         public virtual DbSet<DHCDSTT> DHCDSTTs { get; set; }
         public virtual DbSet<EXCEPTIONAPP> EXCEPTIONAPPs { get; set; }
         public virtual DbSet<THANHVIENBK> THANHVIENBKS { get; set; }
         public virtual DbSet<THANHVIENHDQT> THANHVIENHDQTs { get; set; }
         public virtual DbSet<USERCD> USERCDs { get; set; }
         public virtual DbSet<UYQUYEN> UYQUYENs { get; set; }
-        public virtual DbSet<CT_YKIEN_BQPHIEU> CT_YKIEN_BQPHIEU { get; set; }
-        public virtual DbSet<CTBQYKIEN> CTBQYKIENs { get; set; }
+        public virtual DbSet<DHCD> DHCDs { get; set; }
     
-        public virtual int CT_BAUBKS_INSERT(string mABKS, string mANGUOIBAU, Nullable<int> sLPHIEUBAU, string hINHTHUCBAU, Nullable<bool> lAHOPLE, ObjectParameter cHECKSUCCESS)
+        public virtual int CT_BAUBKS_INSERT(string mABKS, string mANGUOIBAU, Nullable<long> sLPHIEUBAU, string hINHTHUCBAU, Nullable<bool> lAHOPLE, ObjectParameter cHECKSUCCESS)
         {
             var mABKSParameter = mABKS != null ?
                 new ObjectParameter("MABKS", mABKS) :
@@ -56,7 +56,7 @@ namespace QLDHCDAPI.Models
     
             var sLPHIEUBAUParameter = sLPHIEUBAU.HasValue ?
                 new ObjectParameter("SLPHIEUBAU", sLPHIEUBAU) :
-                new ObjectParameter("SLPHIEUBAU", typeof(int));
+                new ObjectParameter("SLPHIEUBAU", typeof(long));
     
             var hINHTHUCBAUParameter = hINHTHUCBAU != null ?
                 new ObjectParameter("HINHTHUCBAU", hINHTHUCBAU) :
@@ -69,7 +69,7 @@ namespace QLDHCDAPI.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CT_BAUBKS_INSERT", mABKSParameter, mANGUOIBAUParameter, sLPHIEUBAUParameter, hINHTHUCBAUParameter, lAHOPLEParameter, cHECKSUCCESS);
         }
     
-        public virtual int CT_BAUHDQT_INSERT(string mAHDQT, string mANGUOIBAU, Nullable<int> sLPHIEUBAU, string hINHTHUCBAU, Nullable<bool> lAHOPLE, ObjectParameter cHECKSUCCESS)
+        public virtual int CT_BAUHDQT_INSERT(string mAHDQT, string mANGUOIBAU, Nullable<long> sLPHIEUBAU, string hINHTHUCBAU, Nullable<bool> lAHOPLE, ObjectParameter cHECKSUCCESS)
         {
             var mAHDQTParameter = mAHDQT != null ?
                 new ObjectParameter("MAHDQT", mAHDQT) :
@@ -81,7 +81,7 @@ namespace QLDHCDAPI.Models
     
             var sLPHIEUBAUParameter = sLPHIEUBAU.HasValue ?
                 new ObjectParameter("SLPHIEUBAU", sLPHIEUBAU) :
-                new ObjectParameter("SLPHIEUBAU", typeof(int));
+                new ObjectParameter("SLPHIEUBAU", typeof(long));
     
             var hINHTHUCBAUParameter = hINHTHUCBAU != null ?
                 new ObjectParameter("HINHTHUCBAU", hINHTHUCBAU) :
@@ -99,7 +99,7 @@ namespace QLDHCDAPI.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DHCD_CAPNHATNTONG", cHECKRESULT);
         }
     
-        public virtual int UYQUYEN_INSERT(string mANGCHUYEN, string mANGNHAN, string uYQUYENTYPE, Nullable<int> sLUQ, string hoTen, Nullable<int> cMND, Nullable<System.DateTime> ngayCap, string noiCap, string diaChi, string quocTich, ObjectParameter cHECKSUCCESS)
+        public virtual int UYQUYEN_INSERT(string mANGCHUYEN, string mANGNHAN, string uYQUYENTYPE, Nullable<long> sLUQ, string hoTen, Nullable<int> cMND, Nullable<System.DateTime> ngayCap, string noiCap, string diaChi, string quocTich, ObjectParameter cHECKSUCCESS)
         {
             var mANGCHUYENParameter = mANGCHUYEN != null ?
                 new ObjectParameter("MANGCHUYEN", mANGCHUYEN) :
@@ -115,7 +115,7 @@ namespace QLDHCDAPI.Models
     
             var sLUQParameter = sLUQ.HasValue ?
                 new ObjectParameter("SLUQ", sLUQ) :
-                new ObjectParameter("SLUQ", typeof(int));
+                new ObjectParameter("SLUQ", typeof(long));
     
             var hoTenParameter = hoTen != null ?
                 new ObjectParameter("HoTen", hoTen) :
@@ -144,7 +144,7 @@ namespace QLDHCDAPI.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UYQUYEN_INSERT", mANGCHUYENParameter, mANGNHANParameter, uYQUYENTYPEParameter, sLUQParameter, hoTenParameter, cMNDParameter, ngayCapParameter, noiCapParameter, diaChiParameter, quocTichParameter, cHECKSUCCESS);
         }
     
-        public virtual int UYQUYEN_INSERT_BYUSERNAME(string uSERNAME, string mANGNHAN, string uYQUYENTYPE, Nullable<int> sLUQ, string hoTen, Nullable<int> cMND, Nullable<System.DateTime> ngayCap, string noiCap, string diaChi, string quocTich, ObjectParameter cHECKSUCCESS)
+        public virtual int UYQUYEN_INSERT_BYUSERNAME(string uSERNAME, string mANGNHAN, string uYQUYENTYPE, Nullable<long> sLUQ, string hoTen, Nullable<int> cMND, Nullable<System.DateTime> ngayCap, string noiCap, string diaChi, string quocTich, ObjectParameter cHECKSUCCESS)
         {
             var uSERNAMEParameter = uSERNAME != null ?
                 new ObjectParameter("USERNAME", uSERNAME) :
@@ -160,7 +160,7 @@ namespace QLDHCDAPI.Models
     
             var sLUQParameter = sLUQ.HasValue ?
                 new ObjectParameter("SLUQ", sLUQ) :
-                new ObjectParameter("SLUQ", typeof(int));
+                new ObjectParameter("SLUQ", typeof(long));
     
             var hoTenParameter = hoTen != null ?
                 new ObjectParameter("HoTen", hoTen) :

@@ -1,0 +1,64 @@
+﻿@model QLDHCDAPI.Models.CT_YKIEN_BQPHIEU
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CT_YKIEN_BQPHIEU</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LUACHON)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LUACHON)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.THOIGIANBAU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.THOIGIANBAU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LAHOPLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LAHOPLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BANGYKIENBQPHIEU.MADH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BANGYKIENBQPHIEU.MADH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CT_DHCD.MADH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CT_DHCD.MADH)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

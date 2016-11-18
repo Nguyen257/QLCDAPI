@@ -1,0 +1,57 @@
+﻿@model QLDHCDAPI.Models.BANGYKIENBQPHIEU
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "BIEUQUYETPHIEU", FormMethod.Post, new { @class = "formCreate form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>BANGYKIENBQPHIEU</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MADH, "MADH", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.MADH)
+                <input type="text" value="@ViewBag.TenDH" class="form-control k-textbox " readonly />
+                @Html.ValidationMessageFor(model => model.MADH)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NOIDUNG, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.NOIDUNG, new { @class = "form-control k-textbox myTextArea", @style = "width:200px;height:200px;" })
+                @Html.ValidationMessageFor(model => model.NOIDUNG)
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.SLDONGY)
+        @Html.HiddenFor(model => model.NCPDONGY)
+        @Html.HiddenFor(model => model.SLKHONGDONGY)
+        @Html.HiddenFor(model => model.NCPKHONGDONGY)
+        @Html.HiddenFor(model => model.SL_PHATRA)
+        @Html.HiddenFor(model => model.SLCP_PHATRA)
+        @Html.HiddenFor(model => model.SL_THUVAO)
+        @Html.HiddenFor(model => model.SLCP_THUVAO)
+        @Html.HiddenFor(model => model.SL_HOPLE)
+        @Html.HiddenFor(model => model.SLCP_HOPLE)
+        @Html.HiddenFor(model => model.SL_KHONG_HOPLE)
+        @Html.HiddenFor(model => model.SLCP_KHONG_HOPLE)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

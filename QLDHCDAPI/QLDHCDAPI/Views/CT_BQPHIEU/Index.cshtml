@@ -1,12 +1,12 @@
-﻿@model PagedList.IPagedList<QLDHCDAPI.Models.CTBQYKIEN>
+﻿@model PagedList.IPagedList<QLDHCDAPI.Models.CT_YKIEN_BQPHIEU>
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
- @Html.ActionLink("Trở lại danh sách ý kiến", "Index","BIEUQUYETYKIEN")
-@using (Html.BeginForm("Index", "CT_BQYKIEN", FormMethod.Get))
+@Html.ActionLink("Trở lại danh sách ý kiến", "Index", "BIEUQUYETPHIEU")
+@using (Html.BeginForm("Index", "CT_BQPHIEU", FormMethod.Get))
 {
     <p>
         Tìm theo tên: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
@@ -22,7 +22,7 @@
             @Html.DisplayNameFor(model => model.FirstOrDefault().MAYK)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().BANGYKIEN.NOIDUNG)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().BANGYKIENBQPHIEU.NOIDUNG)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().MATD)
@@ -47,44 +47,44 @@
                 @Html.DisplayFor(modelItem => item.MAYK)
             </td>
             <td>
-                @Html.TextAreaFor(modelItem => item.BANGYKIEN.NOIDUNG, new {@class="form-control k-textbox myTextArea",@style="width:200px;height:100px;", @readonly="readonly" })
+                @Html.TextAreaFor(modelItem => item.BANGYKIENBQPHIEU.NOIDUNG, new { @class = "form-control k-textbox myTextArea", @style = "width:200px;height:100px;", @readonly = "readonly" })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MATD)
             </td>
 
             <td>
-              @if(item.LUACHON == 1)
-              {
+                @if (item.LUACHON == 1)
+                {
                     <label>Đồng ý</label>
-              }
-              else
-              {
-                  if(item.LUACHON==0)
-                  {
-                      <label>Không đồng ý</label>
-                  }
-                  else
-                  {
-                      <label>Ý kiến khác</label>
-                  }
-              }
+                }
+                else
+                {
+                    if (item.LUACHON == 0)
+                    {
+                        <label>Không đồng ý</label>
+                    }
+                    else
+                    {
+                        <label>Ý kiến khác</label>
+                    }
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem=>item.THOIGIANBAU)
+                @Html.DisplayFor(modelItem => item.THOIGIANBAU)
             </td>
 
 
             <td>
 
                 @Html.ActionLink("Details", "Details", new { id = item.ID })
-                @if(HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.Role] + string.Empty == "Admin"
-                    && HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.isLogin] + string.Empty=="Yes")
+                @if (HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.Role] + string.Empty == "Admin"
+                    && HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.isLogin] + string.Empty == "Yes")
                 {
                     <p>
                         | @Html.ActionLink("Delete", "Delete", new { id = item.ID })
                     </p>
-                   
+
                 }
             </td>
         </tr>

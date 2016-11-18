@@ -17,7 +17,7 @@ namespace QLDHCDAPI.Models
         public int MACT { get; set; }
         public string MAHDQT { get; set; }
         public string MANGUOIBAU { get; set; }
-        public int SLPHIEUBAU { get; set; }
+        public long SLPHIEUBAU { get; set; }
         public string HINHTHUCBAU { get; set; }
         public bool LAHOPLE { get; set; }
         public Nullable<System.DateTime> THOIGIANBAU { get; set; }

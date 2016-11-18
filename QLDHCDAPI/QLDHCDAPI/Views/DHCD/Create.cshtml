@@ -18,9 +18,11 @@
         <div>
             @Html.HiddenFor(model => model.nTongHDQT)
             @Html.HiddenFor(model => model.nTongBKS)
-            @Html.HiddenFor(mode => Model.SLCPPHATRA_BKS)
-            @Html.HiddenFor(mode => Model.SLCPPHATRA_HDQT)
-            @Html.HiddenFor(mode => mode.TONGSOPHIEU)
+            @Html.HiddenFor(model => model.SLCPPHATRA_BKS)
+            @Html.HiddenFor(model => model.SLCPPHATRA_HDQT)
+            @Html.HiddenFor(model=>model.SLCPPHATRA_YKIEN)
+            @Html.HiddenFor(model => model.SLCPPHATRA_YKIENPHIEU)
+            @Html.HiddenFor(model => model.TONGSOPHIEU)
             <div class="divMyLeft DHCDCreate">
                 <div class="form-group">
                     @Html.LabelFor(model => model.MADH, new { @class = "control-label col-lg-2 DHCDLabel DHCDLabel" })

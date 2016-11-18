@@ -1,0 +1,113 @@
+﻿@model PagedList.IPagedList<QLDHCDAPI.Models.BANGYKIENBQPHIEU>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@if (HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.Role] == "Admin")
+{
+    <p>
+        @Html.ActionLink("Tạo mới ý kiến ", "Create") | @Html.ActionLink("Phiếu biểu quyết","BieuQuyet","CT_BQPHIEU") | @Html.ActionLink("Cập nhật số lượng phát ra", "UpdateSLCPPhatra") | @Html.ActionLink("Xem danh sách biểu quyết", "Index", "CT_BQPHIEU")
+    </p>
+}
+else
+{
+    @Html.ActionLink("Xem danh sách biểu quyết", "Index", "CT_BQYKIEN")
+}
+
+@using (Html.BeginForm("Index", "BIEUQUYETPHIEU", FormMethod.Get))
+{
+    <p>
+        Tìm theo nội dung ý kiến: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Tìm kiếm" class="btn btn-success" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().MAYK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().DHCD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NOIDUNG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SLDONGY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().SLKHONGDONGY)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MAYK)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DHCD.TenDH)
+            </td>
+            <td>
+                @Html.TextAreaFor(modelItem => item.NOIDUNG, new { @class = "k-textbox myTextArea", @readonly = "readonly" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SLDONGY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SLKHONGDONGY)
+            </td>
+            <td>
+
+                @if (HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.isLogin] + string.Empty == "Yes"
+                    && HttpContext.Current.Session[QLDHCDAPI.Core.Define.SessionName.Role] + string.Empty == "Admin")
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MAYK }) <span>|</span>
+                    @Html.ActionLink("Details", "Details", new { id = item.MAYK })
+                }
+                else
+                {
+                    @Html.ActionLink("Details", "Details", new { id = item.MAYK })
+                }
+
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+</div>
+
+
+<span id="popupNotification"></span>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var popupAlert = $("#popupNotification").kendoNotification().data("kendoNotification");
+            if ('@(ViewBag.Alert + string.Empty)' != null && '@(ViewBag.Alert + string.Empty)' != '') {
+                popupAlert.show('@(ViewBag.Alert + string.Empty)');
+            }
+            @{
+                List<string> ListAlert = ViewBag.ListAlert as List<string>;
+                if(ListAlert!=null && ListAlert.Count>0)
+                {
+                    foreach(var v in ListAlert)
+                    {
+                                 <text>
+            popupAlert.show('@(v + string.Empty)');
+            </text>
+                    }
+
+                }
+            }
+        });
+    </script>
+}

@@ -61,7 +61,7 @@
 
             <td>
 
-               @Html.ActionLink("Details", "Details", new { id = item.MACT })
+                @Html.ActionLink("Details", "Details", new { id = item.MACT })
 
             </td>
         </tr>
@@ -72,7 +72,6 @@
 <div>
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
 </div>
-
 <span id="popupNotification"></span>
 @section Scripts{
     <script>
@@ -87,7 +86,7 @@
                 {
                     foreach(var v in ListAlert)
                     {
-                         <text>
+                                 <text>
             popupAlert.show('@(v + string.Empty)');
             </text>
                     }

@@ -295,6 +295,8 @@ namespace QLDHCDAPI.Controllers
                  dhcd.SLCPPHATRA_HDQT = tongSoCPCoDong * TichSoHDQT;
                  dhcd.SLCPPHATRA_BKS = tongSoCPCoDong * TichSoBKS;
                  dhcd.TONGSOPHIEU = TongSOPhieu;
+                 dhcd.SLCPPHATRA_YKIEN = tongSoCPCoDong;
+                 dhcd.SLCPPHATRA_YKIENPHIEU = tongSoCPCoDong;
 
                  db.SaveChanges();
                  TempData["Message"] = "Cập nhật số lương phát hành cổ phiếu thành công";
@@ -305,6 +307,7 @@ namespace QLDHCDAPI.Controllers
                  return new HttpStatusCodeResult(401, "Ban khong co quyen");
              }
         }
+        
 
         #region AddUngVien
         public ActionResult AddUngVienHDQT()

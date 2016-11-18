@@ -153,7 +153,18 @@
         <dd>
             @((Model.SLCPPHATRA_BKS.HasValue) ? Model.SLCPPHATRA_BKS.Value : 0) cổ phiếu
         </dd>
-
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCPPHATRA_YKIEN)
+        </dt>
+        <dd>
+            @((Model.SLCPPHATRA_HDQT.HasValue) ? Model.SLCPPHATRA_YKIEN.Value : 0) cổ phiếu
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCPPHATRA_YKIENPHIEU)
+        </dt>
+        <dd>
+            @((Model.SLCPPHATRA_BKS.HasValue) ? Model.SLCPPHATRA_YKIENPHIEU.Value : 0) cổ phiếu
+        </dd>
     </dl>
 </div>
 <p>

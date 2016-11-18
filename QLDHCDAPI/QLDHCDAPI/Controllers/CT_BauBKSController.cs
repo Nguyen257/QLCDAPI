@@ -83,14 +83,23 @@ namespace QLDHCDAPI.Controllers
                 CurrentCT.LAHOPLE = true;
                 CurrentCT.HINHTHUCBAU = "Trực tiếp";
 
-                long SoPhieuThuVao = db.CT_BAUBKS.Where(x => x.CT_DHCD.DHCD.MADH == dhcd.MADH ).Sum(q => q.SLPHIEUBAU);
-                long SoPhieuHopLe = db.CT_BAUBKS.Where(x => x.CT_DHCD.DHCD.MADH == dhcd.MADH  && x.LAHOPLE == true).Sum(q => q.SLPHIEUBAU);
-                long SoPhieuKhongHople = SoPhieuThuVao - SoPhieuHopLe;
+                long SoPhieuThuVao = 0; long SoPhieuHopLe = 0; long SoPhieuKhongHople = 0;
+
+                if (db.CT_BAUHDQT.Where(x => x.CT_DHCD.MADH == dhcd.MADH).Count() > 0)
+                {
+                    SoPhieuThuVao = db.CT_BAUHDQT.Where(x => x.CT_DHCD.DHCD.MADH == dhcd.MADH).Sum(q => q.SLPHIEUBAU);
+                    SoPhieuHopLe = db.CT_BAUHDQT.Where(x => x.CT_DHCD.DHCD.MADH == dhcd.MADH && x.LAHOPLE == true).Sum(q => q.SLPHIEUBAU);
+                    SoPhieuKhongHople = SoPhieuThuVao - SoPhieuHopLe;
+                }
+
                 ViewBag.SLHopLe = SoPhieuHopLe;
                 ViewBag.SLKhongHopLe = SoPhieuKhongHople;
                 ViewBag.SoPhieuThuVao = SoPhieuThuVao;
                 ViewBag.SoPhieuPhatRa = dhcd.SLCPPHATRA_HDQT;
-                ViewBag.TichSo = listHDQT.Count;
+                int tichso = 0;
+                if (dhcd.LABAUBOSUNG) tichso = dhcd.nBauBoSungHDQT ?? 0;
+                else tichso = (dhcd.nDeCuHDQT ?? 0) + (dhcd.nUngCuHDQT ?? 0);
+                ViewBag.TichSo = tichso;
                 ViewBag.MaCoDinh = "HDC" + dhcd.YEARDHCD + dhcd.STTDHTRONGNAM;
                 ViewBag.YearDH = dhcd.YEARDHCD;
 
@@ -117,6 +126,7 @@ namespace QLDHCDAPI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult BauThanhVien(ListModel<CT_BAUBKS> listReturn)
         {
             if (!string.IsNullOrWhiteSpace(HttpContext.Session[Core.Define.SessionName.UserName] + string.Empty)
@@ -129,19 +139,27 @@ namespace QLDHCDAPI.Controllers
                     THANHVIENHDQTController tvhdqtController = new THANHVIENHDQTController();
                     try
                     {
-                        if (tvhdqtController.checkThanhVien(v.MABKS))
+                        if (v.SLPHIEUBAU > 0)
                         {
-                            ObjectParameter myCheck = new ObjectParameter("CHECKSUCCESS", 0);
-                            db.CT_BAUHDQT_INSERT(v.MABKS, v.MANGUOIBAU, v.SLPHIEUBAU, v.HINHTHUCBAU, v.LAHOPLE, myCheck);
-                            if (myCheck.Value.ToString() == "1")
+                            if (tvhdqtController.checkThanhVien(v.MABKS))
                             {
-                                Mess.Add("Bầu thành viên " + v.MABKS + " thành công ");
-                            }
-                            else
-                            {
-                                Mess.Add("Bầu thành viên " + v.MABKS + "không thành công ");
+                                ObjectParameter myCheck = new ObjectParameter("CHECKSUCCESS", 0);
+                                db.CT_BAUHDQT_INSERT(v.MABKS, v.MANGUOIBAU, v.SLPHIEUBAU, v.HINHTHUCBAU, v.LAHOPLE, myCheck);
+                                if (myCheck.Value.ToString() == "1")
+                                {
+                                    Mess.Add("Bầu thành viên " + v.MABKS + " thành công ");
+                                }
+                                else
+                                {
+                                    Mess.Add("Bầu thành viên " + v.MABKS + "không thành công ");
+                                }
                             }
                         }
+                        else
+                        {
+                            Mess.Add("Bầu thành viên " + v.MABKS + " không thành công vì SL phiếu bầu <=0 ");
+                        }
+                        
                     }
                     catch (Exception ex)
                     {

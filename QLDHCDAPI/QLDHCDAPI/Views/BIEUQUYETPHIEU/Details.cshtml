@@ -1,0 +1,136 @@
+﻿@model QLDHCDAPI.Models.BANGYKIENBQPHIEU
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BANGYKIENBQPHIEU</h4>
+	<hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MAYK)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MAYK)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DHCD.TenDH)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DHCD.TenDH)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NOIDUNG)
+        </dt>
+
+        <dd>
+            @Html.TextAreaFor(model => model.NOIDUNG, new { @class = "form-control k-textbox myTextArea", @readonly = "readonly", @style = "width:300px;height:200px" })
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NCPDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NCPDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLKHONGDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLKHONGDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NCPKHONGDONGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NCPKHONGDONGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SL_PHATRA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SL_PHATRA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCP_PHATRA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLCP_PHATRA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SL_THUVAO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SL_THUVAO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCP_THUVAO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLCP_THUVAO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SL_HOPLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SL_HOPLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCP_HOPLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLCP_HOPLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SL_KHONG_HOPLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SL_KHONG_HOPLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SLCP_KHONG_HOPLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SLCP_KHONG_HOPLE)
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MAYK }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

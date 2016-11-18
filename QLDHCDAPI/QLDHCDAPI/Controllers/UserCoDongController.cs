@@ -181,7 +181,7 @@ namespace QLDHCDAPI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(string USERNAME, string PASS, string ConfirmPass)
+        public ActionResult Register(string USERNAME, string PASS, string ConfirmPass, int MACD)
         {
             if (string.Equals(HttpContext.Session["UserName"] + string.Empty, "AdminQLDHCD") && !string.IsNullOrWhiteSpace(HttpContext.Session["isLogin"] + string.Empty))
             {
@@ -197,11 +197,11 @@ namespace QLDHCDAPI.Controllers
                         USERCD usercd = new USERCD();
                         usercd.USERNAME = USERNAME;
                         usercd.PASS = hashedDataBytes;
-
+                        usercd.MACD = MACD;
                         db.USERCDs.Add(usercd);
                         db.SaveChanges();
-                        TempData["Message"] = "Chỉnh sửa tham dự đại hội thành công";
-                        return RedirectToLocal("~/");
+                        TempData["Message"] = "Tạo mới thành công";
+                        return RedirectToAction("Index");
                     }
                     else
                     {
@@ -331,6 +331,7 @@ namespace QLDHCDAPI.Controllers
             {
                 db.Entry(usercd).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["Message"] = "Chỉnh sửa user thành công";
                 return RedirectToAction("Index");
             }
             ViewBag.MACD = new SelectList(db.CODONGs, "MACD", "HoTen", usercd.MACD);
@@ -388,6 +389,7 @@ namespace QLDHCDAPI.Controllers
                 {
                     db.USERCDs.Remove(usercd);
                     db.SaveChanges();
+                    TempData["Message"] = "Xóa user thành công";
                     return RedirectToAction("Index");
                 }
             }
